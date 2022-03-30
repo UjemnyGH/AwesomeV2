@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>P:\VS project\AwesomeV2\AwesomeV2\</FILEPATH>
+      <FILENAME>Core.hpp</FILENAME>
+      <LINE>155</LINE>
+      <COLUMN>7</COLUMN>
+    </SFA>
+    <DEFECTCODE>26812</DEFECTCODE>
+    <DESCRIPTION>The enum type 'aws::ShadType' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).</DESCRIPTION>
+    <FUNCTION>aws::Aws_Shader::attachShader</FUNCTION>
+    <DECORATED>?attachShader@Aws_Shader@aws@@QAEXPBDW4ShadType@2@@Z</DECORATED>
+    <FUNCLINE>155</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>P:\VS project\AwesomeV2\AwesomeV2\</FILEPATH>
+      <FILENAME>Core.hpp</FILENAME>
+      <LINE>145</LINE>
+      <COLUMN>1</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'aws::Aws_Rendered::sizeID' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>aws::Aws_Rendered::{ctor}</FUNCTION>
+    <DECORATED>??0Aws_Rendered@aws@@QAE@XZ</DECORATED>
+    <FUNCLINE>145</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>aws::Aws_Rendered::sizeID</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>P:\VS project\AwesomeV2\AwesomeV2\</FILEPATH>
+      <FILENAME>Core.hpp</FILENAME>
+      <LINE>145</LINE>
+      <COLUMN>1</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'aws::Aws_Rendered::count' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>aws::Aws_Rendered::{ctor}</FUNCTION>
+    <DECORATED>??0Aws_Rendered@aws@@QAE@XZ</DECORATED>
+    <FUNCLINE>145</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>aws::Aws_Rendered::count</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>P:\VS project\AwesomeV2\AwesomeV2\</FILEPATH>
+      <FILENAME>Camera.hpp</FILENAME>
+      <LINE>26</LINE>
+      <COLUMN>7</COLUMN>
+    </SFA>
+    <DEFECTCODE>26812</DEFECTCODE>
+    <DESCRIPTION>The enum type 'aws::Axis' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).</DESCRIPTION>
+    <FUNCTION>aws::Aws_Camera::SetCameraRotation</FUNCTION>
+    <DECORATED>?SetCameraRotation@Aws_Camera@aws@@QAEXMW4Axis@2@@Z</DECORATED>
+    <FUNCLINE>26</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>P:\VS project\AwesomeV2\AwesomeV2\</FILEPATH>
+      <FILENAME>Core.hpp</FILENAME>
+      <LINE>211</LINE>
+      <COLUMN>2</COLUMN>
+    </SFA>
+    <DEFECTCODE>26812</DEFECTCODE>
+    <DESCRIPTION>The enum type 'aws::BuffType' is unscoped. Prefer 'enum class' over 'enum' (Enum.3).</DESCRIPTION>
+    <FUNCTION>aws::Aws_Buffer::bind</FUNCTION>
+    <DECORATED>??$bind@M@Aws_Buffer@aws@@QAEXW4BuffType@1@V?$vector@MV?$allocator@M@std@@@std@@IE@Z</DECORATED>
+    <FUNCLINE>211</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>

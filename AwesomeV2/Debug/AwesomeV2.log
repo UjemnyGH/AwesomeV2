@@ -1,0 +1,11 @@
+﻿  AwesomeV2.cpp
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(290,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(294,22): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(204,22): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(232,22): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(329,45): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(45,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(46,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(48,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(49,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  AwesomeV2.vcxproj -> P:\VS project\AwesomeV2\Debug\AwesomeV2.exe

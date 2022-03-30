@@ -1,0 +1,39 @@
+﻿  AwesomeV2.cpp
+P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(48,1): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(61,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(64,22): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(76,22): warning C4018: '<': signed/unsigned mismatch
+AwesomeV2.obj : error LNK2019: unresolved external symbol glewInit referenced in function main
+AwesomeV2.obj : error LNK2019: unresolved external symbol glfwInit referenced in function main
+AwesomeV2.obj : error LNK2019: unresolved external symbol glfwTerminate referenced in function main
+AwesomeV2.obj : error LNK2019: unresolved external symbol glfwWindowHint referenced in function main
+AwesomeV2.obj : error LNK2019: unresolved external symbol glfwCreateWindow referenced in function main
+AwesomeV2.obj : error LNK2019: unresolved external symbol glfwWindowShouldClose referenced in function main
+AwesomeV2.obj : error LNK2019: unresolved external symbol glfwPollEvents referenced in function main
+AwesomeV2.obj : error LNK2019: unresolved external symbol glfwMakeContextCurrent referenced in function main
+AwesomeV2.obj : error LNK2019: unresolved external symbol glfwSwapBuffers referenced in function main
+AwesomeV2.obj : error LNK2019: unresolved external symbol glfwSwapInterval referenced in function main
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewBindBuffer
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewBufferData
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewDeleteBuffers
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewGenBuffers
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewAttachShader
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewCompileShader
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewCreateProgram
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewCreateShader
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewDeleteProgram
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewEnableVertexAttribArray
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewGetUniformLocation
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewLinkProgram
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewShaderSource
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewUniformMatrix4fv
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewUseProgram
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewVertexAttribPointer
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewBindVertexArray
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewDeleteVertexArrays
+AwesomeV2.obj : error LNK2001: unresolved external symbol __glewGenVertexArrays
+AwesomeV2.obj : error LNK2001: unresolved external symbol __GLEW_VERSION_4_5
+AwesomeV2.obj : error LNK2001: unresolved external symbol glewExperimental
+P:\VS project\AwesomeV2\AwesomeV2\Libs\Lib\glew32s.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+P:\VS project\AwesomeV2\AwesomeV2\Libs\Lib\glfw3.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+P:\VS project\AwesomeV2\x64\Debug\AwesomeV2.exe : fatal error LNK1120: 31 unresolved externals
