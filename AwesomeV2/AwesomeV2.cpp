@@ -11,6 +11,8 @@
 
 const float speed = 20.0f;
 
+float w = 0.0f;
+
 glm::mat4 view = glm::mat4(1.0);
 glm::mat4 projection = glm::mat4(1.0);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -25,8 +27,6 @@ float yaw, pitch;
 float lyaw, lpitch;
 int lastX, lastY;
 float acceleration = 1.0f;
-bool canJump = true;
-bool grav = true;
 bool inGround = false;
 
 aws::Camera camera;
@@ -100,11 +100,9 @@ void input(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		playerPos -= cameraRight * speed * aws::time.GetDeltaTime() * glm::vec3(1.0f, 0.0f, 1.0f);
 
-	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && canJump)
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && inGround)
 	{
 		acceleration = -2.0f;
-		canJump = false;
-		grav = true;
 	}
 
 	cameraRight = glm::normalize(glm::cross(cameraFront, glm::vec3(0.0f, 1.0f, 0.0f)));
@@ -128,14 +126,8 @@ void physics()
 {
 	playerPos.y -= aws::time.GetDeltaTime() * 20.0f * acceleration;
 
-	if(playerPos.y < 10.0f) 
-	{
-		inGround = true;
-	}
-	else
-	{
-		inGround = false;
-	}
+	inGround = aws::CheckAABBCollision(camera.GetCameraPosition(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(10000.0f, 0.1f, 10000.0f))
+	|| aws::CheckAABBCollision(camera.GetCameraPosition() - glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(10.0f, 10.0f, 10.0f));
 
 	if (inGround)
 	{
@@ -145,11 +137,6 @@ void physics()
 	if (acceleration < 1.5f)
 	{
 		acceleration += 5.0f * aws::time.GetDeltaTime();
-	}
-
-	if (acceleration > 1.3f)
-	{
-		canJump = true;
 	}
 }
 
@@ -196,29 +183,22 @@ int main()
 
 	object1.Init(aws::cubemap_vs, aws::cubemap_fs, true);
 	ground.Init();
-	ground2.Init();
+	ground2.Init(aws::vs, aws::fs);
 
 	object1.SetRendererData(aws::cube);
 	ground.SetRendererData(aws::cube);
 	ground2.SetRendererData(aws::cube);
 
-	object1.SetCubemap(
-		{ 
-			"data/textures/stalin.png",
-			"data/textures/stalin.png",
-			"data/textures/stalin.png",
-			"data/textures/stalin.png",
-			"data/textures/stalin.png",
-			"data/textures/stalin.png"
-		});
-	ground.AddTexture("data/textures/stalin.png");
-	ground2.AddTexture("data/textures/awesome.png");
+	//object1.AddTexture("AwesomeV2/white.png");
+	ground.AddTexture("AwesomeV2/data/textures/stalin.png");
+	ground2.AddTexture("AwesomeV2/data/textures/awesome.png");
 
 	ground.SetColorByID(0, 0.0f, 0.5f, 0.0f, 1.0f);
 	ground.SetScale(10000.0f, 0.1f, 10000.0f);
 
 	ground2.SetScale(10.0f, 10.0f, 10.0f);
 	ground2.SetPosition(0.0f, 20.0f, 0.0f);
+	//object1.SetPosition(0.0f, 2.0f, 0.0f);
 
 	playerPos.y = 11.0f;
 
@@ -235,16 +215,22 @@ int main()
 		glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
 
 		//object1.SetColorByID(0, sin(aws::time.GetTime()), cos(aws::time.GetTime()), sin(atan(aws::time.GetTime())), 1.0f);
+		//rejestr bazowy, licznik, rejest danych, rejeztry wskaznikowe(wsk. baz., wsk. stosu, wsk. instr.), r. seg., flagi(MF, OF, CF, SF, DF, ZF, IF), operandy(register, memory, stałę instrukcyjne, default), tryby adresowania(bezposredni, pos. przez rej., indexowany, skalowany, relatywny), typydanych(DB, DW, DD, DT)
 
 		/*ground.SetFloatMat4g("u_projectionMatrix", 1U, &projection);
 		ground.SetFloatMat4g("u_viewMatrix", 1U, &view);
 		ground.SetFloatMat4g("u_transform", 1U, &water_transform);
 
 		ground.SetFloat1("u_passedTime", aws::time.GetTime());
-		ground.SetFloat1("u_waterPlaneLength", 1.0f);
+		ground.SetFloat1("u_waterPlaneLength", 10.0f);
 
 		ground.SetFloat4v("u_waveParameters", 4, wave);
 		ground.SetFloat2v("u_waveDirections", 4, wave_dir);*/
+
+		ground2.SetColorByID(0, sin(w), cos(w), sin(tan(w)), 1.0f);
+		ground2.SetRotation(w * 100.0f, w * 100.0f, w * 100.0f);
+
+		w += 0.01f;
 
 		object1.Render(projection, view);
 

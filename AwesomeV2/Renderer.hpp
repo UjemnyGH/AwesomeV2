@@ -78,7 +78,7 @@ namespace aws
 			if(cubemap_init)
 				cubemap_texture.init();
 			
-			shader.~Aws_Shader();
+			//shader.~Aws_Shader();
 			shader.attachShader(vertex_shader, ShadType::vertex);
 			shader.attachShader(fragment_shader, ShadType::fragment);
 			shader.linkShader();

@@ -679,6 +679,25 @@ namespace aws
 		return -1;
 	}
 
+	bool CheckAABBCollision(const glm::vec3 _Position1, const glm::vec3 _Scale1, const glm::vec3 _Position2, const glm::vec3 _Scale2) {
+		glm::vec3 Position1 = _Position1 - _Scale1;
+		glm::vec3 Scale1 = _Scale1 * glm::vec3(2.0f, 2.0f, 2.0f);
+
+		glm::vec3 Position2 = _Position2 - _Scale2;
+		glm::vec3 Scale2 = _Scale2 * glm::vec3(2.0f, 2.0f, 2.0f);
+
+        bool collisionX = Position1.x + Scale1.x >= Position2.x &&
+			Position2.x + Scale2.x >= Position1.x;
+
+        bool collisionY = Position1.y + Scale1.y >= Position2.y &&
+			Position2.y + Scale2.y >= Position1.y;
+
+        bool collisionZ = Position1.z + Scale1.z >= Position2.z &&
+			Position2.z + Scale2.z >= Position1.z;
+
+        return collisionX && collisionY && collisionZ;
+    }
+
 	const Aws_RenderedData cube = Aws_RenderedData(
 		{
 			1.0f, 1.0f, 1.0f,
