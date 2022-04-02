@@ -13,6 +13,8 @@
 #include <cmath>
 #include <string>
 #include "stb_image.h"
+#include "Model_Loader.hpp"
+//#include "cgltf.h"
 
 namespace aws 
 {
@@ -40,7 +42,7 @@ namespace aws
 		"out vec4 Color;\n"
 		"void main()\n"
 		"{\n"
-		"Color = texture(skybox, TexCoords) * Col;\n"
+		"Color = texture(skybox, TexCoords / vec3(2.0, 2.0, 2.0)) * Col;\n"
 		"}\n";
 
 	InShader vs =
@@ -268,7 +270,7 @@ namespace aws
 
 	enum Axis
 	{
-		x,
+		xy,
 		y,
 		z
 	};
@@ -381,6 +383,10 @@ namespace aws
 			glAttachShader(ID, sh);
 		}
 
+		void attachShader(uint32_t shaderID) {
+			glAttachShader(ID, shaderID);
+		}
+
 		void linkShader() {
 			glLinkProgram(ID);
 		}
@@ -391,6 +397,10 @@ namespace aws
 
 		void unuse() {
 			glUseProgram(0);
+		}
+
+		void terminate() {
+			glDeleteShader(ID);
 		}
 
 		~Aws_Shader() {
@@ -416,6 +426,10 @@ namespace aws
 
 		void unbind() {
 			glBindVertexArray(0);
+		}
+
+		void terminate() {
+			glDeleteVertexArrays(1, &ID);
 		}
 
 		~Aws_Array() {
@@ -445,6 +459,10 @@ namespace aws
 				glVertexAttribPointer(index, dimensions, GL_FLOAT, GL_FALSE, 0, nullptr);
 				glEnableVertexAttribArray(index);
 			}
+		}
+
+		void terminate() {
+			glDeleteBuffers(1, &ID);
 		}
 
 		~Aws_Buffer() {
@@ -477,6 +495,10 @@ namespace aws
 			glEnableVertexAttribArray(index + 2);
 			glVertexAttribPointer(index + 3, 4, GL_FLOAT, GL_FALSE, sizeof(T) * 16, (void*)(sizeof(T) * 12));
 			glEnableVertexAttribArray(index + 3);
+		}
+
+		void terminate() {
+			glDeleteBuffers(1, &ID);
 		}
 
 		~Aws_Mat4Buffer() {
@@ -551,6 +573,10 @@ namespace aws
 			glUseProgram(0);
 		}
 
+		void terminate() {
+			glDeleteTextures(1, &ID);
+		}
+
 		~Aws_Texture() {
 			glDeleteTextures(1, &ID);
 		}
@@ -601,6 +627,10 @@ namespace aws
 			glUseProgram(0);
 		}
 
+		void terminate() {
+			glDeleteTextures(1, &ID);
+		}
+
 		~Aws_Cubemap() {
 			glDeleteTextures(1, &ID);
 		}
@@ -611,7 +641,7 @@ namespace aws
 		size_t pos;
 
 		if (_first <= _last && value >= arr[_first] && value <= arr[_last]) {
-			pos = _first + ((_last - _first) / (arr[_last] - arr[_first]) * (x - arr[_first]));
+			pos = _first + ((_last - _first) / (arr[_last] - arr[_first]) * (value - arr[_first]));
 
 			if (arr[pos] == value)
 				return pos;
@@ -629,13 +659,13 @@ namespace aws
 	template<class T, class Arr>
 	size_t binSearch(size_t _first, size_t _last, Arr arr, T value) {
 		if (_last >= 1) {
-			int pos = 1 + (_last - 1) / 2;
+			int pos = _first + (_last - _first) / 2;
 
 			if (arr[pos] == value)
 				return pos;
 
 			if (arr[pos] > value)
-				return binSearch(1, pos - 1, arr, value);
+				return binSearch(_first, pos - 1, arr, value);
 
 			return binSearch(pos + 1, _last, arr, value);
 		}
@@ -698,6 +728,105 @@ namespace aws
         return collisionX && collisionY && collisionZ;
     }
 
+	Aws_RenderedData LoadOBJModel(const std::string& location) {
+		BufferMeshData meshData = LoadMeshBuffer(location);
+
+		std::vector<float> __Fast_color;
+
+		for (int i = 0; i < (meshData.vertices.size() / 3); i++)
+		{
+			__Fast_color.push_back(1.0f);
+			__Fast_color.push_back(1.0f);
+			__Fast_color.push_back(1.0f);
+			__Fast_color.push_back(1.0f);
+		}
+
+		/*for (int i = 0; i < meshData.vertices.size() / 3; i++)
+		{
+			std::cout << "Iter: " << i << '\t' << meshData.vertices[i * 3] << ' ' << meshData.vertices[i * 3 + 1] << ' ' << meshData.vertices[i * 3 + 2] << "\n";
+		}*/
+
+		return { meshData.vertices, __Fast_color, meshData.textureCoordinates };
+	}
+
+	InShader LoadShader(const std::string& path) {
+		std::ifstream f;
+
+		f.open(path.c_str(), std::ios_base::binary);
+
+		if (f.bad())
+		{
+			return "NULL";
+		}
+
+		f.seekg(0, std::ios_base::end);
+
+		int len = static_cast<int>(f.tellg());
+
+		f.seekg(0, std::ios_base::beg);
+
+		char* src = new char[(len + 1) * sizeof(char)];
+		f.read(src, len);
+		src[len] = '\0';
+		f.close();
+
+		std::string source = src;
+
+		delete[] src;
+
+		std::cout << source.c_str();
+
+		return source.c_str();
+	}
+
+	uint32_t LoadShader(const std::string& path, ShadType type) {
+		std::ifstream f;
+
+		f.open(path.c_str(), std::ios_base::binary);
+
+		if (f.bad())
+		{
+			return 0;
+		}
+
+		f.seekg(0, std::ios_base::end);
+
+		int len = static_cast<int>(f.tellg());
+
+		f.seekg(0, std::ios_base::beg);
+
+		char* src = new char[(len + 1) * sizeof(char)];
+		f.read(src, len);
+		src[len] = '\0';
+		f.close();
+
+		uint32_t shader = glCreateShader(type);
+
+		glShaderSource(shader, 1, &src, nullptr);
+
+		delete[] src;
+
+		glCompileShader(shader);
+
+		return shader;
+	}
+
+	/*Aws_RenderedData LoadGLTFModel(const std::string location) {
+		cgltf_options options = { cgltf_file_type_invalid };
+		cgltf_data* data = NULL;
+		cgltf_result result = cgltf_parse_file(&options, location.c_str(), &data);
+
+		if (result == cgltf_result_success)
+		{
+			result = cgltf_load_buffers(&options, data, location.c_str());
+
+			std::cout << "" << data->nodes->mesh->
+
+			cgltf_free(data);
+		}
+
+	}*/
+
 	const Aws_RenderedData cube = Aws_RenderedData(
 		{
 			1.0f, 1.0f, 1.0f,
@@ -747,6 +876,150 @@ namespace aws
 			-1.0f, 1.0f, -1.0f,
 			1.0f, -1.0f, -1.0f,
 			-1.0f, -1.0f, -1.0f
+		},
+		{
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f
+		},
+		{
+			1.0f, 1.0f,
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+			0.0f, 0.0f,
+
+			1.0f, 1.0f,
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+			0.0f, 0.0f,
+
+			1.0f, 1.0f,
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+			0.0f, 0.0f,
+
+			1.0f, 1.0f,
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+			0.0f, 0.0f,
+
+			1.0f, 1.0f,
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+			0.0f, 0.0f,
+
+			1.0f, 1.0f,
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+			0.0f, 0.0f
+		}
+	);
+
+	const Aws_RenderedData skybox = Aws_RenderedData(
+		{
+			-1.0f,  1.0f, -1.0f,
+			-1.0f, -1.0f, -1.0f,
+			 1.0f, -1.0f, -1.0f,
+			 1.0f, -1.0f, -1.0f,
+			 1.0f,  1.0f, -1.0f,
+			-1.0f,  1.0f, -1.0f,
+
+			-1.0f, -1.0f,  1.0f,
+			-1.0f, -1.0f, -1.0f,
+			-1.0f,  1.0f, -1.0f,
+			-1.0f,  1.0f, -1.0f,
+			-1.0f,  1.0f,  1.0f,
+			-1.0f, -1.0f,  1.0f,
+
+			 1.0f, -1.0f, -1.0f,
+			 1.0f, -1.0f,  1.0f,
+			 1.0f,  1.0f,  1.0f,
+			 1.0f,  1.0f,  1.0f,
+			 1.0f,  1.0f, -1.0f,
+			 1.0f, -1.0f, -1.0f,
+
+			-1.0f, -1.0f,  1.0f,
+			-1.0f,  1.0f,  1.0f,
+			 1.0f,  1.0f,  1.0f,
+			 1.0f,  1.0f,  1.0f,
+			 1.0f, -1.0f,  1.0f,
+			-1.0f, -1.0f,  1.0f,
+
+			-1.0f,  1.0f, -1.0f,
+			 1.0f,  1.0f, -1.0f,
+			 1.0f,  1.0f,  1.0f,
+			 1.0f,  1.0f,  1.0f,
+			-1.0f,  1.0f,  1.0f,
+			-1.0f,  1.0f, -1.0f,
+
+			-1.0f, -1.0f, -1.0f,
+			-1.0f, -1.0f,  1.0f,
+			 1.0f, -1.0f, -1.0f,
+			 1.0f, -1.0f, -1.0f,
+			-1.0f, -1.0f,  1.0f,
+			 1.0f, -1.0f,  1.0f
 		},
 		{
 			0.86f, 0.86f, 0.86f, 1.0f,

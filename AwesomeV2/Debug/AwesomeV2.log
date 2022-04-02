@@ -1,11 +1,396 @@
 ﻿  AwesomeV2.cpp
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(290,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(294,22): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(204,22): warning C4018: '<': signed/unsigned mismatch
-P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(232,22): warning C4018: '<': signed/unsigned mismatch
-P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(329,45): warning C4018: '<': signed/unsigned mismatch
-P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(45,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(46,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(48,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(49,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(165,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(166,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(167,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(169,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(170,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(171,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(173,73): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(174,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(175,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(177,73): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(178,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(179,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(181,73): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(182,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(183,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(185,73): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(186,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(187,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(189,73): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(190,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(191,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(193,73): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(194,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(195,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(201,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(202,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(203,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(205,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(206,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(207,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(209,95): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(210,99): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(212,95): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(213,99): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(215,95): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(216,99): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(218,95): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(219,99): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(221,95): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(222,99): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(224,95): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(225,99): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(227,73): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(228,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(229,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(231,73): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(232,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(233,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(235,73): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(236,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(237,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(239,73): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(240,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(241,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(243,73): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(244,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(245,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(247,73): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(248,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(249,77): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(258,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(259,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(260,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(262,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(263,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(264,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(266,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(267,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(268,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(270,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(271,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(272,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(278,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(279,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(280,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(282,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(283,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(284,50): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(286,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(287,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(288,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(290,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(291,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(292,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(294,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(295,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(296,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(298,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(299,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(300,57): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=unsigned int
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(419,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(420,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(421,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(423,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(424,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(425,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(427,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(428,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(429,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(443,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(444,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(445,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(447,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(448,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(449,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(451,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(452,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(453,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(471,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(472,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(473,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(475,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(476,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(477,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(479,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(480,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(481,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(495,94): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(496,98): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(498,94): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(499,98): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(501,94): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(502,98): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(513,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(514,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(515,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(517,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(518,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(519,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(521,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(522,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(523,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(544,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(545,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(546,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(548,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(549,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(550,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(552,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(553,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(554,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(556,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(557,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(558,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(560,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(561,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(562,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(564,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(565,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(566,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(568,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(569,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(570,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(572,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(573,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(574,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(576,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(577,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(578,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(580,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(581,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(582,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(584,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(585,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(586,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(588,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(589,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(590,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(596,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(597,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(598,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(600,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(601,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(602,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(604,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(605,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(606,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(608,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(609,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(610,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(612,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(613,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(614,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(616,74): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(617,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(618,78): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(620,94): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(621,98): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(623,94): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(624,98): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(626,94): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(627,98): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(629,94): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(630,98): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(632,94): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(633,98): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(635,94): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(636,98): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(638,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(639,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(640,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(642,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(643,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(644,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(646,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(647,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(648,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(650,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(651,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(652,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(654,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(655,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(656,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(658,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(659,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(660,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(292,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(296,22): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(736,21): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(254,22): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(282,22): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(379,45): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(47,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(48,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(50,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(51,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
   AwesomeV2.vcxproj -> P:\VS project\AwesomeV2\Debug\AwesomeV2.exe

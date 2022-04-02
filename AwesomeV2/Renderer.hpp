@@ -78,7 +78,6 @@ namespace aws
 			if(cubemap_init)
 				cubemap_texture.init();
 			
-			//shader.~Aws_Shader();
 			shader.attachShader(vertex_shader, ShadType::vertex);
 			shader.attachShader(fragment_shader, ShadType::fragment);
 			shader.linkShader();
@@ -98,8 +97,60 @@ namespace aws
 			vao.unbind();
 		}
 
+		void Init(uint32_t vertex_shader, uint32_t fragment_shader, bool cubemap_init = false) {
+			shader.init();
+			vao.init();
+			vertices_buf.init();
+			color_buf.init();
+			texture_id_buf.init();
+			texture_coords_buf.init();
+
+			for (int i = 0; i < 31; i++)
+			{
+				texture[i].init();
+			}
+
+			if (cubemap_init)
+				cubemap_texture.init();
+
+			shader.attachShader(vertex_shader);
+			shader.attachShader(fragment_shader);
+			shader.linkShader();
+
+			if (cubemap_init)
+				cubemap_texture.uniform(shader.ID, "skybox");
+			else
+				texture[0].uniform(shader.ID, "Texture");
+
+			vao.bind();
+
+			vertices_buf.bind(BuffType::general, objects_data.data.vertices, 0, 3);
+			color_buf.bind(BuffType::general, objects_data.data.color, 1, 4);
+			texture_coords_buf.bind(BuffType::general, objects_data.data.texture_coordinates, 2, 2);
+			texture_id_buf.bind(BuffType::general, objects_data.textureID, 3, 1);
+
+			vao.unbind();
+		}
+
 		void AddShader(InShader _shader, ShadType _type) {
 			shader.attachShader(_shader, _type);
+			shader.linkShader();
+
+			texture[0].uniform(shader.ID, "Texture");
+			cubemap_texture.uniform(shader.ID, "skybox");
+
+			vao.bind();
+
+			vertices_buf.bind(BuffType::general, objects_data.data.vertices, 0, 3);
+			color_buf.bind(BuffType::general, objects_data.data.color, 1, 4);
+			texture_coords_buf.bind(BuffType::general, objects_data.data.texture_coordinates, 2, 2);
+			texture_id_buf.bind(BuffType::general, objects_data.textureID, 3, 1);
+
+			vao.unbind();
+		}
+
+		void AddShader(uint32_t _shader) {
+			shader.attachShader(_shader);
 			shader.linkShader();
 
 			texture[0].uniform(shader.ID, "Texture");
@@ -184,7 +235,6 @@ namespace aws
 			shader.use();
 			vao.bind();
 
-			cubemap_texture.uniform(shader.ID, "skybox");
 			cubemap_texture.bind(paths);
 
 			vao.unbind();
@@ -566,12 +616,44 @@ namespace aws
 			shader.unuse();
 		}
 
+		void Terminate() {
+			shader.terminate();
+			vao.terminate();
+			vertices_buf.terminate();
+			color_buf.terminate();
+			texture_coords_buf.terminate();
+
+			if (cubemap)
+			{
+				cubemap_texture.terminate();
+			}
+			else
+			{
+				for (int i = 0; i < 32; i++)
+				{
+					texture[i].terminate();
+				}
+			}
+		}
+
 		~Aws_Renderer() {
 			shader.~Aws_Shader();
 			vao.~Aws_Array();
 			vertices_buf.~Aws_Buffer();
 			color_buf.~Aws_Buffer();
 			texture_coords_buf.~Aws_Buffer();
+
+			if (cubemap)
+			{
+				cubemap_texture.~Aws_Cubemap();
+			}
+			else
+			{
+				for (int i = 0; i < 32; i++)
+				{
+					texture[i].~Aws_Texture();
+				}
+			}
 		}
 	};
 

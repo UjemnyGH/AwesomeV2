@@ -23,25 +23,25 @@ namespace aws
 			z = _z;
 		}
 
-		void SetCameraRotation(float value, Axis axis)
+		void SetCameraRotation(float value, float value2, Axis axis)
 		{
-			if (axis == Axis::z)
+			if (axis == Axis::xy)
 			{
-				rx = (cos(value) - sin(value)) * lrx;
-				ry = (cos(value) + sin(value)) * lry;
-				rz = 1 * lrz;
-			}
-			else if (axis == Axis::x)
-			{
-				rx = 1 * lrx;
-				ry = (cos(value) - sin(value)) * lry;
-				rz = (cos(value) + sin(value)) * lrz;
+				rx = cos(value) * cos(value2);
+				ry = sin(value2);
+				rz = sin(value) * cos(value2);
 			}
 			else if (axis == Axis::y)
 			{
-				rx = (cos(value) + sin(value)) * lrx;
-				ry = 1 * lry;
-				rz = (cos(value) - sin(value)) * lrz;
+				rx = sin(value2);
+				ry = cos(value) * cos(value2);
+				rz = sin(value) * cos(value2);
+			}
+			else if (axis == Axis::z)
+			{
+				rx = 1 * lrz;
+				ry = cos(x) - sin(x) * lry;
+				rz = cos(x) + sin(x) * lrx;
 			}
 
 			lrx = rx;
