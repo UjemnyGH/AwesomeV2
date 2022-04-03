@@ -12,6 +12,7 @@ namespace aws
 		Buffer color_buf;
 		Buffer texture_coords_buf;
 		Buffer texture_id_buf;
+		Buffer normals_buf;
 		Texture texture[32];
 		Cubemap cubemap_texture;
 
@@ -40,6 +41,7 @@ namespace aws
 			color_buf.init();
 			texture_id_buf.init();
 			texture_coords_buf.init();
+			normals_buf.init();
 
 			for (int i = 0; i < 31; i++)
 			{
@@ -51,6 +53,7 @@ namespace aws
 			shader.linkShader();
 
 			texture[0].uniform(shader.ID, "Texture");
+			cubemap_texture.uniform(shader.ID, "skybox");
 
 			vao.bind();
 
@@ -58,6 +61,7 @@ namespace aws
 			color_buf.bind(BuffType::general, objects_data.data.color, 1, 4);
 			texture_coords_buf.bind(BuffType::general, objects_data.data.texture_coordinates, 2, 2);	
 			texture_id_buf.bind(BuffType::general, objects_data.textureID, 3, 1);
+			normals_buf.bind(BuffType::general, objects_data.data.normals, 4, 3);
 
 			vao.unbind();
 		}
@@ -69,6 +73,7 @@ namespace aws
 			color_buf.init();
 			texture_id_buf.init();
 			texture_coords_buf.init();
+			normals_buf.init();
 
 			for (int i = 0; i < 31; i++)
 			{
@@ -82,10 +87,8 @@ namespace aws
 			shader.attachShader(fragment_shader, ShadType::fragment);
 			shader.linkShader();
 
-			if (cubemap_init)
-				cubemap_texture.uniform(shader.ID, "skybox");
-			else
-				texture[0].uniform(shader.ID, "Texture");
+			cubemap_texture.uniform(shader.ID, "skybox");
+			texture[0].uniform(shader.ID, "Texture");
 
 			vao.bind();
 
@@ -93,6 +96,7 @@ namespace aws
 			color_buf.bind(BuffType::general, objects_data.data.color, 1, 4);
 			texture_coords_buf.bind(BuffType::general, objects_data.data.texture_coordinates, 2, 2);
 			texture_id_buf.bind(BuffType::general, objects_data.textureID, 3, 1);
+			normals_buf.bind(BuffType::general, objects_data.data.normals, 4, 3);
 
 			vao.unbind();
 		}
@@ -104,6 +108,7 @@ namespace aws
 			color_buf.init();
 			texture_id_buf.init();
 			texture_coords_buf.init();
+			normals_buf.init();
 
 			for (int i = 0; i < 31; i++)
 			{
@@ -117,10 +122,8 @@ namespace aws
 			shader.attachShader(fragment_shader);
 			shader.linkShader();
 
-			if (cubemap_init)
-				cubemap_texture.uniform(shader.ID, "skybox");
-			else
-				texture[0].uniform(shader.ID, "Texture");
+			cubemap_texture.uniform(shader.ID, "skybox");
+			texture[0].uniform(shader.ID, "Texture");
 
 			vao.bind();
 
@@ -128,6 +131,7 @@ namespace aws
 			color_buf.bind(BuffType::general, objects_data.data.color, 1, 4);
 			texture_coords_buf.bind(BuffType::general, objects_data.data.texture_coordinates, 2, 2);
 			texture_id_buf.bind(BuffType::general, objects_data.textureID, 3, 1);
+			normals_buf.bind(BuffType::general, objects_data.data.normals, 4, 3);
 
 			vao.unbind();
 		}
@@ -136,15 +140,13 @@ namespace aws
 			shader.attachShader(_shader, _type);
 			shader.linkShader();
 
-			texture[0].uniform(shader.ID, "Texture");
-			cubemap_texture.uniform(shader.ID, "skybox");
-
 			vao.bind();
 
 			vertices_buf.bind(BuffType::general, objects_data.data.vertices, 0, 3);
 			color_buf.bind(BuffType::general, objects_data.data.color, 1, 4);
 			texture_coords_buf.bind(BuffType::general, objects_data.data.texture_coordinates, 2, 2);
 			texture_id_buf.bind(BuffType::general, objects_data.textureID, 3, 1);
+			normals_buf.bind(BuffType::general, objects_data.data.normals, 4, 3);
 
 			vao.unbind();
 		}
@@ -162,12 +164,13 @@ namespace aws
 			color_buf.bind(BuffType::general, objects_data.data.color, 1, 4);
 			texture_coords_buf.bind(BuffType::general, objects_data.data.texture_coordinates, 2, 2);
 			texture_id_buf.bind(BuffType::general, objects_data.textureID, 3, 1);
+			normals_buf.bind(BuffType::general, objects_data.data.normals, 4, 3);
 
 			vao.unbind();
 		}
 
-		void Render(glm::mat4 projection = glm::mat4(1.0), glm::mat4 view = glm::mat4(1.0)) {
-			if (cubemap)
+		void Render(glm::mat4 projection = glm::mat4(1.0), glm::mat4 view = glm::mat4(1.0), bool skybox_cubemap = false) {
+			if (cubemap && skybox_cubemap)
 			{
 				//glDepthFunc(GL_LEQUAL);
 				glDepthMask(GL_FALSE);
@@ -175,42 +178,41 @@ namespace aws
 
 			shader.use();
 			vao.bind();
-			if (!cubemap)
-			{
-				texture[0].bind(0);
-				texture[1].bind(1);
-				texture[2].bind(2);
-				texture[3].bind(3);
-				texture[4].bind(4);
-				texture[5].bind(5);
-				texture[6].bind(6);
-				texture[7].bind(7);
-				texture[8].bind(8);
-				texture[9].bind(9);
-				texture[10].bind(10);
-				texture[11].bind(11);
-				texture[12].bind(12);
-				texture[13].bind(13);
-				texture[14].bind(14);
-				texture[15].bind(15);
-				texture[16].bind(16);
-				texture[17].bind(17);
-				texture[18].bind(18);
-				texture[19].bind(19);
-				texture[20].bind(20);
-				texture[21].bind(21);
-				texture[22].bind(22);
-				texture[23].bind(23);
-				texture[24].bind(24);
-				texture[25].bind(25);
-				texture[26].bind(26);
-				texture[27].bind(27);
-				texture[28].bind(28);
-				texture[29].bind(29);
-				texture[30].bind(30);
-				texture[31].bind(31);
-			}
-			else
+			
+			texture[0].bind(0);
+			texture[1].bind(1);
+			texture[2].bind(2);
+			texture[3].bind(3);
+			texture[4].bind(4);
+			texture[5].bind(5);
+			texture[6].bind(6);
+			texture[7].bind(7);
+			texture[8].bind(8);
+			texture[9].bind(9);
+			texture[10].bind(10);
+			texture[11].bind(11);
+			texture[12].bind(12);
+			texture[13].bind(13);
+			texture[14].bind(14);
+			texture[15].bind(15);
+			texture[16].bind(16);
+			texture[17].bind(17);
+			texture[18].bind(18);
+			texture[19].bind(19);
+			texture[20].bind(20);
+			texture[21].bind(21);
+			texture[22].bind(22);
+			texture[23].bind(23);
+			texture[24].bind(24);
+			texture[25].bind(25);
+			texture[26].bind(26);
+			texture[27].bind(27);
+			texture[28].bind(28);
+			texture[29].bind(29);
+			texture[30].bind(30);
+			texture[31].bind(31);
+
+			if(cubemap)
 			{
 				cubemap_texture.bind();
 			}
@@ -219,7 +221,7 @@ namespace aws
 
 			glDrawArrays(GL_TRIANGLES, 0, objects_data.sizeID);
 
-			if (cubemap)
+			if (cubemap && skybox_cubemap)
 			{
 				//glDepthFunc(GL_LESS);
 				glDepthMask(GL_TRUE);
@@ -247,7 +249,7 @@ namespace aws
 			objects_data.sizeID = 0;
 			objects_data.dataID.clear();
 
-			objects_data.data = data;
+			objects_data.data += data;
 			objects_data.sizeID = data.vertices.size() / 3;
 			objects_data.axis_helper.push_back(AxisHelper(0.0f, 1.0f, 0.0f));
 
@@ -256,7 +258,6 @@ namespace aws
 			}
 
 			objects_data.dataID.push_back(objects_data.count);
-			objects_data.name.insert(std::make_pair(objects_data.count, "Object " + std::to_string(objects_data.count)));
 
 			objects_data.count++;
 
@@ -266,20 +267,21 @@ namespace aws
 			color_buf.bind(BuffType::general, objects_data.data.color, 1, 4);
 			texture_coords_buf.bind(BuffType::general, objects_data.data.texture_coordinates, 2, 2);
 			texture_id_buf.bind(BuffType::general, objects_data.textureID, 3, 1);
+			normals_buf.bind(BuffType::general, objects_data.data.normals, 4, 3);
 
 			vao.unbind();
 		}
 
 		void AddObject() {
 			objects_data.data += data;
+
 			objects_data.axis_helper.push_back(AxisHelper(0.0f, 1.0f, 0.0f));
 
 			objects_data.dataID.push_back(objects_data.count);
-			objects_data.name.insert(std::make_pair(objects_data.count, "Object " + std::to_string(objects_data.count)));
 
 			objects_data.count++;
 
-			for (int i = 0; i < objects_data.count * objects_data.sizeID; i++) {
+			for (int i = objects_data.count * objects_data.sizeID; i < objects_data.count * objects_data.sizeID + objects_data.sizeID; i++) {
 				objects_data.textureID.push_back(0.0f);
 			}
 
@@ -289,16 +291,13 @@ namespace aws
 			color_buf.bind(BuffType::general, objects_data.data.color, 1, 4);
 			texture_coords_buf.bind(BuffType::general, objects_data.data.texture_coordinates, 2, 2);
 			texture_id_buf.bind(BuffType::general, objects_data.textureID, 3, 1);
+			normals_buf.bind(BuffType::general, objects_data.data.normals, 4, 3);
 
 			vao.unbind();
 		}
 
-		void SetObjectName(const unsigned int ID, const std::string _name) {
-			objects_data.name[ID] = _name;
-		}
-
 		void SetPositionByID(unsigned int ID, float x, float y, float z) {
-			if (objects_data.axis_helper[ID].px != x && objects_data.axis_helper[ID].py != y && objects_data.axis_helper[ID].pz != z)
+			if (objects_data.axis_helper[ID].px != x || objects_data.axis_helper[ID].py != y || objects_data.axis_helper[ID].pz != z)
 			{
 				objects_data.axis_helper[ID].px = x;
 				objects_data.axis_helper[ID].py = y;
@@ -320,7 +319,7 @@ namespace aws
 		}
 
 		void SetScaleByID(unsigned int ID, float x, float y, float z) {
-			if (objects_data.axis_helper[ID].sx != x && objects_data.axis_helper[ID].sy != y && objects_data.axis_helper[ID].sz != z)
+			if (objects_data.axis_helper[ID].sx != x || objects_data.axis_helper[ID].sy != y || objects_data.axis_helper[ID].sz != z)
 			{
 				objects_data.axis_helper[ID].sx = x;
 				objects_data.axis_helper[ID].sy = y;
@@ -377,10 +376,23 @@ namespace aws
 			vao.bind();
 
 			for (int i = ID * objects_data.sizeID; i < ID * objects_data.sizeID + objects_data.sizeID; i++) {
-				objects_data.textureID[ID * objects_data.sizeID + i] = (float)textureID;
+				objects_data.textureID[i] = (float)textureID;
 			}
 
 			texture_id_buf.bind(BuffType::general, objects_data.textureID, 3, 1);
+
+			vao.unbind();
+		}
+
+		void SetUVMapByID(const unsigned int ID, const float value) {
+			vao.bind();
+
+			for (int i = ID * objects_data.sizeID; i < ID * objects_data.sizeID + objects_data.sizeID; i++) {
+				objects_data.data.texture_coordinates[i * 2] = data.texture_coordinates[i * 2] * value;
+				objects_data.data.texture_coordinates[i * 2 + 1] = data.texture_coordinates[i * 2 + 1] * value;
+			}
+
+			texture_coords_buf.bind(BuffType::general, objects_data.data.texture_coordinates, 2, 2);
 
 			vao.unbind();
 		}
@@ -616,6 +628,14 @@ namespace aws
 			shader.unuse();
 		}
 
+		void DebugValues() {
+			for (int i = 0; i < objects_data.count * objects_data.sizeID - objects_data.sizeID; i++)
+			{
+				std::cout << objects_data.data.vertices[i * 3] << ' ' << objects_data.data.vertices[i * 3 + 1] << ' ' << objects_data.data.vertices[i * 3 + 2] << "\t\t" <<
+					objects_data.textureID[i] << '\n';
+			}
+		}
+
 		void Terminate() {
 			shader.terminate();
 			vao.terminate();
@@ -627,12 +647,10 @@ namespace aws
 			{
 				cubemap_texture.terminate();
 			}
-			else
+
+			for (int i = 0; i < 32; i++)
 			{
-				for (int i = 0; i < 32; i++)
-				{
-					texture[i].terminate();
-				}
+				texture[i].terminate();
 			}
 		}
 
@@ -647,12 +665,10 @@ namespace aws
 			{
 				cubemap_texture.~Aws_Cubemap();
 			}
-			else
+
+			for (int i = 0; i < 32; i++)
 			{
-				for (int i = 0; i < 32; i++)
-				{
-					texture[i].~Aws_Texture();
-				}
+				texture[i].~Aws_Texture();
 			}
 		}
 	};

@@ -61,5 +61,11 @@
     <None Include="water.frag">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="glass.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="glass.frag">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

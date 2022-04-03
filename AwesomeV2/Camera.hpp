@@ -16,15 +16,13 @@ namespace aws
 		float lrx, lry, lrz;
 
 	public:
-		void SetCameraPosition(float _x, float _y, float _z)
-		{
+		void SetCameraPosition(float _x, float _y, float _z) {
 			x = _x;
 			y = _y;
 			z = _z;
 		}
 
-		void SetCameraRotation(float value, float value2, Axis axis)
-		{
+		void SetCameraRotation(float value, float value2, Axis axis) {
 			if (axis == Axis::xy)
 			{
 				rx = cos(value) * cos(value2);
@@ -50,7 +48,16 @@ namespace aws
 		}
 
 		glm::vec3 GetCameraPosition() { return glm::vec3(x, y, z); }
-		glm::vec3 GetCameraRotation() { return glm::vec3(rx, ry, rz); }
+		glm::vec3 GetCameraRotation(const CameraGetMode& camera_get_mode = CameraGetMode::Rotation) { 
+			if (camera_get_mode == CameraGetMode::Rotation)
+				return glm::vec3(rx, ry, rz); 
+			else if (camera_get_mode == CameraGetMode::Normalized)
+				return glm::normalize(glm::vec3(rx, ry, rz));
+			else if (camera_get_mode == CameraGetMode::Crossed)
+				return glm::normalize(glm::cross(glm::vec3(rx, ry, rz), glm::vec3(0.0f, 1.0f, 0.0f)));
+			else
+				return glm::vec3(rx, ry, rz);
+		}
 	};
 
 	typedef Aws_Camera Camera;

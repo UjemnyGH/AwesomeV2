@@ -1,7 +1,7 @@
 # AwesomeV2 made by UjemnyGH
 Awseome engine v2
 
-![Awesome image logo](AwesomeV2/data/texture/awesomev2.png)
+![Awesome image logo](AwesomeV2/data/textures/awesomev2.png)
 
 This is basicly comtinuation Awesome engine, but instead rewriting old engine I am writing new one.
 

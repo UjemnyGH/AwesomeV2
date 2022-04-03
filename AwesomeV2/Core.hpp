@@ -42,7 +42,7 @@ namespace aws
 		"out vec4 Color;\n"
 		"void main()\n"
 		"{\n"
-		"Color = texture(skybox, TexCoords / vec3(2.0, 2.0, 2.0)) * Col;\n"
+		"Color = texture(skybox, TexCoords) * Col;\n"
 		"}\n";
 
 	InShader vs =
@@ -78,180 +78,6 @@ namespace aws
 		"Color = test_Color;\n"
 		"}\n";
 
-	//Source: https://github.com/McNopper/OpenGL/blob/master/Example15/shader/Water.vert.glsl
-	InShader water_vs = 
-		"#version 450 core\n"
-		"#define NUMBERWAVES 4\n"
-		"\n"
-		"const float PI = 3.141592654;\n"
-		"const float G = 9.81;\n"
-		"\n"
-		"uniform mat4 u_projectionMatrix;\n"
-		"uniform mat4 u_viewMatrix;\n"
-		"uniform mat4 u_transform;\n"
-		"\n"
-		"uniform float u_passedTime;\n"
-		"\n"
-		"uniform float u_waterPlaneLength;\n"
-		"\n"
-		"uniform vec4 u_waveParameters[NUMBERWAVES];\n"
-		"uniform vec2 u_waveDirections[NUMBERWAVES];\n"
-		"\n"
-		"layout(location = 0)in vec4 vertex;\n"
-		"\n"
-		"out vec3 v_incident;\n"
-		"\n"
-		"out vec3 v_bitangent;\n"
-		"out vec3 v_normal;\n"
-		"out vec3 v_tangent;\n"
-		"\n"
-		"out vec2 v_texCoord;\n"
-		"\n"
-		"void main(void)\n"
-		"{\n"
-		"	vec4 finalVertex;\n"
-		"\n"
-		"	finalVertex.x = a_vertex.x;\n"
-		"	finalVertex.y = a_vertex.y;\n"
-		"	finalVertex.z = a_vertex.z;\n"
-		"	finalVertex.w = 1.0;\n"
-		"\n"
-		"	vec3 finalBitangent;\n"
-		"	vec3 finalNormal;\n"
-		"	vec3 finalTangent;\n"
-		"\n"
-		"	finalBitangent.x = 0.0;\n"
-		"	finalBitangent.y = 0.0;\n"
-		"	finalBitangent.z = 0.0;\n"
-		"\n"
-		"	finalNormal.x = 0.0;\n"
-		"	finalNormal.y = 0.0;\n"
-		"	finalNormal.z = 0.0;\n"
-		"\n"
-		"	finalTangent.x = 0.0;\n"
-		"	finalTangent.y = 0.0;\n"
-		"	finalTangent.z = 0.0;\n"
-		"\n"
-		"	// see GPU Gems: Chapter 1. Effective Water Simulation from Physical Models\n"
-		"	for (int i = 0; i < NUMBERWAVES; i++)\n"
-		"	{\n"
-		"		vec2 direction = normalize(u_waveDirections[i]);\n"
-		"		float speed = u_waveParameters[i].x;\n"
-		"		float amplitude = u_waveParameters[i].y;\n"
-		"		float wavelength = u_waveParameters[i].z;\n"
-		"		float steepness = u_waveParameters[i].w;\n"
-		"\n"
-		"		float frequency = sqrt(G * 2.0 * PI / wavelength);\n"
-		"		float phase = speed * frequency;\n"
-		"		float alpha = frequency * dot(direction, a_vertex.xz) + phase * u_passedTime;\n"
-		"\n"
-		"		finalVertex.x += steepness * amplitude * direction.x * cos(alpha);\n"
-		"		finalVertex.y += amplitude * sin(alpha);\n"
-		"		finalVertex.z += steepness * amplitude * direction.y * cos(alpha);\n"
-		"	}\n"
-		"\n"
-		"	for (int i = 0; i < NUMBERWAVES; i++)\n"
-		"	{\n"
-		"		vec2 direction = normalize(u_waveDirections[i]);\n"
-		"		float speed = u_waveParameters[i].x;\n"
-		"		float amplitude = u_waveParameters[i].y;\n"
-		"		float wavelength = u_waveParameters[i].z;\n"
-		"		float steepness = u_waveParameters[i].w;\n"
-		"\n"
-		"		float frequency = sqrt(G * 2.0 * PI / wavelength);\n"
-		"		float phase = speed * frequency;\n"
-		"		float alpha = frequency * dot(direction, finalVertex.xz) + phase * u_passedTime;\n"
-		"\n"
-		"		// x direction\n"
-		"		finalBitangent.x += steepness * direction.x * direction.x * wavelength * amplitude * sin(alpha);\n"
-		"		finalBitangent.y += direction.x * wavelength * amplitude * cos(alpha);\n"
-		"		finalBitangent.z += steepness * direction.x * direction.y * wavelength * amplitude * sin(alpha);\n"
-		"\n"
-		"		// y direction\n"
-		"		finalNormal.x += direction.x * wavelength * amplitude * cos(alpha);\n"
-		"		finalNormal.y += steepness * wavelength * amplitude * sin(alpha);\n"
-		"		finalNormal.z += direction.y * wavelength * amplitude * cos(alpha);\n"
-		"\n"
-		"		// z direction\n"
-		"		finalTangent.x += steepness * direction.x * direction.y * wavelength * amplitude * sin(alpha);\n"
-		"		finalTangent.y += direction.y * wavelength * amplitude * cos(alpha);\n"
-		"		finalTangent.z += steepness * direction.y * direction.y * wavelength * amplitude * sin(alpha);\n"
-		"	}\n"
-		"\n"
-		"	finalTangent.x = -finalTangent.x;\n"
-		"	finalTangent.z = 1.0 - finalTangent.z;\n"
-		"	finalTangent = normalize(finalTangent);\n"
-		"\n"
-		"	finalBitangent.x = 1.0 - finalBitangent.x;\n"
-		"	finalBitangent.z = -finalBitangent.z;\n"
-		"	finalBitangent = normalize(finalBitangent);\n"
-		"\n"
-		"	finalNormal.x = -finalNormal.x;\n"
-		"	finalNormal.y = 1.0 - finalNormal.y;\n"
-		"	finalNormal.z = -finalNormal.z;\n"
-		"	finalNormal = normalize(finalNormal);\n"
-		"\n"
-		"	v_bitangent = finalBitangent;\n"
-		"	v_normal = finalNormal;\n"
-		"	v_tangent = finalTangent;\n"
-		"\n"
-		"	v_texCoord = vec2(clamp((finalVertex.x + u_waterPlaneLength * 0.5 - 0.5) / u_waterPlaneLength, 0.0, 1.0), clamp((-finalVertex.z + u_waterPlaneLength * 0.5 + 0.5) / u_waterPlaneLength, 0.0, 1.0));\n"
-		"\n"
-		"	vec4 vertex = u_viewMatrix * finalVertex;\n"
-		"\n"
-		"	// We caculate in world space.\n"
-		"	v_incident = u_transform * vec3(vertex);\n"
-		"\n"
-		"	gl_Position = u_projectionMatrix * u_viewMatrix * u_transform * vertex;\n"
-		"}";
-
-	//Source: https://github.com/McNopper/OpenGL/blob/master/Example15/shader/Water.frag.glsl
-	InShader water_fs =
-		"#version 450 core\n"
-		"\n"
-		"const float Eta = 0.15; // Water\n"
-		"\n"
-		"uniform samplerCube u_cubemap;\n"
-		"uniform sampler2D Texture;\n"
-		"\n"
-		"in vec3 v_incident;\n"
-		"\n"
-		"in vec3 v_bitangent;\n"
-		"in vec3 v_normal;\n"
-		"in vec3 v_tangent;\n"
-		"\n"
-		"in vec2 v_texCoord;\n"
-		"\n"
-		"out vec4 fragColor;\n"
-		"\n"
-		"vec3 textureToNormal(vec4 orgNormalColor)\n"
-		"{\n"
-		"	return normalize(vec3(clamp(orgNormalColor.r * 2.0 - 1.0, -1.0, 1.0), clamp(orgNormalColor.g * 2.0 - 1.0, -1.0, 1.0), clamp(orgNormalColor.b * 2.0 - 1.0, -1.0, 1.0)));\n"
-		"}\n"
-		"\n"
-		"void main(void)\n"
-		"{\n"
-		"	// The normals stored in the texture are in object space. No world transformations are yet done.\n"
-		"	vec3 objectNormal = textureToNormal(texture(Texture, v_texCoord));\n"
-		"\n"
-		"	// These three vectors span a basis depending on the world transformations e.g. the waves.\n"
-		"	mat3 objectToWorldMatrix = mat3(normalize(v_bitangent), normalize(v_normal), normalize(v_tangent));\n"
-		"\n"
-		"	vec3 worldNormal = objectToWorldMatrix * objectNormal;\n"
-		"\n"
-		"	vec3 worldIncident = normalize(v_incident);\n"
-		"\n"
-		"	vec3 refraction = refract(worldIncident, worldNormal, Eta);\n"
-		"	vec3 reflection = reflect(worldIncident, worldNormal);\n"
-		"\n"
-		"	vec4 refractionColor = texture(u_cubemap, refraction);\n"
-		"	vec4 reflectionColor = texture(u_cubemap, reflection);\n"
-		"\n"
-		"	float fresnel = Eta + (1.0 - Eta) * pow(max(0.0, 1.0 - dot(-worldIncident, worldNormal)), 5.0);\n"
-		"\n"
-		"	fragColor = mix(refractionColor, reflectionColor, fresnel);\n"
-		"}";
-
 	enum BuffType
 	{
 		general = GL_ARRAY_BUFFER,
@@ -266,6 +92,13 @@ namespace aws
 		tesselation_control = GL_TESS_CONTROL_SHADER,
 		tesselation_evaluation = GL_TESS_EVALUATION_SHADER,
 		geometry = GL_GEOMETRY_SHADER
+	};
+
+	enum CameraGetMode
+	{
+		Rotation,
+		Normalized,
+		Crossed
 	};
 
 	enum Axis
@@ -314,10 +147,11 @@ namespace aws
 		std::vector<float> vertices;
 		std::vector<float> color;
 		std::vector<float> texture_coordinates;
+		std::vector<float> normals;
 
 		Aws_RenderedData() = default;
 
-		Aws_RenderedData(std::vector<float> _vertices, std::vector<float> _color, std::vector<float> _texture_coordinates) {
+		Aws_RenderedData(std::vector<float> _vertices, std::vector<float> _color, std::vector<float> _texture_coordinates, std::vector<float> _normals) {
 			this->vertices.clear();
 			std::move(_vertices.begin(), _vertices.end(), std::back_inserter(this->vertices));
 
@@ -326,26 +160,32 @@ namespace aws
 
 			this->texture_coordinates.clear();
 			std::move(_texture_coordinates.begin(), _texture_coordinates.end(), std::back_inserter(this->texture_coordinates));
+
+			this->normals.clear();
+			std::move(_normals.begin(), _normals.end(), std::back_inserter(this->normals));
 		}
 
-		Aws_RenderedData operator=(const Aws_RenderedData& data) {
+		Aws_RenderedData& operator=(const Aws_RenderedData& data) {
 			this->vertices.clear();
 			this->color.clear();
 			this->texture_coordinates.clear();
+			this->normals.clear();
 
 			this->vertices = data.vertices;
 			this->color = data.color;
 			this->texture_coordinates = data.texture_coordinates;
+			this->normals = data.normals;
 
-			return data;
+			return *this;
 		}
 
-		Aws_RenderedData operator+=(const Aws_RenderedData& data) {
+		Aws_RenderedData& operator+=(const Aws_RenderedData& data) {
 			this->vertices.insert(this->vertices.end(), data.vertices.begin(), data.vertices.end());
 			this->color.insert(this->color.end(), data.color.begin(), data.color.end());
 			this->texture_coordinates.insert(this->texture_coordinates.end(), data.texture_coordinates.begin(), data.texture_coordinates.end());
+			this->normals.insert(this->normals.end(), data.normals.begin(), data.normals.end());
 
-			return data;
+			return *this;
 		}
 	};
 
@@ -354,7 +194,6 @@ namespace aws
 		Aws_RenderedData data;
 
 		std::vector<unsigned int> dataID;
-		std::map<int, std::string> name;
 		std::vector<Aws_AxisHepler> axis_helper;
 		std::vector<float> textureID;
 		unsigned int sizeID;
@@ -746,7 +585,7 @@ namespace aws
 			std::cout << "Iter: " << i << '\t' << meshData.vertices[i * 3] << ' ' << meshData.vertices[i * 3 + 1] << ' ' << meshData.vertices[i * 3 + 2] << "\n";
 		}*/
 
-		return { meshData.vertices, __Fast_color, meshData.textureCoordinates };
+		return { meshData.vertices, __Fast_color, meshData.textureCoordinates, meshData.normals };
 	}
 
 	InShader LoadShader(const std::string& path) {
@@ -974,6 +813,49 @@ namespace aws
 			0.0f, 1.0f,
 			1.0f, 0.0f,
 			0.0f, 0.0f
+		},
+		{
+			0.0f, 1.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+
+			0.0f, -1.0f, 0.0f,
+			0.0f, -1.0f, 0.0f,
+			0.0f, -1.0f, 0.0f,
+			0.0f, -1.0f, 0.0f,
+			0.0f, -1.0f, 0.0f,
+			0.0f, -1.0f, 0.0f,
+
+			1.0f, 0.0f, 0.0f,
+			1.0f, 0.0f, 0.0f,
+			1.0f, 0.0f, 0.0f,
+			1.0f, 0.0f, 0.0f,
+			1.0f, 0.0f, 0.0f,
+			1.0f, 0.0f, 0.0f,
+
+			-1.0f, 0.0f, 0.0f,
+			-1.0f, 0.0f, 0.0f,
+			-1.0f, 0.0f, 0.0f,
+			-1.0f, 0.0f, 0.0f,
+			-1.0f, 0.0f, 0.0f,
+			-1.0f, 0.0f, 0.0f,
+
+			0.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f,
+
+			0.0f, 0.0f, -1.0f,
+			0.0f, 0.0f, -1.0f,
+			0.0f, 0.0f, -1.0f,
+			0.0f, 0.0f, -1.0f,
+			0.0f, 0.0f, -1.0f,
+			0.0f, 0.0f, -1.0f
 		}
 	);
 
@@ -1118,6 +1000,49 @@ namespace aws
 			0.0f, 1.0f,
 			1.0f, 0.0f,
 			0.0f, 0.0f
+		},
+		{
+			0.0f, 0.0f, -1.0f,
+			0.0f, 0.0f, -1.0f,
+			0.0f, 0.0f, -1.0f,
+			0.0f, 0.0f, -1.0f,
+			0.0f, 0.0f, -1.0f,
+			0.0f, 0.0f, -1.0f,
+
+			-1.0f, 0.0f, 0.0f,
+			-1.0f, 0.0f, 0.0f,
+			-1.0f, 0.0f, 0.0f,
+			-1.0f, 0.0f, 0.0f,
+			-1.0f, 0.0f, 0.0f,
+			-1.0f, 0.0f, 0.0f,
+
+			1.0f, 0.0f, 0.0f,
+			1.0f, 0.0f, 0.0f,
+			1.0f, 0.0f, 0.0f,
+			1.0f, 0.0f, 0.0f,
+			1.0f, 0.0f, 0.0f,
+			1.0f, 0.0f, 0.0f,
+
+			0.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f,
+
+			0.0f, 1.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+
+			0.0f, -1.0f, 0.0f,
+			0.0f, -1.0f, 0.0f,
+			0.0f, -1.0f, 0.0f,
+			0.0f, -1.0f, 0.0f,
+			0.0f, -1.0f, 0.0f,
+			0.0f, -1.0f, 0.0f
 		}
 	);
 

@@ -171,6 +171,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
+    <None Include="glass.frag" />
+    <None Include="glass.vert" />
     <None Include="water.frag" />
     <None Include="water.vert" />
   </ItemGroup>
