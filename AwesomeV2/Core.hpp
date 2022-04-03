@@ -16,6 +16,8 @@
 #include "Model_Loader.hpp"
 //#include "cgltf.h"
 
+#define PI 3.141592653589793238462643383279502884197169399375105820974944592307816406286
+
 namespace aws 
 {
 	typedef const char* InShader;
@@ -546,6 +548,15 @@ namespace aws
 		}
 
 		return -1;
+	}
+
+	template<typename T>
+	T* invatan2(T radians) {
+		T _val[2];
+		_val[0] = cos(radians);
+		_val[1] = sin(radians);
+
+		return _val;
 	}
 
 	bool CheckAABBCollision(const glm::vec3 _Position1, const glm::vec3 _Scale1, const glm::vec3 _Position2, const glm::vec3 _Scale2) {

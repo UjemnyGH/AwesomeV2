@@ -383,19 +383,16 @@ P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(656,76): warning C4244: 'argu
 P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(658,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
 P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(659,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
 P:\VS project\AwesomeV2\AwesomeV2\Model_Loader.hpp(660,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(125,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(129,22): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(575,21): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(127,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(131,22): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(586,21): warning C4018: '<': signed/unsigned mismatch
 P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(256,22): warning C4018: '<': signed/unsigned mismatch
 P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(284,61): warning C4018: '<': signed/unsigned mismatch
-P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(378,45): warning C4018: '<': signed/unsigned mismatch
-P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(390,45): warning C4018: '<': signed/unsigned mismatch
-P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(632,22): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(404,45): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(416,45): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(658,22): warning C4018: '<': signed/unsigned mismatch
 P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(40,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(41,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(43,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
 P:\VS project\AwesomeV2\AwesomeV2\AwesomeV2.cpp(44,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-glew32s.lib(glew.obj) : warning LNK4099: PDB 'glew_static.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'P:\VS project\AwesomeV2\Debug\glew_static.pdb'; linking object as if no debug info
   AwesomeV2.vcxproj -> P:\VS project\AwesomeV2\Debug\AwesomeV2.exe

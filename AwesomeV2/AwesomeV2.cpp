@@ -168,6 +168,7 @@ void Wnd::Start() {
 	ground2.AddObject();
 	ground2.SetTextureByID(1, 1);
 	ground2.SetPositionByID(1, 4.0f, 4.0f, 4.0f);
+	ground2.SetPositionByID(0, 45.0f, 0.0f, 0.0f);
 
 	/*ground2.SetCubemap(
 		{
@@ -193,7 +194,7 @@ void Wnd::Update() {
 
 	glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
 
-	ground2.SetRotation(w * 100.0f, w * 100.0f, w * 100.0f);
+	//ground2.SetRotation(w * 100.0f, w * 100.0f, w * 100.0f);
 	
 	ground.Render(projection, view);
 	
@@ -202,7 +203,7 @@ void Wnd::Update() {
 	ground2.SetFloatMat4("projection", 1, glm::value_ptr(projection));
 
 	ground2.Render(projection, view);
-
+	
 	std::future<void> phys = std::async(physics);
 }
 

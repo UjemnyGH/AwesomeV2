@@ -245,7 +245,7 @@ namespace aws
 
 		void SetRendererData(const RenderedData& m_data) {
 			data = m_data;
-			objects_data.count = 1;
+			objects_data.count = 0;
 			objects_data.sizeID = 0;
 			objects_data.dataID.clear();
 
@@ -330,6 +330,32 @@ namespace aws
 					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3)] = data.vertices[i * 3] * objects_data.axis_helper[ID].sx + objects_data.axis_helper[ID].px;
 					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = data.vertices[i * 3 + 1] * objects_data.axis_helper[ID].sy + objects_data.axis_helper[ID].py;
 					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = data.vertices[i * 3 + 2] * objects_data.axis_helper[ID].sz + objects_data.axis_helper[ID].pz;
+				}
+
+				vao.bind();
+
+				vertices_buf.bind(BuffType::general, objects_data.data.vertices, 0, 3);
+
+				vao.unbind();
+			}
+		}
+
+		void SetRotationByID(unsigned int ID, float x, float y, float z) {
+			if (objects_data.axis_helper[ID].rx != x || objects_data.axis_helper[ID].ry != y || objects_data.axis_helper[ID].rz != z)
+			{
+				objects_data.axis_helper[ID].rx = x;
+				objects_data.axis_helper[ID].ry = y;
+				objects_data.axis_helper[ID].rz = z;
+
+				float* _xz = invatan2(glm::radians(objects_data.axis_helper[ID].rx));
+				float* _yx = invatan2(glm::radians(objects_data.axis_helper[ID].ry));
+				float* _zy = invatan2(glm::radians(objects_data.axis_helper[ID].rz));
+
+				for (size_t i = 0; i < objects_data.sizeID; i++)
+				{
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3)] = data.vertices[i * 3] * objects_data.axis_helper[ID].sx + objects_data.axis_helper[ID].px + _xz[0] * _yx[1];
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = data.vertices[i * 3 + 1] * objects_data.axis_helper[ID].sy + objects_data.axis_helper[ID].py + _yx[0] * _zy[1];
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = data.vertices[i * 3 + 2] * objects_data.axis_helper[ID].sz + objects_data.axis_helper[ID].pz + _zy[0] * _xz[1];
 				}
 
 				vao.bind();
@@ -629,7 +655,7 @@ namespace aws
 		}
 
 		void DebugValues() {
-			for (int i = 0; i < objects_data.count * objects_data.sizeID - objects_data.sizeID; i++)
+			for (int i = 0; i < objects_data.count * objects_data.sizeID; i++)
 			{
 				std::cout << objects_data.data.vertices[i * 3] << ' ' << objects_data.data.vertices[i * 3 + 1] << ' ' << objects_data.data.vertices[i * 3 + 2] << "\t\t" <<
 					objects_data.textureID[i] << '\n';

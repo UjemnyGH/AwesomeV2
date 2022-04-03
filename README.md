@@ -1,5 +1,5 @@
 # AwesomeV2 made by UjemnyGH
-Awseome engine v2
+Awesome engine v2
 
 ![Awesome image logo](AwesomeV2/data/textures/awesomev2.png)
 
