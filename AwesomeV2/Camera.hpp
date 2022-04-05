@@ -16,12 +16,26 @@ namespace aws
 		float lrx, lry, lrz;
 
 	public:
+		/**
+		 * @brief Set the Camera Position object
+		 * 
+		 * @param _x 
+		 * @param _y 
+		 * @param _z 
+		 */
 		void SetCameraPosition(float _x, float _y, float _z) {
 			x = _x;
 			y = _y;
 			z = _z;
 		}
 
+		/**
+		 * @brief Set the Camera Rotation object
+		 * 
+		 * @param value 
+		 * @param value2 
+		 * @param axis 
+		 */
 		void SetCameraRotation(float value, float value2, Axis axis) {
 			if (axis == Axis::xy)
 			{
@@ -47,7 +61,19 @@ namespace aws
 			lrz = rz;
 		}
 
+		/**
+		 * @brief Get the Camera Position object
+		 * 
+		 * @return glm::vec3 
+		 */
 		glm::vec3 GetCameraPosition() { return glm::vec3(x, y, z); }
+
+		/**
+		 * @brief Get the Camera Rotation object
+		 * 
+		 * @param camera_get_mode mode of returned values
+		 * @return glm::vec3 
+		 */
 		glm::vec3 GetCameraRotation(const CameraGetMode& camera_get_mode = CameraGetMode::Rotation) { 
 			if (camera_get_mode == CameraGetMode::Rotation)
 				return glm::vec3(rx, ry, rz); 

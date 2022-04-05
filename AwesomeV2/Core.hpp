@@ -13,13 +13,17 @@
 #include <cmath>
 #include <string>
 #include "stb_image.h"
-#include "Model_Loader.hpp"
+#include "Model_loader.hpp"
 //#include "cgltf.h"
 
 #define PI 3.141592653589793238462643383279502884197169399375105820974944592307816406286
 
 namespace aws 
 {
+	/**
+	 * @brief const char*
+	 * 
+	 */
 	typedef const char* InShader;
 
 	InShader cubemap_vs =
@@ -80,12 +84,20 @@ namespace aws
 		"Color = test_Color;\n"
 		"}\n";
 
+	/**
+	 * @brief Type of buffer(general or element)
+	 * 
+	 */
 	enum BuffType
 	{
 		general = GL_ARRAY_BUFFER,
 		element = GL_ELEMENT_ARRAY_BUFFER
 	};
 
+	/**
+	 * @brief Shader type(names gives you everything you need)
+	 * 
+	 */
 	enum ShadType
 	{
 		vertex = GL_VERTEX_SHADER,
@@ -96,6 +108,10 @@ namespace aws
 		geometry = GL_GEOMETRY_SHADER
 	};
 
+	/**
+	 * @brief Defines what GetCameraRotation returns
+	 * 
+	 */
 	enum CameraGetMode
 	{
 		Rotation,
@@ -103,6 +119,10 @@ namespace aws
 		Crossed
 	};
 
+	/**
+	 * @brief Camera rotation axis(now only working "xy")
+	 * 
+	 */
 	enum Axis
 	{
 		xy,
@@ -110,28 +130,51 @@ namespace aws
 		z
 	};
 
+	/**
+	 * @brief Time class(please use aws::Time::)
+	 * 
+	 */
 	class Aws_Time
 	{
 	private:
-		float lastFrame, currentFrame, deltaTime;
+		float lastFrame;
+		float currentFrame;
+		float deltaTime;
 
 	public:
-
+		/**
+		 * @brief Get the Delta Time object
+		 * 
+		 * @return float 
+		 */
 		float GetDeltaTime() {
 			return deltaTime;
 		}
 
+		/**
+		 * @brief Calculate Delta Time(DO NOT USE THIS FUNCTION)
+		 * 
+		 */
 		void CalcDeltaTime() {
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
 			currentFrame = glfwGetTime();
 		}
 
+		/**
+		 * @brief Get the Time object
+		 * 
+		 * @return float 
+		 */
 		float GetTime() {
 			return glfwGetTime();
 		}
 	};
 
+	/**
+	 * @brief Helps batched objects have they axis
+	 * 
+	 */
 	struct Aws_AxisHepler {
 		float px, py, pz, sx, sy, sz, rx, ry, rz;
 
@@ -144,6 +187,10 @@ namespace aws
 		}
 	};
 
+	/**
+	 * @brief Data of rendered objects
+	 * 
+	 */
 	struct Aws_RenderedData
 	{
 		std::vector<float> vertices;
@@ -191,6 +238,10 @@ namespace aws
 		}
 	};
 
+	/**
+	 * @brief Data of rendered objects along with aws::Renderer instance statistics
+	 * 
+	 */
 	struct Aws_Rendered
 	{
 		Aws_RenderedData data;
@@ -203,6 +254,10 @@ namespace aws
 		unsigned int textureCount = 0;
 	};
 
+	/**
+	 * @brief Basicly shader
+	 * 
+	 */
 	struct Aws_Shader
 	{
 		unsigned int ID;
@@ -211,10 +266,20 @@ namespace aws
 
 		}
 
+		/**
+		 * @brief Initialize shader
+		 * 
+		 */
 		void init() {
 			ID = glCreateProgram();
 		}
 
+		/**
+		 * @brief Attach shader to existing shader instance
+		 * 
+		 * @param shader hard coded shader
+		 * @param type type of shader
+		 */
 		void attachShader(InShader shader, ShadType type)
 		{
 			unsigned int sh = glCreateShader(type);
@@ -224,22 +289,43 @@ namespace aws
 			glAttachShader(ID, sh);
 		}
 
+		/**
+		 * @brief attach shader by ID
+		 * 
+		 * @param shaderID ID of loaded shader(aws::LoadShader)
+		 */
 		void attachShader(uint32_t shaderID) {
 			glAttachShader(ID, shaderID);
 		}
 
+		/**
+		 * @brief Links shader
+		 * 
+		 */
 		void linkShader() {
 			glLinkProgram(ID);
 		}
 
+		/**
+		 * @brief Use shader
+		 * 
+		 */
 		void use() {
 			glUseProgram(ID);
 		}
 
+		/**
+		 * @brief Unuse shader(glUseProgram(0);)
+		 * 
+		 */
 		void unuse() {
 			glUseProgram(0);
 		}
 
+		/**
+		 * @brief Delete shader
+		 * 
+		 */
 		void terminate() {
 			glDeleteShader(ID);
 		}
@@ -249,6 +335,10 @@ namespace aws
 		}
 	};
 
+	/**
+	 * @brief Basicly array
+	 * 
+	 */
 	struct Aws_Array
 	{
 		unsigned int ID;
@@ -257,18 +347,34 @@ namespace aws
 
 		}
 
+		/**
+		 * @brief Initialize array
+		 * 
+		 */
 		void init() {
 			glGenVertexArrays(1, &ID);
 		}
 
+		/**
+		 * @brief Binds array
+		 * 
+		 */
 		void bind() {
 			glBindVertexArray(ID);
 		}
 
+		/**
+		 * @brief Unbinds array(glBindVertexArray(0);)
+		 * 
+		 */
 		void unbind() {
 			glBindVertexArray(0);
 		}
 
+		/**
+		 * @brief Delete array
+		 * 
+		 */
 		void terminate() {
 			glDeleteVertexArrays(1, &ID);
 		}
@@ -278,6 +384,10 @@ namespace aws
 		}
 	};
 
+	/**
+	 * @brief Basicly buffer
+	 * 
+	 */
 	struct Aws_Buffer
 	{
 		unsigned int ID;
@@ -286,10 +396,23 @@ namespace aws
 
 		}
 
+		/**
+		 * @brief Initialize buffer
+		 * 
+		 */
 		void init() {
 			glGenBuffers(1, &ID);
 		}
 
+		/**
+		 * @brief Bind buffer
+		 * 
+		 * @tparam T typename of data
+		 * @param buffer_type buffer type (BuffType)
+		 * @param data basicly data(std::vector)
+		 * @param index index in shader
+		 * @param dimensions dimensions(1, 2, 3, 4)
+		 */
 		template<class T>
 		void bind(BuffType buffer_type, std::vector<T> data, uint32_t index = 0, uint8_t dimensions = 0) {
 			glBindBuffer(buffer_type, ID);
@@ -302,6 +425,10 @@ namespace aws
 			}
 		}
 
+		/**
+		 * @brief Delete buffer
+		 * 
+		 */
 		void terminate() {
 			glDeleteBuffers(1, &ID);
 		}
@@ -311,6 +438,10 @@ namespace aws
 		}
 	};
 
+	/**
+	 * @brief <UNUSED> Matrix 4x4 buffer
+	 * 
+	 */
 	struct Aws_Mat4Buffer
 	{
 		unsigned int ID;
@@ -319,10 +450,21 @@ namespace aws
 
 		}
 
+		/**
+		 * @brief Initialize buffer
+		 * 
+		 */
 		void init() {
 			glGenBuffers(1, &ID);
 		}
 
+		/**
+		 * @brief Bind buffer
+		 * 
+		 * @tparam T typename
+		 * @param data data
+		 * @param index index in shader
+		 */
 		template<class T>
 		void bind(std::vector<T> data, uint32_t index = 0) {
 			glBindBuffer(GL_ARRAY_BUFFER, ID);
@@ -337,7 +479,11 @@ namespace aws
 			glVertexAttribPointer(index + 3, 4, GL_FLOAT, GL_FALSE, sizeof(T) * 16, (void*)(sizeof(T) * 12));
 			glEnableVertexAttribArray(index + 3);
 		}
-
+		
+		/**
+		 * @brief Delete buffer
+		 * 
+		 */
 		void terminate() {
 			glDeleteBuffers(1, &ID);
 		}
@@ -347,6 +493,10 @@ namespace aws
 		}
 	};
 
+	/**
+	 * @brief Basicly texture
+	 * 
+	 */
 	struct Aws_Texture
 	{
 		unsigned int ID;
@@ -362,18 +512,38 @@ namespace aws
 
 		}
 
+		/**
+		 * @brief Initialize texture
+		 * 
+		 */
 		void init() {
 			glGenTextures(1, &ID);
 		}
 
+		/**
+		 * @brief Bind texture
+		 * 
+		 */
 		void bind() {
 			glBindTexture(GL_TEXTURE_2D, ID);
 		}
 
+		/**
+		 * @brief Bind texture by ID(0-31)
+		 * 
+		 * @param _id 
+		 */
 		void bind(const unsigned int _id) {
 			glBindTextureUnit(_id, ID);
 		}
 
+		/**
+		 * @brief Bind texture and set data
+		 * 
+		 * @param name name of .png file(only that is handled right now)
+		 * @param wrapping GL_REPEAT, GL_CLAMP_TO_EDGE...
+		 * @param pixelized true = pixelized art(good for pixel arts)
+		 */
 		void bind(const std::string& name, const unsigned int& wrapping, bool pixelized = false) {
 			glBindTexture(GL_TEXTURE_2D, ID);
 
@@ -406,6 +576,12 @@ namespace aws
 			stbi_image_free(data);
 		}
 
+		/**
+		 * @brief Sets shader uniform by name
+		 * 
+		 * @param program Shader program
+		 * @param place how uniform in shader has named
+		 */
 		void uniform(const unsigned int program, const std::string place) {
 			glUseProgram(program);
 
@@ -414,6 +590,10 @@ namespace aws
 			glUseProgram(0);
 		}
 
+		/**
+		 * @brief Delete texture
+		 * 
+		 */
 		void terminate() {
 			glDeleteTextures(1, &ID);
 		}
@@ -423,6 +603,10 @@ namespace aws
 		}
 	};
 
+	/**
+	 * @brief Basicly cubemap texture
+	 * 
+	 */
 	struct Aws_Cubemap
 	{
 		unsigned int ID;
@@ -431,14 +615,27 @@ namespace aws
 
 		}
 
+		/**
+		 * @brief Initialize cubemap texture
+		 * 
+		 */
 		void init() {
 			glGenTextures(1, &ID);
 		}
 
+		/**
+		 * @brief Bind cubemap texture
+		 * 
+		 */
 		void bind() {
 			glBindTexture(GL_TEXTURE_CUBE_MAP, ID);
 		}
 
+		/**
+		 * @brief Bind cubemap texture with faces
+		 * 
+		 * @param faces texture faces
+		 */
 		void bind(std::vector<std::string> faces)
 		{
 			glBindTexture(GL_TEXTURE_CUBE_MAP, ID);
@@ -460,6 +657,12 @@ namespace aws
 			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 		}
 
+		/**
+		 * @brief Set uniform in shader
+		 * 
+		 * @param program Shader program
+		 * @param name how uniform han named in shader
+		 */
 		void uniform(const unsigned int program, const std::string name) {
 			glUseProgram(program);
 
@@ -468,6 +671,10 @@ namespace aws
 			glUseProgram(0);
 		}
 
+		/**
+		 * @brief Delete cubemap texture
+		 * 
+		 */
 		void terminate() {
 			glDeleteTextures(1, &ID);
 		}
@@ -477,6 +684,17 @@ namespace aws
 		}
 	};
 
+	/**
+	 * @brief Linear search algorithm
+	 * 
+	 * @tparam T typename
+	 * @tparam Arr data to search
+	 * @param _first first element
+	 * @param _last last element
+	 * @param arr data to research
+	 * @param value value to be founded bt address
+	 * @return size_t 
+	 */
 	template<class T, class Arr>
 	size_t Search(size_t _first, size_t _last, Arr arr, T value) {
 		size_t pos;
@@ -497,6 +715,17 @@ namespace aws
 		return -1;
 	}
 
+	/**
+	 * @brief Binary search algorithm
+	 * 
+	 * @tparam T typename
+	 * @tparam Arr data to search
+	 * @param _first first element
+	 * @param _last last element
+	 * @param arr data to research
+	 * @param value value to be founded bt address
+	 * @return size_t 
+	 */
 	template<class T, class Arr>
 	size_t binSearch(size_t _first, size_t _last, Arr arr, T value) {
 		if (_last >= 1) {
@@ -514,6 +743,16 @@ namespace aws
 		return -1;
 	}
 
+	/**
+	 * @brief Exponential search algorithm
+	 * 
+	 * @tparam T typename
+	 * @tparam Arr data to search
+	 * @param size size of data
+	 * @param arr data to research
+	 * @param value value to be founded bt address
+	 * @return size_t 
+	 */
 	template<class T, class Arr>
 	size_t expSearch(size_t size, Arr arr, T value) {
 		if (arr[0] == value)
@@ -527,6 +766,17 @@ namespace aws
 		return binSearch(i / 2, fmin(i, size - 1), arr, value);
 	}
 
+	/**
+	 * @brief Ternary search algorithm
+	 * 
+	 * @tparam T typename
+	 * @tparam Arr data to search
+	 * @param _first first element
+	 * @param _last last element
+	 * @param arr data to research
+	 * @param value value to be founded bt address
+	 * @return size_t 
+	 */
 	template<class T, class Arr>
 	size_t ternSearch(size_t _first, size_t _last, Arr arr, T value) {
 		if (_last >= 1) {
@@ -549,7 +799,14 @@ namespace aws
 
 		return -1;
 	}
-
+	
+	/**
+	 * @brief inverse atan2 function
+	 * 
+	 * @tparam T 
+	 * @param radians angle in radians
+	 * @return T* return in order[x, y]
+	 */
 	template<typename T>
 	T* invatan2(T radians) {
 		T _val[2];
@@ -559,6 +816,16 @@ namespace aws
 		return _val;
 	}
 
+	/**
+	 * @brief Checks 2 unrotatable box if they collide
+	 * 
+	 * @param _Position1 position of first box
+	 * @param _Scale1 scale of first box
+	 * @param _Position2 position of second box
+	 * @param _Scale2 scale of second box
+	 * @return true they collide
+	 * @return false they not collide
+	 */
 	bool CheckAABBCollision(const glm::vec3 _Position1, const glm::vec3 _Scale1, const glm::vec3 _Position2, const glm::vec3 _Scale2) {
 		glm::vec3 Position1 = _Position1 - _Scale1;
 		glm::vec3 Scale1 = _Scale1 * glm::vec3(2.0f, 2.0f, 2.0f);
@@ -578,6 +845,12 @@ namespace aws
         return collisionX && collisionY && collisionZ;
     }
 
+	/**
+	 * @brief Loads .obj model to memory
+	 * 
+	 * @param location path to .obj model
+	 * @return Aws_RenderedData 
+	 */
 	Aws_RenderedData LoadOBJModel(const std::string& location) {
 		BufferMeshData meshData = LoadMeshBuffer(location);
 
@@ -591,14 +864,15 @@ namespace aws
 			__Fast_color.push_back(1.0f);
 		}
 
-		/*for (int i = 0; i < meshData.vertices.size() / 3; i++)
-		{
-			std::cout << "Iter: " << i << '\t' << meshData.vertices[i * 3] << ' ' << meshData.vertices[i * 3 + 1] << ' ' << meshData.vertices[i * 3 + 2] << "\n";
-		}*/
-
 		return { meshData.vertices, __Fast_color, meshData.textureCoordinates, meshData.normals };
 	}
 
+	/**
+	 * @brief Load shader as InShader data by path
+	 * 
+	 * @param path path to shader file
+	 * @return InShader 
+	 */
 	InShader LoadShader(const std::string& path) {
 		std::ifstream f;
 
@@ -629,6 +903,13 @@ namespace aws
 		return source.c_str();
 	}
 
+	/**
+	 * @brief Loads shader ad ID by path to shader and shader type
+	 * 
+	 * @param path path to shader file
+	 * @param type type of shader (ShadType)
+	 * @return uint32_t 
+	 */
 	uint32_t LoadShader(const std::string& path, ShadType type) {
 		std::ifstream f;
 
@@ -677,6 +958,10 @@ namespace aws
 
 	}*/
 
+	/**
+	 * @brief Hard coded cube data
+	 * 
+	 */
 	const Aws_RenderedData cube = Aws_RenderedData(
 		{
 			1.0f, 1.0f, 1.0f,
@@ -870,6 +1155,10 @@ namespace aws
 		}
 	);
 
+	/**
+	 * @brief Hard coded cube data 2
+	 * 
+	 */
 	const Aws_RenderedData skybox = Aws_RenderedData(
 		{
 			-1.0f,  1.0f, -1.0f,
@@ -1057,7 +1346,7 @@ namespace aws
 		}
 	);
 
-	Aws_Time time;
+	static Aws_Time time;
 
 	typedef Aws_Time Time;
 

@@ -121,7 +121,8 @@ void physics() {
 	playerPos.y -= aws::time.GetDeltaTime() * 20.0f * acceleration;
 
 	inGround = aws::CheckAABBCollision(camera.GetCameraPosition(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(10000.0f, 0.1f, 10000.0f))
-		|| aws::CheckAABBCollision(camera.GetCameraPosition() - glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(10.0f, 10.0f, 10.0f));
+		|| aws::CheckAABBCollision(camera.GetCameraPosition(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(10.0f, 10.0f, 10.0f))
+		|| ground2.GetAABBTriggerByID(0, camera.GetCameraPosition(), glm::vec3(1.0f, 10.0f, 1.0f));
 
 	if (inGround)
 	{
@@ -155,13 +156,12 @@ void Wnd::Start() {
 	ground.SetColorByID(0, 0.0f, 0.5f, 0.0f, 1.0f);
 	ground.SetScale(10000.0f, 0.1f, 10000.0f);
 	ground.SetUVMapByID(0, 2000.0f);
-	ground.AddTexture("data/textures/grass.png");
+	ground.AddTexture("AwesomeV2/data/textures/grass.png");
 	ground.SetTextureByID(0, 0);
 
-	//ground2.Init(aws::LoadShader("glass.vert", aws::ShadType::vertex), aws::LoadShader("glass.frag", aws::ShadType::fragment), true);
 	ground2.Init();
 	ground2.SetRendererData(aws::cube);
-	ground2.AddTexture("data/textures/awesomev2.png");
+	ground2.AddTexture("AwesomeV2/data/textures/awesomev2.png");
 	ground2.AddTexture("data/textures/grass.png");
 	ground2.SetTextureByID(0, 0);
 
@@ -169,17 +169,6 @@ void Wnd::Start() {
 	ground2.SetTextureByID(1, 1);
 	ground2.SetPositionByID(1, 4.0f, 4.0f, 4.0f);
 	ground2.SetPositionByID(0, 45.0f, 0.0f, 0.0f);
-
-	/*ground2.SetCubemap(
-		{
-			"data/textures/whitePapa.png",
-			"data/textures/whitePapa.png",
-			"data/textures/whitePapa.png",
-			"data/textures/whitePapa.png",
-			"data/textures/whitePapa.png",
-			"data/textures/whitePapa.png"
-		}
-	);*/
 
 	ground2.SetScale(10.0f, 10.0f, 10.0f);
 	ground2.SetPosition(0.0f, 20.0f, 0.0f);
@@ -193,8 +182,6 @@ void Wnd::Update() {
 	view = glm::lookAt(camera.GetCameraPosition() + cameraFront, camera.GetCameraPosition(), glm::vec3(0.0f, 1.0f, 0.0f));
 
 	glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
-
-	//ground2.SetRotation(w * 100.0f, w * 100.0f, w * 100.0f);
 	
 	ground.Render(projection, view);
 	

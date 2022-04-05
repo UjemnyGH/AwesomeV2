@@ -34,6 +34,10 @@ namespace aws
 
 		}
 
+		/**
+		 * @brief Initialize Renderer
+		 * 
+		 */
 		void Init() {
 			shader.init();
 			vao.init();
@@ -66,6 +70,13 @@ namespace aws
 			vao.unbind();
 		}
 
+		/**
+		 * @brief Initialize Renderer with inline shaders
+		 * 
+		 * @param vertex_shader
+		 * @param fragment_shader 
+		 * @param cubemap_init true to initialize cubemap 
+		 */
 		void Init(InShader vertex_shader, InShader fragment_shader, bool cubemap_init = false) {
 			shader.init();
 			vao.init();
@@ -101,6 +112,13 @@ namespace aws
 			vao.unbind();
 		}
 
+		/**
+		 * @brief Initialize Renderer with ID to shaders
+		 * 
+		 * @param vertex_shader 
+		 * @param fragment_shader 
+		 * @param cubemap_init true to initialize cubemap
+		 */
 		void Init(uint32_t vertex_shader, uint32_t fragment_shader, bool cubemap_init = false) {
 			shader.init();
 			vao.init();
@@ -136,6 +154,12 @@ namespace aws
 			vao.unbind();
 		}
 
+		/**
+		 * @brief Adds shader to Renderer
+		 * 
+		 * @param _shader inline shader
+		 * @param _type type of shader
+		 */
 		void AddShader(InShader _shader, ShadType _type) {
 			shader.attachShader(_shader, _type);
 			shader.linkShader();
@@ -151,6 +175,11 @@ namespace aws
 			vao.unbind();
 		}
 
+		/**
+		 * @brief Adds shader by ID of them
+		 * 
+		 * @param _shader LoadShader function loads shader by ID
+		 */
 		void AddShader(uint32_t _shader) {
 			shader.attachShader(_shader);
 			shader.linkShader();
@@ -169,6 +198,13 @@ namespace aws
 			vao.unbind();
 		}
 
+		/**
+		 * @brief Renders data
+		 * 
+		 * @param projection matrix 4x4
+		 * @param view matrix 4x4
+		 * @param skybox_cubemap true if renders skybox
+		 */
 		void Render(glm::mat4 projection = glm::mat4(1.0), glm::mat4 view = glm::mat4(1.0), bool skybox_cubemap = false) {
 			if (cubemap && skybox_cubemap)
 			{
@@ -231,6 +267,11 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Cubemap object
+		 * 
+		 * @param paths faces of cubemap
+		 */
 		void SetCubemap(std::vector<std::string> paths) {
 			cubemap = true;
 			
@@ -243,11 +284,19 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Custom Renderer Data objects
+		 * 
+		 * @param m_data custom data
+		 */
 		void SetRendererData(const RenderedData& m_data) {
 			data = m_data;
 			objects_data.count = 0;
 			objects_data.sizeID = 0;
 			objects_data.dataID.clear();
+			objects_data.axis_helper.clear();
+			objects_data.dataID.clear();
+			objects_data.textureID.clear();
 
 			objects_data.data += data;
 			objects_data.sizeID = data.vertices.size() / 3;
@@ -272,6 +321,10 @@ namespace aws
 			vao.unbind();
 		}
 
+		/**
+		 * @brief Adds one object in batch
+		 * 
+		 */
 		void AddObject() {
 			objects_data.data += data;
 
@@ -296,6 +349,14 @@ namespace aws
 			vao.unbind();
 		}
 
+		/**
+		 * @brief Set the Position By ID of object
+		 * 
+		 * @param ID object ID in batch
+		 * @param x 
+		 * @param y 
+		 * @param z 
+		 */
 		void SetPositionByID(unsigned int ID, float x, float y, float z) {
 			if (objects_data.axis_helper[ID].px != x || objects_data.axis_helper[ID].py != y || objects_data.axis_helper[ID].pz != z)
 			{
@@ -318,6 +379,14 @@ namespace aws
 			}
 		}
 
+		/**
+		 * @brief Set the Scale By ID object
+		 * 
+		 * @param ID object ID in batch
+		 * @param x 
+		 * @param y 
+		 * @param z 
+		 */
 		void SetScaleByID(unsigned int ID, float x, float y, float z) {
 			if (objects_data.axis_helper[ID].sx != x || objects_data.axis_helper[ID].sy != y || objects_data.axis_helper[ID].sz != z)
 			{
@@ -340,6 +409,14 @@ namespace aws
 			}
 		}
 
+		/**
+		 * @brief Set the Rotation By ID object
+		 * 
+		 * @param ID object ID in batch
+		 * @param x 
+		 * @param y 
+		 * @param z 
+		 */
 		void SetRotationByID(unsigned int ID, float x, float y, float z) {
 			if (objects_data.axis_helper[ID].rx != x || objects_data.axis_helper[ID].ry != y || objects_data.axis_helper[ID].rz != z)
 			{
@@ -366,6 +443,11 @@ namespace aws
 			}
 		}
 
+		/**
+		 * @brief Adds texture to Renderer
+		 * 
+		 * @param name path to texture file
+		 */
 		void AddTexture(std::string name) {
 			vao.bind();
 
@@ -383,6 +465,12 @@ namespace aws
 			vao.unbind();
 		}
 
+		/**
+		 * @brief Change texture by ID
+		 * 
+		 * @param textureID ID of changed texture
+		 * @param name path to texture file
+		 */
 		void ChangeTextureInID(unsigned int textureID, std::string name) {
 			vao.bind();
 
@@ -398,6 +486,12 @@ namespace aws
 			vao.unbind();
 		}
 
+		/**
+		 * @brief Set the Texture By ID of object
+		 * 
+		 * @param ID ID of object to set the texture
+		 * @param textureID ID of texture to set
+		 */
 		void SetTextureByID(unsigned int ID, float textureID) {
 			vao.bind();
 
@@ -410,6 +504,12 @@ namespace aws
 			vao.unbind();
 		}
 
+		/**
+		 * @brief Set UV map in by ID of object
+		 * 
+		 * @param ID ID of object in batch
+		 * @param value value to multiply
+		 */
 		void SetUVMapByID(const unsigned int ID, const float value) {
 			vao.bind();
 
@@ -423,6 +523,13 @@ namespace aws
 			vao.unbind();
 		}
 
+		/**
+		 * @brief Set the Position object
+		 * 
+		 * @param x 
+		 * @param y 
+		 * @param z 
+		 */
 		void SetPosition(float x, float y, float z) {
 			psr[0][0] = x;
 			psr[0][1] = y;
@@ -435,6 +542,13 @@ namespace aws
 			transform = glm::scale(transform, glm::vec3(psr[1][0], psr[1][1], psr[1][2]));
 		}
 
+		/**
+		 * @brief Set the Scale object
+		 * 
+		 * @param x 
+		 * @param y 
+		 * @param z 
+		 */
 		void SetScale(float x, float y, float z) {
 			psr[1][0] = x;
 			psr[1][1] = y;
@@ -447,6 +561,13 @@ namespace aws
 			transform = glm::scale(transform, glm::vec3(psr[1][0], psr[1][1], psr[1][2]));
 		}
 
+		/**
+		 * @brief Set the Rotation object
+		 * 
+		 * @param x 
+		 * @param y 
+		 * @param z 
+		 */
 		void SetRotation(float x, float y, float z) {
 			psr[2][0] = x;
 			psr[2][1] = y;
@@ -459,6 +580,15 @@ namespace aws
 			transform = glm::scale(transform, glm::vec3(psr[1][0], psr[1][1], psr[1][2]));
 		}
 
+		/**
+		 * @brief Set the Color By ID object
+		 * 
+		 * @param ID ID of object in batch
+		 * @param r 
+		 * @param g 
+		 * @param b 
+		 * @param a 
+		 */
 		void SetColorByID(unsigned int ID, float r, float g, float b, float a) {
 			//if (objects_data.data.color[ID * objects_data.sizeID] != r && objects_data.data.color[ID * objects_data.sizeID + 1] != g && objects_data.data.color[ID * objects_data.sizeID + 2] != b && objects_data.data.color[ID * objects_data.sizeID + 3] != a)
 			//{
@@ -478,6 +608,12 @@ namespace aws
 			//}
 		}
 
+		/**
+		 * @brief Set the Int 1 uniform
+		 * 
+		 * @param _name 
+		 * @param _value 
+		 */
 		void SetInt1(const std::string _name, int _value) {
 			shader.use();
 
@@ -486,6 +622,13 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Int 2 uniform
+		 * 
+		 * @param _name 
+		 * @param _value1 
+		 * @param _value2 
+		 */
 		void SetInt2(const std::string _name, int _value1, int _value2) {
 			shader.use();
 
@@ -494,6 +637,14 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Int 3 uniform
+		 * 
+		 * @param _name 
+		 * @param _value1 
+		 * @param _value2 
+		 * @param _value3 
+		 */
 		void SetInt3(const std::string _name, int _value1, int _value2, int _value3) {
 			shader.use();
 
@@ -502,6 +653,15 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Int 4 uniform
+		 * 
+		 * @param _name 
+		 * @param _value1 
+		 * @param _value2 
+		 * @param _value3 
+		 * @param _value4 
+		 */
 		void SetInt4(const std::string _name, int _value1, int _value2, int _value3, int _value4) {
 			shader.use();
 
@@ -510,6 +670,13 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Int 1 pointer uniform
+		 * 
+		 * @param _name 
+		 * @param _count 
+		 * @param _value 
+		 */
 		void SetInt1v(const std::string _name, unsigned int _count, int* _value) {
 			shader.use();
 
@@ -518,6 +685,13 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Int 2 pointer uniform
+		 * 
+		 * @param _name 
+		 * @param _count 
+		 * @param _value 
+		 */
 		void SetInt2v(const std::string _name, unsigned int _count, int* _value) {
 			shader.use();
 
@@ -526,6 +700,13 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Int 3 pointer uniform
+		 * 
+		 * @param _name 
+		 * @param _count 
+		 * @param _value 
+		 */
 		void SetInt3v(const std::string _name, unsigned int _count, int* _value) {
 			shader.use();
 
@@ -534,6 +715,13 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Int 4 pointer uniform
+		 * 
+		 * @param _name 
+		 * @param _count 
+		 * @param _value 
+		 */
 		void SetInt4v(const std::string _name, unsigned int _count, int* _value) {
 			shader.use();
 
@@ -542,6 +730,12 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Float 1 uniform
+		 * 
+		 * @param _name 
+		 * @param _value 
+		 */
 		void SetFloat1(const std::string _name, float _value) {
 			shader.use();
 
@@ -550,6 +744,13 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Float 2 uniform
+		 * 
+		 * @param _name 
+		 * @param _value1 
+		 * @param _value2 
+		 */
 		void SetFloat2(const std::string _name, float _value1, float _value2) {
 			shader.use();
 
@@ -558,6 +759,14 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Float 3 uniform
+		 * 
+		 * @param _name 
+		 * @param _value1 
+		 * @param _value2 
+		 * @param _value3 
+		 */
 		void SetFloat3(const std::string _name, float _value1, float _value2, float _value3) {
 			shader.use();
 
@@ -566,6 +775,15 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Float 4 uniform
+		 * 
+		 * @param _name 
+		 * @param _value1 
+		 * @param _value2 
+		 * @param _value3 
+		 * @param _value4 
+		 */
 		void SetFloat4(const std::string _name, float _value1, float _value2, float _value3, float _value4) {
 			shader.use();
 
@@ -574,6 +792,13 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Float 1 pointer uniform
+		 * 
+		 * @param _name 
+		 * @param _count 
+		 * @param _value 
+		 */
 		void SetFloat1v(const std::string _name, unsigned int _count, float* _value) {
 			shader.use();
 
@@ -582,6 +807,13 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Float 2 pointer uniform
+		 * 
+		 * @param _name 
+		 * @param _count 
+		 * @param _value 
+		 */
 		void SetFloat2v(const std::string _name, unsigned int _count, float* _value) {
 			shader.use();
 
@@ -590,6 +822,13 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Float 3 pointer uniform
+		 * 
+		 * @param _name 
+		 * @param _count 
+		 * @param _value 
+		 */
 		void SetFloat3v(const std::string _name, unsigned int _count, float* _value) {
 			shader.use();
 
@@ -598,6 +837,13 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Float 4 pointer uniform
+		 * 
+		 * @param _name 
+		 * @param _count 
+		 * @param _value 
+		 */
 		void SetFloat4v(const std::string _name, unsigned int _count, float* _value) {
 			shader.use();
 
@@ -606,6 +852,14 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Float Mat 2 uniform
+		 * 
+		 * @param _name 
+		 * @param _count 
+		 * @param _value 
+		 * @param _transpose 
+		 */
 		void SetFloatMat2(const std::string _name, unsigned int _count, float* _value, GLboolean _transpose = GL_FALSE) {
 			shader.use();
 
@@ -614,6 +868,14 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Float Mat 3 uniform
+		 * 
+		 * @param _name 
+		 * @param _count 
+		 * @param _value 
+		 * @param _transpose 
+		 */
 		void SetFloatMat3(const std::string _name, unsigned int _count, float* _value, GLboolean _transpose = GL_FALSE) {
 			shader.use();
 
@@ -622,6 +884,14 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Float Mat 4 uniform
+		 * 
+		 * @param _name 
+		 * @param _count 
+		 * @param _value 
+		 * @param _transpose 
+		 */
 		void SetFloatMat4(const std::string _name, unsigned int _count, float* _value, GLboolean _transpose = GL_FALSE) {
 			shader.use();
 
@@ -630,6 +900,14 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Float Mat 2 by glm::mat2
+		 * 
+		 * @param _name 
+		 * @param _count 
+		 * @param _value 
+		 * @param _transpose 
+		 */
 		void SetFloatMat2g(const std::string _name, unsigned int _count, glm::mat2* _value, GLboolean _transpose = GL_FALSE) {
 			shader.use();
 
@@ -638,6 +916,14 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Float Mat 3 by glm::mat3
+		 * 
+		 * @param _name 
+		 * @param _count 
+		 * @param _value 
+		 * @param _transpose 
+		 */
 		void SetFloatMat3g(const std::string _name, unsigned int _count, glm::mat3* _value, GLboolean _transpose = GL_FALSE) {
 			shader.use();
 
@@ -646,6 +932,14 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Set the Float Mat 4 by glm::mat4
+		 * 
+		 * @param _name 
+		 * @param _count 
+		 * @param _value 
+		 * @param _transpose 
+		 */
 		void SetFloatMat4g(const std::string _name, unsigned int _count, glm::mat4* _value, GLboolean _transpose = GL_FALSE) {
 			shader.use();
 
@@ -654,6 +948,10 @@ namespace aws
 			shader.unuse();
 		}
 
+		/**
+		 * @brief Debugging values 
+		 * 
+		 */
 		void DebugValues() {
 			for (int i = 0; i < objects_data.count * objects_data.sizeID; i++)
 			{
@@ -662,6 +960,10 @@ namespace aws
 			}
 		}
 
+		/**
+		 * @brief Delete Renderer
+		 * 
+		 */
 		void Terminate() {
 			shader.terminate();
 			vao.terminate();
@@ -678,6 +980,66 @@ namespace aws
 			{
 				texture[i].terminate();
 			}
+		}
+
+		/**
+		 * @brief Get the Object Axis Helper By ID object
+		 * 
+		 * @param ID ID of object in batch
+		 * @return AxisHelper 
+		 */
+		AxisHelper GetObjectByID(unsigned int ID) {
+			return objects_data.axis_helper[ID];
+		}
+
+		/**
+		 * @brief Check collision on object with coordinates
+		 * 
+		 * @param ID ID of object in batch
+		 * @param _position position of object
+		 * @param _scale scale of object
+		 * @return true 
+		 * @return false 
+		 */
+		bool GetAABBTriggerByID(unsigned int ID, glm::vec3 _position, glm::vec3 _scale) {
+			return CheckAABBCollision(_position, _scale, glm::vec3(psr[0][0] + objects_data.axis_helper[ID].px, psr[0][1] + objects_data.axis_helper[ID].py, psr[0][2] + objects_data.axis_helper[ID].pz), glm::vec3(psr[1][0] * objects_data.axis_helper[ID].sx, psr[1][1] * objects_data.axis_helper[ID].sy, psr[1][2] * objects_data.axis_helper[ID].sz));
+		}
+
+		/**
+		 * @brief Get the Texture ID By ID
+		 * 
+		 * @param ID ID of object in batch
+		 * @return unsigned int 
+		 */
+		unsigned int GetTextureIDByID(unsigned int ID) {
+			return objects_data.textureID[ID * objects_data.sizeID];
+		}
+
+		/**
+		 * @brief Get the One Object Size object
+		 * 
+		 * @return unsigned int 
+		 */
+		unsigned int GetObjectSize() {
+			return objects_data.sizeID;
+		}
+
+		/**
+		 * @brief Get the Objects Count object
+		 * 
+		 * @return unsigned int 
+		 */
+		unsigned int GetObjectsCount() {
+			return objects_data.count;
+		}
+
+		/**
+		 * @brief Get the Textures Count object
+		 * 
+		 * @return unsigned int 
+		 */
+		unsigned int GetTexturesCount() {
+			return objects_data.textureCount;
 		}
 
 		~Aws_Renderer() {

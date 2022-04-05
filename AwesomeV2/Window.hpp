@@ -11,8 +11,20 @@ namespace aws
 		GLFWwindow* window;
 
 	public:
+		/**
+		 * @brief It limits number of frames if set to TRUE ( 60 FPS )
+		 * 
+		 */
 		bool vertical_synchronization;
 
+		/**
+		 * @brief Create a Window object
+		 * 
+		 * @param name Window name
+		 * @param width Window width
+		 * @param height Window height
+		 * @param fullscreen If fullscreen
+		 */
 		void CreateWindow(const std::string& name, const int& width, const int& height, GLFWmonitor* fullscreen) {
 			glfwInit();
 
@@ -69,12 +81,31 @@ namespace aws
 			}
 		}
 
+		/**
+		 * @brief Get the Window object
+		 * 
+		 * @return GLFWwindow* 
+		 */
 		GLFWwindow* GetWindow() {
 			return window;
 		}
 
+		/**
+		 * @brief Start function called on start
+		 * 
+		 */
 		virtual void Start() {}
+
+		/**
+		 * @brief Update function called every frame before frame swap
+		 * 
+		 */
 		virtual void Update() {}
+
+		/**
+		 * @brief Late update function called every frame after frame swap
+		 * 
+		 */
 		virtual void LateUpdate() {}
 
 		~Aws_Window() {
