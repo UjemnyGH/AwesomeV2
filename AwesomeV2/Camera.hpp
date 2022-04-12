@@ -23,10 +23,10 @@ namespace aws
 		 * @param _y 
 		 * @param _z 
 		 */
-		void SetCameraPosition(float _x, float _y, float _z) {
-			x = _x;
-			y = _y;
-			z = _z;
+		void SetCameraPosition(Vector pos) {
+			x = pos.x;
+			y = pos.y;
+			z = pos.z;
 		}
 
 		/**
@@ -64,9 +64,16 @@ namespace aws
 		/**
 		 * @brief Get the Camera Position object
 		 * 
-		 * @return glm::vec3 
+		 * @return Vector
 		 */
-		glm::vec3 GetCameraPosition() { return glm::vec3(x, y, z); }
+		Vector GetCameraPosition() { return { x, y, z }; }
+
+		/**
+		 * @brief Get the Camera Position object
+		 *
+		 * @return glm::vec3
+		 */
+		glm::vec3 GetCameraPositionV3() { return { x, y, z }; }
 
 		/**
 		 * @brief Get the Camera Rotation object
@@ -74,15 +81,15 @@ namespace aws
 		 * @param camera_get_mode mode of returned values
 		 * @return glm::vec3 
 		 */
-		glm::vec3 GetCameraRotation(const CameraGetMode& camera_get_mode = CameraGetMode::Rotation) { 
+		Vector GetCameraRotation(const CameraGetMode& camera_get_mode = CameraGetMode::Rotation) { 
 			if (camera_get_mode == CameraGetMode::Rotation)
-				return glm::vec3(rx, ry, rz); 
+				return { rx, ry, rz };
 			else if (camera_get_mode == CameraGetMode::Normalized)
-				return glm::normalize(glm::vec3(rx, ry, rz));
+				return Vector(glm::normalize(glm::vec3(rx, ry, rz)).x, glm::normalize(glm::vec3(rx, ry, rz)).y, glm::normalize(glm::vec3(rx, ry, rz)).z);
 			else if (camera_get_mode == CameraGetMode::Crossed)
-				return glm::normalize(glm::cross(glm::vec3(rx, ry, rz), glm::vec3(0.0f, 1.0f, 0.0f)));
+				return Vector(glm::normalize(glm::cross(glm::normalize(glm::vec3(rx, ry, rz)), glm::vec3(0.0f, 1.0f, 0.0f))).x, glm::normalize(glm::cross(glm::normalize(glm::vec3(rx, ry, rz)), glm::vec3(0.0f, 1.0f, 0.0f))).y, glm::normalize(glm::cross(glm::normalize(glm::vec3(rx, ry, rz)), glm::vec3(0.0f, 1.0f, 0.0f))).z);
 			else
-				return glm::vec3(rx, ry, rz);
+				return { rx, ry, rz };
 		}
 	};
 

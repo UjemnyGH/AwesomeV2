@@ -188,6 +188,364 @@ namespace aws
 	};
 
 	/**
+	 * @brief Awesome vector type
+	 * 
+	 */
+	struct Aws_Vector
+	{
+		float x = 0.0f, y = 0.0f, z = 0.0f, w = 0.0f;
+
+		Aws_Vector() = default;
+		Aws_Vector(float _x) : x(_x) {}
+		Aws_Vector(float _x, float _y) : x(_x), y(_y) {}
+		Aws_Vector(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
+		Aws_Vector(float _x, float _y, float _z, float _w) : x(_x), y(_y), z(_z), w(_w) {}
+
+		static Aws_Vector changeS(float _val) { return Aws_Vector(_val); }
+		static Aws_Vector changeS(glm::vec2 _val) { return Aws_Vector(_val.x, _val.y); }
+		static Aws_Vector changeS(glm::vec3 _val) { return Aws_Vector(_val.x, _val.y, _val.z); }
+		static Aws_Vector changeS(glm::vec4 _val) { return Aws_Vector(_val.x, _val.y, _val.z, _val.w); }
+
+		Aws_Vector change(float _val) { return Aws_Vector(_val); }
+		Aws_Vector change(glm::vec2 _val) { return Aws_Vector(_val.x, _val.y); }
+		Aws_Vector change(glm::vec3 _val) { return Aws_Vector(_val.x, _val.y, _val.z); }
+		Aws_Vector change(glm::vec4 _val) { return Aws_Vector(_val.x, _val.y, _val.z, _val.w); }
+
+		static float changeV1S(Aws_Vector _val) { return _val.x; }
+		static glm::vec2 changeV2S(Aws_Vector _val) { return glm::vec2(_val.x, _val.y); }
+		static glm::vec3 changeV3S(Aws_Vector _val) { return glm::vec3(_val.x, _val.y, _val.z); }
+		static glm::vec4 changeV4S(Aws_Vector _val) { return glm::vec4(_val.x, _val.y, _val.z, _val.w); }
+
+		float changeV1() { return this->x; }
+		glm::vec2 changeV2() { return glm::vec2(this->x, this->y); }
+		glm::vec3 changeV3() { return glm::vec3(this->x, this->y, this->z); }
+		glm::vec4 changeV4() { return glm::vec4(this->x, this->y, this->z, this->w); }
+
+		Aws_Vector operator+(const Aws_Vector& vec) { 
+			this->x += vec.x;
+			this->y += vec.y;
+			this->z += vec.z;
+			this->w += vec.w;
+
+			return *this;
+		}
+
+		Aws_Vector operator-(const Aws_Vector& vec) {
+			this->x -= vec.x;
+			this->y -= vec.y;
+			this->z -= vec.z;
+			this->w -= vec.w;
+
+			return *this;
+		}
+
+		Aws_Vector operator*(const Aws_Vector& vec) {
+			this->x *= vec.x;
+			this->y *= vec.y;
+			this->z *= vec.z;
+			this->w *= vec.w;
+
+			return *this;
+		}
+
+		Aws_Vector operator/(const Aws_Vector& vec) {
+			this->x /= vec.x;
+			this->y /= vec.y;
+			this->z /= vec.z;
+			this->w /= vec.w;
+
+			return *this;
+		}
+
+		const Aws_Vector operator+(Aws_Vector& vec) {
+			this->x += vec.x;
+			this->y += vec.y;
+			this->z += vec.z;
+			this->w += vec.w;
+
+			return *this;
+		}
+
+		const Aws_Vector operator-(Aws_Vector& vec) {
+			this->x -= vec.x;
+			this->y -= vec.y;
+			this->z -= vec.z;
+			this->w -= vec.w;
+
+			return *this;
+		}
+
+		const Aws_Vector operator*(Aws_Vector& vec) {
+			this->x *= vec.x;
+			this->y *= vec.y;
+			this->z *= vec.z;
+			this->w *= vec.w;
+
+			return *this;
+		}
+
+		const Aws_Vector operator/(Aws_Vector& vec) {
+			this->x /= vec.x;
+			this->y /= vec.y;
+			this->z /= vec.z;
+			this->w /= vec.w;
+
+			return *this;
+		}
+
+		Aws_Vector operator+=(const Aws_Vector& vec) {
+			this->x += vec.x;
+			this->y += vec.y;
+			this->z += vec.z;
+			this->w += vec.w;
+
+			return *this;
+		}
+
+		Aws_Vector operator-=(const Aws_Vector& vec) {
+			this->x -= vec.x;
+			this->y -= vec.y;
+			this->z -= vec.z;
+			this->w -= vec.w;
+
+			return *this;
+		}
+
+		Aws_Vector operator*=(const Aws_Vector& vec) {
+			this->x *= vec.x;
+			this->y *= vec.y;
+			this->z *= vec.z;
+			this->w *= vec.w;
+
+			return *this;
+		}
+
+		Aws_Vector operator/=(const Aws_Vector& vec) {
+			this->x /= vec.x;
+			this->y /= vec.y;
+			this->z /= vec.z;
+			this->w /= vec.w;
+
+			return *this;
+		}
+
+		const Aws_Vector operator+=(Aws_Vector& vec) {
+			this->x += vec.x;
+			this->y += vec.y;
+			this->z += vec.z;
+			this->w += vec.w;
+
+			return *this;
+		}
+
+		const Aws_Vector operator-=(Aws_Vector& vec) {
+			this->x -= vec.x;
+			this->y -= vec.y;
+			this->z -= vec.z;
+			this->w -= vec.w;
+
+			return *this;
+		}
+
+		const Aws_Vector operator*=(Aws_Vector& vec) {
+			this->x *= vec.x;
+			this->y *= vec.y;
+			this->z *= vec.z;
+			this->w *= vec.w;
+
+			return *this;
+		}
+
+		const Aws_Vector operator/=(Aws_Vector& vec) {
+			this->x /= vec.x;
+			this->y /= vec.y;
+			this->z /= vec.z;
+			this->w /= vec.w;
+
+			return *this;
+		}
+	};
+
+	/**
+	 * @brief Awesome double vector type
+	 *
+	 */
+	struct Aws_DVector
+	{
+		double x = 0.0, y = 0.0, z = 0.0, w = 0.0;
+
+		Aws_DVector() = default;
+		Aws_DVector(float _x) : x(_x) {}
+		Aws_DVector(float _x, float _y) : x(_x), y(_y) {}
+		Aws_DVector(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
+		Aws_DVector(float _x, float _y, float _z, float _w) : x(_x), y(_y), z(_z), w(_w) {}
+
+		static Aws_DVector changeS(double _val) { return Aws_DVector(_val); }
+		static Aws_DVector changeS(glm::dvec2 _val) { return Aws_DVector(_val.x, _val.y); }
+		static Aws_DVector changeS(glm::dvec3 _val) { return Aws_DVector(_val.x, _val.y, _val.z); }
+		static Aws_DVector changeS(glm::dvec4 _val) { return Aws_DVector(_val.x, _val.y, _val.z, _val.w); }
+
+		Aws_DVector change(double _val) { return Aws_DVector(_val); }
+		Aws_DVector change(glm::dvec2 _val) { return Aws_DVector(_val.x, _val.y); }
+		Aws_DVector change(glm::dvec3 _val) { return Aws_DVector(_val.x, _val.y, _val.z); }
+		Aws_DVector change(glm::dvec4 _val) { return Aws_DVector(_val.x, _val.y, _val.z, _val.w); }
+
+		static double changeV1S(Aws_DVector _val) { return _val.x; }
+		static glm::dvec2 changeV2S(Aws_DVector _val) { return glm::dvec2(_val.x, _val.y); }
+		static glm::dvec3 changeV3S(Aws_DVector _val) { return glm::dvec3(_val.x, _val.y, _val.z); }
+		static glm::dvec4 changeV4S(Aws_DVector _val) { return glm::dvec4(_val.x, _val.y, _val.z, _val.w); }
+
+		double changeV1() { return this->x; }
+		glm::dvec2 changeV2() { return glm::dvec2(this->x, this->y); }
+		glm::dvec3 changeV3() { return glm::dvec3(this->x, this->y, this->z); }
+		glm::dvec4 changeV4() { return glm::dvec4(this->x, this->y, this->z, this->w); }
+
+		Aws_DVector operator+(const Aws_DVector& vec) {
+			this->x += vec.x;
+			this->y += vec.y;
+			this->z += vec.z;
+			this->w += vec.w;
+
+			return *this;
+		}
+
+		Aws_DVector operator-(const Aws_DVector& vec) {
+			this->x -= vec.x;
+			this->y -= vec.y;
+			this->z -= vec.z;
+			this->w -= vec.w;
+
+			return *this;
+		}
+
+		Aws_DVector operator*(const Aws_DVector& vec) {
+			this->x *= vec.x;
+			this->y *= vec.y;
+			this->z *= vec.z;
+			this->w *= vec.w;
+
+			return *this;
+		}
+
+		Aws_DVector operator/(const Aws_DVector& vec) {
+			this->x /= vec.x;
+			this->y /= vec.y;
+			this->z /= vec.z;
+			this->w /= vec.w;
+
+			return *this;
+		}
+
+		const Aws_DVector operator+(Aws_DVector& vec) {
+			this->x += vec.x;
+			this->y += vec.y;
+			this->z += vec.z;
+			this->w += vec.w;
+
+			return *this;
+		}
+
+		const Aws_DVector operator-(Aws_DVector& vec) {
+			this->x -= vec.x;
+			this->y -= vec.y;
+			this->z -= vec.z;
+			this->w -= vec.w;
+
+			return *this;
+		}
+
+		const Aws_DVector operator*(Aws_DVector& vec) {
+			this->x *= vec.x;
+			this->y *= vec.y;
+			this->z *= vec.z;
+			this->w *= vec.w;
+
+			return *this;
+		}
+
+		const Aws_DVector operator/(Aws_DVector& vec) {
+			this->x /= vec.x;
+			this->y /= vec.y;
+			this->z /= vec.z;
+			this->w /= vec.w;
+
+			return *this;
+		}
+
+		Aws_DVector operator+=(const Aws_DVector& vec) {
+			this->x += vec.x;
+			this->y += vec.y;
+			this->z += vec.z;
+			this->w += vec.w;
+
+			return *this;
+		}
+
+		Aws_DVector operator-=(const Aws_DVector& vec) {
+			this->x -= vec.x;
+			this->y -= vec.y;
+			this->z -= vec.z;
+			this->w -= vec.w;
+
+			return *this;
+		}
+
+		Aws_DVector operator*=(const Aws_DVector& vec) {
+			this->x *= vec.x;
+			this->y *= vec.y;
+			this->z *= vec.z;
+			this->w *= vec.w;
+
+			return *this;
+		}
+
+		Aws_DVector operator/=(const Aws_DVector& vec) {
+			this->x /= vec.x;
+			this->y /= vec.y;
+			this->z /= vec.z;
+			this->w /= vec.w;
+
+			return *this;
+		}
+
+		const Aws_DVector operator+=(Aws_DVector& vec) {
+			this->x += vec.x;
+			this->y += vec.y;
+			this->z += vec.z;
+			this->w += vec.w;
+
+			return *this;
+		}
+
+		const Aws_DVector operator-=(Aws_DVector& vec) {
+			this->x -= vec.x;
+			this->y -= vec.y;
+			this->z -= vec.z;
+			this->w -= vec.w;
+
+			return *this;
+		}
+
+		const Aws_DVector operator*=(Aws_DVector& vec) {
+			this->x *= vec.x;
+			this->y *= vec.y;
+			this->z *= vec.z;
+			this->w *= vec.w;
+
+			return *this;
+		}
+
+		const Aws_DVector operator/=(Aws_DVector& vec) {
+			this->x /= vec.x;
+			this->y /= vec.y;
+			this->z /= vec.z;
+			this->w /= vec.w;
+
+			return *this;
+		}
+	};
+
+	/**
 	 * @brief Data of rendered objects
 	 * 
 	 */
@@ -249,6 +607,7 @@ namespace aws
 		std::vector<unsigned int> dataID;
 		std::vector<Aws_AxisHepler> axis_helper;
 		std::vector<float> textureID;
+		std::vector<float> moved_vertices;
 		unsigned int sizeID;
 		unsigned int count;
 		unsigned int textureCount = 0;
@@ -685,6 +1044,33 @@ namespace aws
 	};
 
 	/**
+	 * @brief Ujemny search algorithm
+	 *
+	 * @tparam T typename
+	 * @tparam Arr data to search
+	 * @param _first first element
+	 * @param _last last element
+	 * @param arr data to research
+	 * @param _value value to be founded bt address
+	 * @return size_t
+	 */
+	template<typename T, typename Arr>
+	size_t Search(size_t _first, size_t _last, Arr arr[], T _value) {
+		if (_last >= _first)
+		{
+			if (arr[_first] == _value)
+				return _first;
+
+			if (arr[_last] == _value)
+				return _last;
+
+			return Search(_first + 1, _last - 1, arr, _value);
+		}
+
+		return -1;
+	}
+
+	/**
 	 * @brief Linear search algorithm
 	 * 
 	 * @tparam T typename
@@ -695,8 +1081,8 @@ namespace aws
 	 * @param value value to be founded bt address
 	 * @return size_t 
 	 */
-	template<class T, class Arr>
-	size_t Search(size_t _first, size_t _last, Arr arr, T value) {
+	template<typename T>
+	size_t linSearch(size_t _first, size_t _last, T *arr, T value) {
 		size_t pos;
 
 		if (_first <= _last && value >= arr[_first] && value <= arr[_last]) {
@@ -706,10 +1092,10 @@ namespace aws
 				return pos;
 
 			if (arr[pos] < value)
-				return Search(pos + 1, _last, arr, value);
+				return linSearch(pos + 1, _last, arr, value);
 
 			if (arr[pos] > value)
-				return Search(_first, pos - 1, arr, value);
+				return linSearch(_first, pos - 1, arr, value);
 		}
 
 		return -1;
@@ -726,9 +1112,9 @@ namespace aws
 	 * @param value value to be founded bt address
 	 * @return size_t 
 	 */
-	template<class T, class Arr>
-	size_t binSearch(size_t _first, size_t _last, Arr arr, T value) {
-		if (_last >= 1) {
+	template<typename T, typename Arr>
+	size_t binSearch(size_t _first, size_t _last, Arr arr[], T value) {
+		if (_last >= _first) {
 			int pos = _first + (_last - _first) / 2;
 
 			if (arr[pos] == value)
@@ -753,8 +1139,8 @@ namespace aws
 	 * @param value value to be founded bt address
 	 * @return size_t 
 	 */
-	template<class T, class Arr>
-	size_t expSearch(size_t size, Arr arr, T value) {
+	template<typename T>
+	size_t expSearch(size_t size, T *arr, T value) {
 		if (arr[0] == value)
 			return arr[0];
 
@@ -777,9 +1163,9 @@ namespace aws
 	 * @param value value to be founded bt address
 	 * @return size_t 
 	 */
-	template<class T, class Arr>
-	size_t ternSearch(size_t _first, size_t _last, Arr arr, T value) {
-		if (_last >= 1) {
+	template<typename T>
+	size_t ternSearch(size_t _first, size_t _last, T *arr, T value) {
+		if (_last >= _first) {
 			int pos1 = _first + (_last - 1) / 3;
 			int pos2 = _last - (_last - 1) / 3;
 
@@ -799,6 +1185,52 @@ namespace aws
 
 		return -1;
 	}
+
+	/*
+	 * @brief Swap 2 values
+	 * 
+	 * @param _first
+	 * @param _second
+	 */
+	template<class T>
+	void swap(T* _first, T* _second) {
+		T t = *_first;
+		*_first = *_second;
+		*_second = t;
+	}
+
+	/**
+	 * @brief Quick sort algorithm
+	 *
+	 * @tparam T typename
+	 * @tparam Arr data to sort
+	 * @param _begin first index
+	 * @param _end last index
+	 * @param arr data to sort
+	 * @return T* 
+	 */
+	template<typename T>
+	void quickSort(T *arr, size_t _begin, size_t _end) {
+		if (_begin < _end) {
+			T pivot = arr[_end];
+			T i = (_begin - 1);
+
+			for (int j = _begin; j <= _end; j++)
+			{
+				if (arr[j] < pivot) {
+					i++;
+					swap(&arr[i], &arr[j]);
+				}
+			}
+
+			swap(&arr[i + 1], &arr[_end]);
+
+			T part = i + 1;
+
+			quickSort(arr, _begin, part - 1);
+			quickSort(arr, part + 1, _end);
+		}
+	}
 	
 	/**
 	 * @brief inverse atan2 function
@@ -814,6 +1246,38 @@ namespace aws
 		_val[1] = sin(radians);
 
 		return _val;
+	}
+
+	/*
+	 * @brief (OLD)Returns rotation from input
+	 * 
+	 * @param _Rotation1
+	 */
+	Aws_Vector rotation(Aws_Vector _Rotation1) {
+		Aws_Vector Rotation1 = {
+			cos(_Rotation1.y) * cos(_Rotation1.z) + sin(_Rotation1.x) * sin(_Rotation1.y) * cos(_Rotation1.z) - cos(_Rotation1.x) * sin(_Rotation1.z) + cos(_Rotation1.x) * sin(_Rotation1.y) * cos(_Rotation1.z) + sin(_Rotation1.x) * sin(_Rotation1.z),
+			cos(_Rotation1.y) * sin(_Rotation1.z) + sin(_Rotation1.x) * sin(_Rotation1.y) * sin(_Rotation1.z) - cos(_Rotation1.x) * cos(_Rotation1.z) + cos(_Rotation1.x) * sin(_Rotation1.y) * sin(_Rotation1.z) + sin(_Rotation1.x) * cos(_Rotation1.z),
+			-sin(_Rotation1.y) + sin(_Rotation1.x) * cos(_Rotation1.y) + cos(_Rotation1.x) * cos(_Rotation1.y)
+		};
+
+		return Rotation1;
+	}
+
+	/*
+	 * @brief Sphere to cartesian coordinates
+	 *
+	 * 
+	 */
+	Aws_Vector SphereToCart(float _ZRad, float _XYRad, float _r = 1) {
+		return Aws_Vector(_r * sin(_XYRad) * cos(_ZRad), _r* sin(_XYRad)* sin(_ZRad), _r* cos(_XYRad));
+	}
+
+	Aws_Vector CartToSphere(float _x, float _y, float _z) {
+		return Aws_Vector(pow(tan(_y / _x), -1), pow(tan(sqrt(pow(_x, 2) + pow(_y, 2)) / _z), -1), sqrt(pow(_x, 2) + pow(_y, 2) + pow(_z, 2)));
+	}
+
+	float Radians(float _val) {
+		return sin(_val) * cos(_val);
 	}
 
 	/**
@@ -844,6 +1308,48 @@ namespace aws
 
         return collisionX && collisionY && collisionZ;
     }
+
+	/*
+	 * @brief Checks 2 box if they collide(may not work now)
+	 * 
+	 * @param _Position1
+	 * @param _Scale1
+	 * @param _Rotation1
+	 * @param _Position2
+	 * @param _Scale2
+	 * @param _Rotation2
+	 * 
+	 */
+	bool CheckOBBBoxCollision(glm::vec3 _Position1, glm::vec3 _Scale1, glm::vec3 _Rotation1, glm::vec3 _Position2, glm::vec3 _Scale2, glm::vec3 _Rotation2) {
+		glm::vec3 Position1 = _Position1 - _Scale1;
+		glm::vec3 Scale1 = _Scale1 * glm::vec3(2.0f, 2.0f, 2.0f);
+
+		glm::vec3 Position2 = _Position2 - _Scale2;
+		glm::vec3 Scale2 = _Scale2 * glm::vec3(2.0f, 2.0f, 2.0f);
+
+		glm::vec3 Rotation1 = glm::vec3(
+			cos(_Rotation1.y) * cos(_Rotation1.z) + sin(_Rotation1.x) * sin(_Rotation1.y) * cos(_Rotation1.z) - cos(_Rotation1.x) * sin(_Rotation1.z) + cos(_Rotation1.x) * sin(_Rotation1.y) * cos(_Rotation1.z) + sin(_Rotation1.x) * sin(_Rotation1.z),
+			cos(_Rotation1.y) * sin(_Rotation1.z) + sin(_Rotation1.x) * sin(_Rotation1.y) * sin(_Rotation1.z) - cos(_Rotation1.x) * cos(_Rotation1.z) + cos(_Rotation1.x) * sin(_Rotation1.y) * sin(_Rotation1.z) + sin(_Rotation1.x) * cos(_Rotation1.z),
+			-sin(_Rotation1.y) + sin(_Rotation1.x) * cos(_Rotation1.y) + cos(_Rotation1.x) * cos(_Rotation1.y)
+		);
+
+		glm::vec3 Rotation2 = glm::vec3(
+			cos(_Rotation2.y) * cos(_Rotation2.z) + sin(_Rotation2.x) * sin(_Rotation2.y) * cos(_Rotation2.z) - cos(_Rotation2.x) * sin(_Rotation2.z) + cos(_Rotation2.x) * sin(_Rotation2.y) * cos(_Rotation2.z) + sin(_Rotation2.x) * sin(_Rotation2.z),
+			cos(_Rotation2.y) * sin(_Rotation2.z) + sin(_Rotation2.x) * sin(_Rotation2.y) * sin(_Rotation2.z) - cos(_Rotation2.x) * cos(_Rotation2.z) + cos(_Rotation2.x) * sin(_Rotation2.y) * sin(_Rotation2.z) + sin(_Rotation2.x) * cos(_Rotation2.z),
+			-sin(_Rotation2.y) + sin(_Rotation2.x) * cos(_Rotation2.y) + cos(_Rotation2.x) * cos(_Rotation2.y)
+		);
+
+		bool collisionX = Position1.x + Scale1.x + Rotation1.x >= Position2.x + Rotation2.x &&
+			Position2.x + Scale2.x + Rotation2.x >= Position1.x;
+
+		bool collisionY = Position1.y + Scale1.y + Rotation1.y >= Position2.y + Rotation2.y &&
+			Position2.y + Scale2.y + Rotation2.y >= Position1.y;
+
+		bool collisionZ = Position1.z + Scale1.z + Rotation1.z >= Position2.z + Rotation2.z &&
+			Position2.z + Scale2.z + Rotation2.z >= Position1.z;
+
+		return collisionX && collisionY && collisionZ;
+	}
 
 	/**
 	 * @brief Loads .obj model to memory
@@ -940,6 +1446,14 @@ namespace aws
 		glCompileShader(shader);
 
 		return shader;
+	}
+
+	Aws_Vector to_vec(float _value) {
+		return Aws_Vector(_value, _value, _value, _value);
+	}
+
+	Aws_DVector to_dvec(double _value) {
+		return Aws_DVector(_value, _value, _value, _value);
 	}
 
 	/*Aws_RenderedData LoadGLTFModel(const std::string location) {
@@ -1351,6 +1865,8 @@ namespace aws
 	typedef Aws_Time Time;
 
 	typedef Aws_AxisHepler AxisHelper;
+	typedef Aws_Vector Vector;
+	typedef Aws_DVector DVector;
 	typedef Aws_RenderedData RenderedData;
 	typedef Aws_Rendered Rendered;
 	typedef Aws_Shader Shader;

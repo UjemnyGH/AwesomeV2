@@ -297,6 +297,13 @@ namespace aws
 			objects_data.axis_helper.clear();
 			objects_data.dataID.clear();
 			objects_data.textureID.clear();
+			objects_data.moved_vertices.clear();
+
+			objects_data.moved_vertices.push_back(data.vertices[data.vertices.size() - 1]);
+			objects_data.moved_vertices.push_back(data.vertices[data.vertices.size() - 2]);
+			objects_data.moved_vertices.push_back(data.vertices[data.vertices.size() - 3]);
+
+			std::move(data.vertices.begin(), data.vertices.end() - 3, std::back_inserter(objects_data.moved_vertices));
 
 			objects_data.data += data;
 			objects_data.sizeID = data.vertices.size() / 3;
@@ -328,6 +335,12 @@ namespace aws
 		void AddObject() {
 			objects_data.data += data;
 
+			objects_data.moved_vertices.push_back(data.vertices[data.vertices.size() - 1]);
+			objects_data.moved_vertices.push_back(data.vertices[data.vertices.size() - 2]);
+			objects_data.moved_vertices.push_back(data.vertices[data.vertices.size() - 3]);
+
+			std::move(data.vertices.begin(), data.vertices.end() - 3, std::back_inserter(objects_data.moved_vertices));
+
 			objects_data.axis_helper.push_back(AxisHelper(0.0f, 1.0f, 0.0f));
 
 			objects_data.dataID.push_back(objects_data.count);
@@ -357,12 +370,12 @@ namespace aws
 		 * @param y 
 		 * @param z 
 		 */
-		void SetPositionByID(unsigned int ID, float x, float y, float z) {
-			if (objects_data.axis_helper[ID].px != x || objects_data.axis_helper[ID].py != y || objects_data.axis_helper[ID].pz != z)
+		void SetPositionByID(unsigned int ID, Vector position) {
+			if (objects_data.axis_helper[ID].px != position.x || objects_data.axis_helper[ID].py != position.y || objects_data.axis_helper[ID].pz != position.z)
 			{
-				objects_data.axis_helper[ID].px = x;
-				objects_data.axis_helper[ID].py = y;
-				objects_data.axis_helper[ID].pz = z;
+				objects_data.axis_helper[ID].px = position.x;
+				objects_data.axis_helper[ID].py = position.y;
+				objects_data.axis_helper[ID].pz = position.z;
 
 				for (size_t i = 0; i < objects_data.sizeID; i++)
 				{
@@ -387,12 +400,12 @@ namespace aws
 		 * @param y 
 		 * @param z 
 		 */
-		void SetScaleByID(unsigned int ID, float x, float y, float z) {
-			if (objects_data.axis_helper[ID].sx != x || objects_data.axis_helper[ID].sy != y || objects_data.axis_helper[ID].sz != z)
+		void SetScaleByID(unsigned int ID, Vector scale) {
+			if (objects_data.axis_helper[ID].sx != scale.x || objects_data.axis_helper[ID].sy != scale.y || objects_data.axis_helper[ID].sz != scale.z)
 			{
-				objects_data.axis_helper[ID].sx = x;
-				objects_data.axis_helper[ID].sy = y;
-				objects_data.axis_helper[ID].sz = z;
+				objects_data.axis_helper[ID].sx = scale.x;
+				objects_data.axis_helper[ID].sy = scale.y;
+				objects_data.axis_helper[ID].sz = scale.z;
 
 				for (size_t i = 0; i < objects_data.sizeID; i++)
 				{
@@ -417,22 +430,21 @@ namespace aws
 		 * @param y 
 		 * @param z 
 		 */
-		void SetRotationByID(unsigned int ID, float x, float y, float z) {
-			if (objects_data.axis_helper[ID].rx != x || objects_data.axis_helper[ID].ry != y || objects_data.axis_helper[ID].rz != z)
+		void SetRotationByID(unsigned int ID, Vector rotation) {
+			if (objects_data.axis_helper[ID].rx != rotation.x || objects_data.axis_helper[ID].ry != rotation.y || objects_data.axis_helper[ID].rz != rotation.z)
 			{
-				objects_data.axis_helper[ID].rx = x;
-				objects_data.axis_helper[ID].ry = y;
-				objects_data.axis_helper[ID].rz = z;
+				objects_data.axis_helper[ID].rx = rotation.x;
+				objects_data.axis_helper[ID].ry = rotation.y;
+				objects_data.axis_helper[ID].rz = rotation.z;
 
-				float* _xz = invatan2(glm::radians(objects_data.axis_helper[ID].rx));
-				float* _yx = invatan2(glm::radians(objects_data.axis_helper[ID].ry));
-				float* _zy = invatan2(glm::radians(objects_data.axis_helper[ID].rz));
+				Vector rot_cart = CartToSphere(Radians(rotation.x), Radians(rotation.y), Radians(rotation.z));
+				Vector rot = SphereToCart(rot_cart.x, rot_cart.y, rot_cart.z);
 
 				for (size_t i = 0; i < objects_data.sizeID; i++)
 				{
-					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3)] = data.vertices[i * 3] * objects_data.axis_helper[ID].sx + objects_data.axis_helper[ID].px + _xz[0] * _yx[1];
-					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = data.vertices[i * 3 + 1] * objects_data.axis_helper[ID].sy + objects_data.axis_helper[ID].py + _yx[0] * _zy[1];
-					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = data.vertices[i * 3 + 2] * objects_data.axis_helper[ID].sz + objects_data.axis_helper[ID].pz + _zy[0] * _xz[1];
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = data.vertices[i * 3 + 0] * objects_data.axis_helper[ID].sx + objects_data.axis_helper[ID].px + (rot.x * objects_data.moved_vertices[i * 3 + 0]);
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = data.vertices[i * 3 + 1] * objects_data.axis_helper[ID].sy + objects_data.axis_helper[ID].py + (rot.y * objects_data.moved_vertices[i * 3 + 1]);
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = data.vertices[i * 3 + 2] * objects_data.axis_helper[ID].sz + objects_data.axis_helper[ID].pz + (rot.z * objects_data.moved_vertices[i * 3 + 2]);
 				}
 
 				vao.bind();
@@ -530,10 +542,10 @@ namespace aws
 		 * @param y 
 		 * @param z 
 		 */
-		void SetPosition(float x, float y, float z) {
-			psr[0][0] = x;
-			psr[0][1] = y;
-			psr[0][2] = z;
+		void SetPosition(Vector position) {
+			psr[0][0] = position.x;
+			psr[0][1] = position.y;
+			psr[0][2] = position.z;
 
 			transform = glm::translate(glm::mat4(1.0), glm::vec3(psr[0][0], psr[0][1], psr[0][2]));
 			transform = glm::rotate(transform, glm::radians(psr[2][0]), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -549,10 +561,10 @@ namespace aws
 		 * @param y 
 		 * @param z 
 		 */
-		void SetScale(float x, float y, float z) {
-			psr[1][0] = x;
-			psr[1][1] = y;
-			psr[1][2] = z;
+		void SetScale(Vector scale) {
+			psr[1][0] = scale.x;
+			psr[1][1] = scale.y;
+			psr[1][2] = scale.z;
 
 			transform = glm::translate(glm::mat4(1.0), glm::vec3(psr[0][0], psr[0][1], psr[0][2]));
 			transform = glm::rotate(transform, glm::radians(psr[2][0]), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -568,10 +580,10 @@ namespace aws
 		 * @param y 
 		 * @param z 
 		 */
-		void SetRotation(float x, float y, float z) {
-			psr[2][0] = x;
-			psr[2][1] = y;
-			psr[2][2] = z;
+		void SetRotation(Vector rotation) {
+			psr[2][0] = rotation.x;
+			psr[2][1] = rotation.y;
+			psr[2][2] = rotation.z;
 
 			transform = glm::translate(glm::mat4(1.0), glm::vec3(psr[0][0], psr[0][1], psr[0][2]));
 			transform = glm::rotate(transform, glm::radians(psr[2][0]), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -589,15 +601,15 @@ namespace aws
 		 * @param b 
 		 * @param a 
 		 */
-		void SetColorByID(unsigned int ID, float r, float g, float b, float a) {
+		void SetColorByID(unsigned int ID, Vector color) {
 			//if (objects_data.data.color[ID * objects_data.sizeID] != r && objects_data.data.color[ID * objects_data.sizeID + 1] != g && objects_data.data.color[ID * objects_data.sizeID + 2] != b && objects_data.data.color[ID * objects_data.sizeID + 3] != a)
 			//{
 				for (size_t i = 0; i < objects_data.sizeID; i++)
 				{
-					objects_data.data.color[ID * objects_data.sizeID + (i * 4)] = r;
-					objects_data.data.color[ID * objects_data.sizeID + (i * 4 + 1)] = g;
-					objects_data.data.color[ID * objects_data.sizeID + (i * 4 + 2)] = b;
-					objects_data.data.color[ID * objects_data.sizeID + (i * 4 + 3)] = a;
+					objects_data.data.color[ID * objects_data.sizeID + (i * 4)] = color.x;
+					objects_data.data.color[ID * objects_data.sizeID + (i * 4 + 1)] = color.y;
+					objects_data.data.color[ID * objects_data.sizeID + (i * 4 + 2)] = color.z;
+					objects_data.data.color[ID * objects_data.sizeID + (i * 4 + 3)] = color.w;
 				}
 
 				vao.bind();
@@ -751,10 +763,10 @@ namespace aws
 		 * @param _value1 
 		 * @param _value2 
 		 */
-		void SetFloat2(const std::string _name, float _value1, float _value2) {
+		void SetFloat2(const std::string _name, Vector _value) {
 			shader.use();
 
-			glUniform2f(glGetUniformLocation(shader.ID, _name.c_str()), _value1, _value2);
+			glUniform2f(glGetUniformLocation(shader.ID, _name.c_str()), _value.x, _value.z);
 
 			shader.unuse();
 		}
@@ -767,10 +779,10 @@ namespace aws
 		 * @param _value2 
 		 * @param _value3 
 		 */
-		void SetFloat3(const std::string _name, float _value1, float _value2, float _value3) {
+		void SetFloat3(const std::string _name, Vector _value) {
 			shader.use();
 
-			glUniform3f(glGetUniformLocation(shader.ID, _name.c_str()), _value1, _value2, _value3);
+			glUniform3f(glGetUniformLocation(shader.ID, _name.c_str()), _value.x, _value.y, _value.z);
 
 			shader.unuse();
 		}
@@ -784,10 +796,10 @@ namespace aws
 		 * @param _value3 
 		 * @param _value4 
 		 */
-		void SetFloat4(const std::string _name, float _value1, float _value2, float _value3, float _value4) {
+		void SetFloat4(const std::string _name, Vector _value) {
 			shader.use();
 
-			glUniform4f(glGetUniformLocation(shader.ID, _name.c_str()), _value1, _value2, _value3, _value4);
+			glUniform4f(glGetUniformLocation(shader.ID, _name.c_str()), _value.x, _value.y, _value.z, _value.w);
 
 			shader.unuse();
 		}

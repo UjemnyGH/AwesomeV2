@@ -5,7 +5,22 @@ Awesome engine v2
 
 This is basicly comtinuation Awesome engine, but instead rewriting old engine I am writing new one.
 
+# Libs I used:
+- GLFW
+- GLEW
+- GLM
+- STB Image
+- CGLTF (I hope I use it)
+
 ### Changes
+	> - 12.04.2022
+	> I added custom dynamic vector type
+	> I made better (in engine case) user input
+	> I added another sorting algorithm
+	> I added some functions for rotation to try things out
+	> Also I rewrite every function using glm::vec3 to aws::Vector to make things easier
+	> And also I added converting aws::Vector to glm::vec<ANY_SIZE> and function to convert float into aws::Vector(neaded to multiply aws::Vector by float at this time)
+	> ------------------------------
 	> - 5.04.2022
 	> I added commenst on every function to make it easier to use
 	> I added inverted atan2 function
@@ -16,3 +31,9 @@ This is basicly comtinuation Awesome engine, but instead rewriting old engine I 
 	> Shader now can be loaded from file
 	> I added window class
 	> AABB collisions work as intended
+
+
+### To fix:
+	> AABB Collisions inside Renderer class doesn`t work properly
+	> Adding new objects in batch adds weird things
+	> Rotation of batched object
