@@ -162,6 +162,7 @@
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="cgltf.h" />
     <ClInclude Include="cgltf_write.h" />
+    <ClInclude Include="CollisionHandler.hpp" />
     <ClInclude Include="Core.hpp" />
     <ClInclude Include="dynamic.hpp" />
     <ClInclude Include="Model_loader.hpp" />

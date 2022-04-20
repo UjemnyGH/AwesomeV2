@@ -146,6 +146,9 @@ namespace aws
 		GLFWwindow* window;
 
 	public:
+		//static int width;
+		//static int height;
+
 		/**
 		 * @brief It limits number of frames if set to TRUE ( 60 FPS )
 		 * 
@@ -257,6 +260,9 @@ namespace aws
 		 * @param state Key state to check
 		 */
 		inline bool GetKey(Aws_Keys key, Aws_KeyState state = Aws_KeyState::PRESS) { return glfwGetKey(window, key) == state; }
+
+		//static int GetWidth() { return width; }
+		//static int GetHeight() { return height; }
 
 		~Aws_Window() {
 			glfwTerminate();

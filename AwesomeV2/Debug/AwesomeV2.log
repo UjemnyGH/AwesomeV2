@@ -477,14 +477,14 @@ P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(391,64): warning C4244: 'argument': c
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1276,98): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1276,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1276,24): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1365,21): warning C4018: '<': signed/unsigned mismatch
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1456,46): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1456,38): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1456,30): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1456,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1356,98): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1356,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1356,24): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1445,21): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1536,46): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1536,38): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1536,30): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1536,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(312,22): warning C4018: '<': signed/unsigned mismatch
 P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(350,61): warning C4018: '<': signed/unsigned mismatch
 P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(510,45): warning C4018: '<': signed/unsigned mismatch
@@ -495,8 +495,49 @@ P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(1027,58): warning C4244: 'return'
           [
               _Ty=float
           ]
-P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(49,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(50,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(52,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(53,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(53,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(54,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(56,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(57,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1319,13): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\CollisionHandler.hpp(12): message : see reference to function template instantiation 'T aws::ClosestMatch<float,_Ty>(Arr *,unsigned int,T)' being compiled
+          with
+          [
+              T=float,
+              _Ty=float,
+              Arr=float
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1310,23): warning C4244: 'return': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1320,23): warning C4244: 'return': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1282,11): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1311): message : see reference to function template instantiation 'int aws::getClosest<Arr>(T,T,T)' being compiled
+          with
+          [
+              Arr=float,
+              T=float
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\CollisionHandler.hpp(12): message : see reference to function template instantiation 'T aws::ClosestMatch<float,_Ty>(Arr *,unsigned int,T)' being compiled
+          with
+          [
+              T=float,
+              _Ty=float,
+              Arr=float
+          ]
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1284,11): warning C4244: 'return': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
   AwesomeV2.vcxproj -> P:\VS project\AwesomeV2\Debug\AwesomeV2.exe

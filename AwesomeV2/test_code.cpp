@@ -8,6 +8,9 @@
 #include "Renderer.hpp"
 #include "Camera.hpp"
 #include "Window.hpp"
+#include "CollisionHandler.hpp"
+
+aws::CollisionHandler ch;
 
 class Wnd : public aws::Window
 {
@@ -42,6 +45,7 @@ aws::Camera camera;
 
 aws::Renderer ground;
 aws::Renderer ground2;
+aws::Renderer terrainMesh;
 
 void mouse(GLFWwindow* window, double xpos, double ypos) {
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
@@ -121,6 +125,8 @@ void Wnd::input() {
 }
 
 void framebuffer_call(GLFWwindow* window, int w, int h) {
+	//Wnd::width = w;
+	//Wnd::height = h;
 	glViewport(0, 0, w, h);
 
 	projection = glm::perspectiveFov(70.0f, (float)w, (float)h, 0.001f, 10000.0f);
@@ -132,7 +138,8 @@ void physics() {
 	inGround = aws::CheckAABBCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(10000.0f, 0.1f, 10000.0f))
 		|| aws::CheckAABBCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(10.0f, 10.0f, 10.0f))
 		|| ground2.GetAABBTriggerByID(0, camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f))
-		|| aws::CheckOBBBoxCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(10.0f, 10.0f, 10.0f), glm::vec3(glm::radians(45.0f), 0.0f, 0.0f));
+		|| aws::CheckOBBBoxCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(10.0f, 10.0f, 10.0f), glm::vec3(glm::radians(45.0f), 0.0f, 0.0f))
+		|| ch.AABBToMesh(camera.GetCameraPosition(), { 1.0f, 10.0f, 1.0f, 1.0f }, terrainMesh.GetMesh().vertices, { 0.0f, 0.0f, 0.0f, 0.0f }, { 10.0f, 10.0f, 10.0f, 10.0f });
 
 	if (inGround)
 	{
@@ -148,9 +155,9 @@ void physics() {
 }
 
 void Wnd::Start() {
-	int arr[10] = { 0, 8, 2, 4, 6, 1, 9, 5, 3, 7 };
+	std::vector<float> wssd = { 65, 4, 32, 2, 47, 68, 6, 8, 23, 65, 31 };
 
-	std::cout << aws::Search(0, 9, arr, 1) << '\n';
+	std::cout << aws::ClosestMatch(wssd.data(), wssd.size(), 50.0f) << '\n';
 
 	vertical_synchronization = true;
 	glfwSetFramebufferSizeCallback(GetWindow(), framebuffer_call);
@@ -172,7 +179,8 @@ void Wnd::Start() {
 	ground2.SetScale({ 10.0f, 10.0f, 10.0f });
 	ground2.SetPosition({ 0.0f, 20.0f, 0.0f });
 
-	ground2.DebugValues();
+	terrainMesh.Init();
+	terrainMesh.SetRendererData(aws::LoadOBJModel("data/models/testTerrain.obj"));
 
 	playerPos.y = 11.0f;
 }
@@ -198,6 +206,8 @@ void Wnd::Update() {
 	}
 
 	ground2.Render(projection, view);
+
+	terrainMesh.Render(projection, view);
 	
 	std::future<void> phys = std::async(physics);
 }

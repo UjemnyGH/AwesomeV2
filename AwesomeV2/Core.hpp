@@ -1055,7 +1055,34 @@ namespace aws
 	 * @return size_t
 	 */
 	template<typename T, typename Arr>
-	size_t Search(size_t _first, size_t _last, Arr arr[], T _value) {
+	size_t Search(size_t _first, size_t _last, Arr *arr, T _value) {
+		if (_last >= _first)
+		{
+			if (arr[_first] == _value)
+				return _first;
+
+			if (arr[_last] == _value)
+				return _last;
+
+			return Search(_first + 1, _last - 1, arr, _value);
+		}
+
+		return -1;
+	}
+
+	/**
+	 * @brief Ujemny search algorithm with vector
+	 *
+	 * @tparam T typename
+	 * @tparam Arr data to search
+	 * @param _first first element
+	 * @param _last last element
+	 * @param arr data to research
+	 * @param _value value to be founded bt address
+	 * @return size_t
+	 */
+	template<typename T>
+	size_t Search(size_t _first, size_t _last, std::vector<T> arr, T _value) {
 		if (_last >= _first)
 		{
 			if (arr[_first] == _value)
@@ -1246,6 +1273,59 @@ namespace aws
 		_val[1] = sin(radians);
 
 		return _val;
+	}
+
+	template<typename T>
+	int getClosest(T val1, T val2, T target)
+	{
+		if (target - val1 >= val2 - target)
+			return val2;
+		else
+			return val1;
+	}
+
+	template<typename T, typename Arr>
+	T ClosestMatch(Arr* arr, unsigned int size, T target) {
+		// Corner cases 
+		/*if (target <= arr[0])
+			return arr[0];
+		if (target >= arr[size - 1])
+			return arr[size - 1];*/
+
+		// Doing binary search 
+		int i = 0, j = size, mid = 0;
+		while (i < j) {
+			mid = (i + j) / 2;
+
+			if (arr[mid] == target)
+				return arr[mid];
+
+			/* If target is less than array element,
+				then search in left */
+			if (target < arr[mid]) {
+
+				// If target is greater than previous 
+				// to mid, return closest of two 
+				if (mid > 0 && target > arr[mid - 1])
+					return getClosest(arr[mid - 1],
+						arr[mid], target);
+
+				/* Repeat for left half */
+				j = mid;
+			}
+
+			// If target is greater than mid 
+			else {
+				if (mid < size - 1 && target < arr[mid + 1])
+					return getClosest(arr[mid],
+						arr[mid + 1], target);
+				// update i 
+				i = mid + 1;
+			}
+		}
+
+		// Only single element left after search 
+		return arr[mid];
 	}
 
 	/*

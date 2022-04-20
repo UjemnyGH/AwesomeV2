@@ -1054,6 +1054,10 @@ namespace aws
 			return objects_data.textureCount;
 		}
 
+		RenderedData GetMesh() {
+			return data;
+		}
+
 		~Aws_Renderer() {
 			shader.~Aws_Shader();
 			vao.~Aws_Array();
