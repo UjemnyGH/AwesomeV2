@@ -53,6 +53,9 @@
     <ClInclude Include="CollisionHandler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Raycast.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">
@@ -68,6 +71,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="glass.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="light.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="light.frag">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

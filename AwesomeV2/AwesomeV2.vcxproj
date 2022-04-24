@@ -166,6 +166,7 @@
     <ClInclude Include="Core.hpp" />
     <ClInclude Include="dynamic.hpp" />
     <ClInclude Include="Model_loader.hpp" />
+    <ClInclude Include="Raycast.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Window.hpp" />
@@ -174,6 +175,8 @@
     <None Include="..\README.md" />
     <None Include="glass.frag" />
     <None Include="glass.vert" />
+    <None Include="light.frag" />
+    <None Include="light.vert" />
     <None Include="water.frag" />
     <None Include="water.vert" />
   </ItemGroup>

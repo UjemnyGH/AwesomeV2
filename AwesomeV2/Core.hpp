@@ -1043,6 +1043,47 @@ namespace aws
 		}
 	};
 
+	template<typename T>
+	size_t basicSearch(size_t _first, size_t _last, std::vector<T> arr, T value) {
+		size_t index_beg = _first;
+		size_t index_end = _last;
+		size_t index_mid_end = (_last - _first) / 2;
+		size_t index_mid_beg = (_last - _first) / 2;
+		
+		if (_last >= _first && _last < arr.size())
+		{
+			while (index_beg < index_mid_beg || index_end > index_mid_end)
+			{
+				if(arr[index_beg] == value)
+				{
+					return index_beg;
+				}
+
+				if (arr[index_end] == value)
+				{
+					return index_end;
+				}
+
+				if (arr[index_mid_beg] == value)
+				{
+					return index_mid_beg;
+				}
+
+				if (arr[index_mid_end] == value)
+				{
+					return index_mid_end;
+				}
+
+				index_beg++;
+				index_end--;
+				index_mid_end++;
+				index_mid_beg--;
+			}
+		}
+
+		return 1;
+	}
+
 	/**
 	 * @brief Ujemny search algorithm
 	 *
@@ -1083,7 +1124,7 @@ namespace aws
 	 */
 	template<typename T>
 	size_t Search(size_t _first, size_t _last, std::vector<T> arr, T _value) {
-		if (_last >= _first)
+		if (_last >= _first && _last < arr.size())
 		{
 			if (arr[_first] == _value)
 				return _first;
@@ -1129,6 +1170,37 @@ namespace aws
 	}
 
 	/**
+	 * @brief Linear search algorithm
+	 *
+	 * @tparam T typename
+	 * @tparam Arr data to search
+	 * @param _first first element
+	 * @param _last last element
+	 * @param arr data to research
+	 * @param value value to be founded bt address
+	 * @return size_t
+	 */
+	template<typename T>
+	size_t linSearch(size_t _first, size_t _last, std::vector<T> arr, T value) {
+		size_t pos;
+
+		if (_first <= _last && value >= arr[_first] && value <= arr[_last]) {
+			pos = _first + ((_last - _first) / (arr[_last] - arr[_first]) * (value - arr[_first]));
+
+			if (arr[pos] == value)
+				return pos;
+
+			if (arr[pos] < value)
+				return linSearch(pos + 1, _last, arr, value);
+
+			if (arr[pos] > value)
+				return linSearch(_first, pos - 1, arr, value);
+		}
+
+		return -1;
+	}
+
+	/**
 	 * @brief Binary search algorithm
 	 * 
 	 * @tparam T typename
@@ -1141,6 +1213,33 @@ namespace aws
 	 */
 	template<typename T, typename Arr>
 	size_t binSearch(size_t _first, size_t _last, Arr arr[], T value) {
+		if (_last >= _first) {
+			int pos = _first + (_last - _first) / 2;
+
+			if (arr[pos] == value)
+				return pos;
+
+			if (arr[pos] > value)
+				return binSearch(_first, pos - 1, arr, value);
+
+			return binSearch(pos + 1, _last, arr, value);
+		}
+
+		return -1;
+	}
+
+	/**
+	 * @brief Binary search algorithm
+	 *
+	 * @tparam T typename
+	 * @param _first first element
+	 * @param _last last element
+	 * @param arr data to research
+	 * @param value value to be founded bt address
+	 * @return size_t
+	 */
+	template<typename T>
+	size_t binSearch(size_t _first, size_t _last, std::vector<T> arr, T value) {
 		if (_last >= _first) {
 			int pos = _first + (_last - _first) / 2;
 
@@ -1192,6 +1291,40 @@ namespace aws
 	 */
 	template<typename T>
 	size_t ternSearch(size_t _first, size_t _last, T *arr, T value) {
+		if (_last >= _first) {
+			int pos1 = _first + (_last - 1) / 3;
+			int pos2 = _last - (_last - 1) / 3;
+
+			if (arr[pos1] == value)
+				return pos1;
+
+			if (arr[pos2] == value)
+				return pos2;
+
+			if (value < arr[pos1])
+				return ternSearch(_first, pos1 - 1, arr, value);
+			else if (value > arr[pos2])
+				return ternSearch(pos2 + 1, _last, arr, value);
+			else
+				return ternSearch(pos1 + 1, pos2 - 1, arr, value);
+		}
+
+		return -1;
+	}
+
+	/**
+	 * @brief Ternary search algorithm
+	 *
+	 * @tparam T typename
+	 * @tparam Arr data to search
+	 * @param _first first element
+	 * @param _last last element
+	 * @param arr data to research
+	 * @param value value to be founded bt address
+	 * @return size_t
+	 */
+	template<typename T>
+	size_t ternSearch(size_t _first, size_t _last, std::vector<T> arr, T value) {
 		if (_last >= _first) {
 			int pos1 = _first + (_last - 1) / 3;
 			int pos2 = _last - (_last - 1) / 3;
@@ -1284,48 +1417,71 @@ namespace aws
 			return val1;
 	}
 
-	template<typename T, typename Arr>
-	T ClosestMatch(Arr* arr, unsigned int size, T target) {
-		// Corner cases 
-		/*if (target <= arr[0])
-			return arr[0];
-		if (target >= arr[size - 1])
-			return arr[size - 1];*/
+	template<typename T>
+	T ClosestMatch(std::vector<T> arr, T target) {
+		size_t index_beg = 0;
+		size_t index_end = arr.size() - 1;
 
-		// Doing binary search 
-		int i = 0, j = size, mid = 0;
-		while (i < j) {
-			mid = (i + j) / 2;
+		T beg_closest = arr[0];
+		T end_closest = arr[0];
 
-			if (arr[mid] == target)
-				return arr[mid];
-
-			/* If target is less than array element,
-				then search in left */
-			if (target < arr[mid]) {
-
-				// If target is greater than previous 
-				// to mid, return closest of two 
-				if (mid > 0 && target > arr[mid - 1])
-					return getClosest(arr[mid - 1],
-						arr[mid], target);
-
-				/* Repeat for left half */
-				j = mid;
+		while (index_beg < index_end)
+		{
+			if (arr[index_beg] > target && beg_closest > arr[index_beg])
+			{
+				beg_closest = arr[index_beg];
 			}
 
-			// If target is greater than mid 
-			else {
-				if (mid < size - 1 && target < arr[mid + 1])
-					return getClosest(arr[mid],
-						arr[mid + 1], target);
-				// update i 
-				i = mid + 1;
+			if (arr[index_beg] < target && beg_closest < arr[index_beg])
+			{
+				beg_closest = arr[index_beg];
 			}
+
+			if (arr[index_end] > target && end_closest > arr[index_end])
+			{
+				end_closest = arr[index_end];
+			}
+
+			if (arr[index_end] < target && end_closest < arr[index_end])
+			{
+				end_closest = arr[index_end];
+			}
+
+			if (arr[index_beg] == target || arr[index_end] == target)
+			{
+				return target;
+			}
+
+			index_beg++;
+			index_end--;
 		}
 
-		// Only single element left after search 
-		return arr[mid];
+		if (beg_closest > end_closest && end_closest > target)
+		{
+			return end_closest;
+		}
+		else if (beg_closest < end_closest && end_closest < target)
+		{
+			return beg_closest;
+		}
+
+		return beg_closest;
+	}
+
+	template<typename T>
+	T clamp(T _min, T _max, T _value) {
+		if (_value > _max)
+		{
+			_value = _max;
+			return _max;
+		}
+		else if (_value < _min)
+		{
+			_value = _min;
+			return _min;
+		}
+
+		return _value;
 	}
 
 	/*
@@ -1359,6 +1515,46 @@ namespace aws
 	float Radians(float _val) {
 		return sin(_val) * cos(_val);
 	}
+
+	Aws_Vector avgVector(std::vector<Aws_Vector> _vecs) {
+		Aws_Vector _avg_vec = {0.0f, 0.0f, 0.0f, 0.0f};
+
+		for (uint32_t i = 0; i < _vecs.size(); i++) 
+		{
+			_avg_vec += _vecs[i];
+		}
+
+		_avg_vec /= Aws_Vector((float)_vecs.size(), (float)_vecs.size(), (float)_vecs.size(), (float)_vecs.size());
+
+		return _avg_vec;
+	}
+
+	/*
+	 * @brief Dot product of 3D vector
+	 *
+	 *
+	 */
+	float dot3D(Aws_Vector _first, Aws_Vector _second) {
+		return _first.x * _first.y * _first.z + _second.x * _second.y * _second.z;
+	}
+
+	/*
+	 * @brief Dot product of 2D vector
+	 *
+	 *
+	 */
+	float dot2D(Aws_Vector _first, Aws_Vector _second) {
+		return _first.x * _first.y + _second.x * _second.y;
+	}
+
+	/*float getLambda3D(Aws_Vector _first_nor, Aws_Vector _second_nor, Aws_Vector _third_nor) {
+		return (-dot3D(_first_nor) - dot3D(_second_nor)) / dot3D(_third_nor);
+	}
+
+	float getLambda2D(Aws_Vector _first_nor, Aws_Vector _second_nor, Aws_Vector _third_nor) {
+		return (-dot2D(_first_nor) - dot2D(_second_nor)) / dot2D(_third_nor);
+	}*/
+
 
 	/**
 	 * @brief Checks 2 unrotatable box if they collide

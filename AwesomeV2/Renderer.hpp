@@ -3,6 +3,8 @@
 
 namespace aws
 {
+	static Vector GlobalLight;
+
 	class Aws_Renderer
 	{
 	private:
@@ -254,6 +256,7 @@ namespace aws
 			}
 
 			glUniformMatrix4fv(glGetUniformLocation(shader.ID, "transform"), 1, GL_FALSE, glm::value_ptr(projection * view * transform));
+			glUniform3f(glGetUniformLocation(shader.ID, "g_light"), GlobalLight.x, GlobalLight.y, GlobalLight.z);
 
 			glDrawArrays(GL_TRIANGLES, 0, objects_data.sizeID);
 
@@ -970,6 +973,16 @@ namespace aws
 				std::cout << objects_data.data.vertices[i * 3] << ' ' << objects_data.data.vertices[i * 3 + 1] << ' ' << objects_data.data.vertices[i * 3 + 2] << "\t\t" <<
 					objects_data.textureID[i] << '\n';
 			}
+		}
+
+		void Use() {
+			shader.use();
+			vao.bind();
+		}
+
+		void Unuse() {
+			vao.unbind();
+			shader.unuse();
 		}
 
 		/**

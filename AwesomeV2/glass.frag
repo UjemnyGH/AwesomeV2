@@ -1,15 +1,17 @@
-#version 450 core
-out vec4 FragColor;
+#version 150
 
-in vec3 Normal;
-in vec3 Position;
+uniform samplerCube u_cubemap;
 
-uniform vec3 cameraPos;
-uniform samplerCube skybox;
+in vec3 v_refraction;
+in vec3 v_reflection;
+in float v_fresnel;
 
-void main()
-{             
-    vec3 I = normalize(Position - cameraPos);
-    vec3 R = reflect(I, normalize(Normal));
-    FragColor = vec4(texture(skybox, R).rgb, 1.0);
+out vec4 fragColor;
+
+void main(void)
+{
+	vec4 refractionColor = texture(u_cubemap, normalize(v_refraction));
+	vec4 reflectionColor = texture(u_cubemap, normalize(v_reflection));
+		
+	fragColor = mix(refractionColor, reflectionColor, v_fresnel);
 }

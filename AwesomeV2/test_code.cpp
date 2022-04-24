@@ -9,8 +9,10 @@
 #include "Camera.hpp"
 #include "Window.hpp"
 #include "CollisionHandler.hpp"
+#include "Raycast.hpp"
 
 aws::CollisionHandler ch;
+aws::Raycast rc;
 
 class Wnd : public aws::Window
 {
@@ -43,8 +45,12 @@ bool inGround = false;
 
 aws::Camera camera;
 
+aws::Vector point;
+
 aws::Renderer ground;
 aws::Renderer ground2;
+aws::Renderer ground3;
+aws::Renderer point1;
 aws::Renderer terrainMesh;
 
 void mouse(GLFWwindow* window, double xpos, double ypos) {
@@ -63,10 +69,7 @@ void mouse(GLFWwindow* window, double xpos, double ypos) {
 		yaw += xoffset;
 		pitch -= yoffset;
 
-		if (pitch > 89.9f)
-			pitch = 89.9f;
-		if (pitch < -89.9f)
-			pitch = -89.9f;
+		pitch = aws::clamp(-89.99f, 89.99f, pitch);
 
 		camera.SetCameraRotation(glm::radians(yaw), glm::radians(pitch), aws::Axis::xy);
 
@@ -129,7 +132,7 @@ void framebuffer_call(GLFWwindow* window, int w, int h) {
 	//Wnd::height = h;
 	glViewport(0, 0, w, h);
 
-	projection = glm::perspectiveFov(70.0f, (float)w, (float)h, 0.001f, 10000.0f);
+	projection = glm::perspectiveFov(70.0f, (float)w, (float)h, 0.001f, 100000.0f);
 }
 
 void physics() {
@@ -138,8 +141,8 @@ void physics() {
 	inGround = aws::CheckAABBCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(10000.0f, 0.1f, 10000.0f))
 		|| aws::CheckAABBCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(10.0f, 10.0f, 10.0f))
 		|| ground2.GetAABBTriggerByID(0, camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f))
-		|| aws::CheckOBBBoxCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(10.0f, 10.0f, 10.0f), glm::vec3(glm::radians(45.0f), 0.0f, 0.0f))
-		|| ch.AABBToMesh(camera.GetCameraPosition(), { 1.0f, 10.0f, 1.0f, 1.0f }, terrainMesh.GetMesh().vertices, { 0.0f, 0.0f, 0.0f, 0.0f }, { 10.0f, 10.0f, 10.0f, 10.0f });
+		|| aws::CheckOBBBoxCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(10.0f, 10.0f, 10.0f), glm::vec3(glm::radians(45.0f), 0.0f, 0.0f));
+		//|| ch.AABBToMesh(camera.GetCameraPosition(), { 1.0f, 10.0f, 1.0f, 1.0f }, terrainMesh.GetMesh().vertices, { 0.0f, 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f });
 
 	if (inGround)
 	{
@@ -151,36 +154,49 @@ void physics() {
 		acceleration += 5.0f * aws::time.GetDeltaTime();
 	}
 
-	w += 0.01f;
+	point = rc.GetPoint(playerPos, camera.GetCameraRotation(aws::CameraGetMode::Normalized) + playerPos, aws::cube);
+
+	w += 0.001f;
 }
 
+aws::RenderedData s = aws::LoadOBJModel("data/models/testTerrain.obj");
+
 void Wnd::Start() {
-	std::vector<float> wssd = { 65, 4, 32, 2, 47, 68, 6, 8, 23, 65, 31 };
-
-	std::cout << aws::ClosestMatch(wssd.data(), wssd.size(), 50.0f) << '\n';
-
-	vertical_synchronization = true;
+	aws::GlobalLight = { 1.0f, 0.6f, 1.0f, 1.0f };
+	vertical_synchronization = false;
 	glfwSetFramebufferSizeCallback(GetWindow(), framebuffer_call);
 	glfwSetCursorPosCallback(GetWindow(), mouse);
 	framebuffer_call(GetWindow(), 800, 600);
 
-	ground.Init();
+	point1.Init(aws::LoadShader("light.vert", aws::ShadType::vertex), aws::LoadShader("light.frag", aws::ShadType::fragment));
+	point1.SetRendererData(aws::cube);
+	point1.SetScale({ 0.1f, 0.1f, 0.1f });
+
+	ground.Init(aws::LoadShader("light.vert", aws::ShadType::vertex), aws::LoadShader("light.frag", aws::ShadType::fragment));
 	ground.SetRendererData(aws::cube);
-	ground.SetColorByID(0, { 0.0f, 0.5f, 0.0f, 1.0f });
-	ground.SetScale({ 10000.0f, 0.1f, 10000.0f });
-	ground.SetUVMapByID(0, 2000.0f);
+	ground.SetColorByID(0, { 0.0f, 0.75f, 0.0f, 1.0f });
+	ground.SetScale({ 1000.0f, 0.1f, 1000.0f });
+	ground.SetUVMapByID(0, 200.0f);
 	ground.AddTexture("data/textures/grass.png");
 	ground.SetTextureByID(0, 0);
 
-	ground2.Init();
+	ground2.Init(aws::LoadShader("light.vert", aws::ShadType::vertex), aws::LoadShader("light.frag", aws::ShadType::fragment));
 	ground2.SetRendererData(aws::cube);
 	ground2.AddTexture("data/textures/awesomev2.png");
 
 	ground2.SetScale({ 10.0f, 10.0f, 10.0f });
 	ground2.SetPosition({ 0.0f, 20.0f, 0.0f });
 
-	terrainMesh.Init();
+	ground3.Init(aws::LoadShader("light.vert", aws::ShadType::vertex), aws::LoadShader("light.frag", aws::ShadType::fragment));
+	ground3.SetRendererData(aws::cube);
+	ground3.SetPosition({ 50.0f, 15.0f, 0.0f });
+	ground3.SetScale({ 10.0f, 10.0f, 10.0f });
+
+	terrainMesh.Init(aws::LoadShader("light.vert", aws::ShadType::vertex), aws::LoadShader("light.frag", aws::ShadType::fragment));
 	terrainMesh.SetRendererData(aws::LoadOBJModel("data/models/testTerrain.obj"));
+	terrainMesh.AddTexture("data/textures/grass.png");
+	terrainMesh.SetColorByID(0, { 0.0f, 0.75f, 0.0f, 1.0f });
+	terrainMesh.SetUVMapByID(0, 100.0f);
 
 	playerPos.y = 11.0f;
 }
@@ -192,7 +208,7 @@ void Wnd::Update() {
 	
 	ground.Render(projection, view);
 	
-	ground2.SetFloat3("cameraPos", { camera.GetCameraPosition().x, camera.GetCameraPosition().y, camera.GetCameraPosition().z });
+	ground2.SetFloat3("cameraPos", camera.GetCameraPosition());
 	ground2.SetFloatMat4("view", 1, glm::value_ptr(view));
 	ground2.SetFloatMat4("projection", 1, glm::value_ptr(projection));
 
@@ -206,13 +222,30 @@ void Wnd::Update() {
 	}
 
 	ground2.Render(projection, view);
+	ground3.Render(projection, view);
+	point1.Render(projection, view);
 
 	terrainMesh.Render(projection, view);
 	
 	std::future<void> phys = std::async(physics);
 }
 
+void tests()
+{
+	float x = aws::ClosestMatch(s.vertices, playerPos.x);
+	float y = aws::ClosestMatch(s.vertices, playerPos.y);
+	float z = aws::ClosestMatch(s.vertices, playerPos.z);
+
+	size_t xi = aws::basicSearch(0, s.vertices.size() - 1, s.vertices, x);
+	size_t yi = aws::basicSearch(0, s.vertices.size() - 1, s.vertices, y);
+	size_t zi = aws::basicSearch(0, s.vertices.size() - 1, s.vertices, z);
+
+	std::cout << "DELTA: " << 1.0f / aws::time.GetDeltaTime() << " X: " << x << ' ' << xi << " Y: " << y << ' ' << yi << " Z: " << z << ' ' << zi << " PX: " << playerPos.x << " PY: " << playerPos.y << " PZ: " << playerPos.z << '\n';
+}
+
 void Wnd::LateUpdate() {
+	//std::future<void> test_th = std::async(tests);
+
 	input();
 }
 
