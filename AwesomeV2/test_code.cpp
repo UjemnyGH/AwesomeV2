@@ -10,6 +10,7 @@
 #include "Window.hpp"
 #include "CollisionHandler.hpp"
 #include "Raycast.hpp"
+#include "Text.hpp"
 
 aws::CollisionHandler ch;
 aws::Raycast rc;
@@ -52,6 +53,7 @@ aws::Renderer ground2;
 aws::Renderer ground3;
 aws::Renderer point1;
 aws::Renderer terrainMesh;
+aws::Text text;
 
 void mouse(GLFWwindow* window, double xpos, double ypos) {
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS)
@@ -172,6 +174,9 @@ void Wnd::Start() {
 	point1.SetRendererData(aws::cube);
 	point1.SetScale({ 0.1f, 0.1f, 0.1f });
 
+	text.Init();
+	text.SetText("Hello world!");
+
 	ground.Init(aws::LoadShader("light.vert", aws::ShadType::vertex), aws::LoadShader("light.frag", aws::ShadType::fragment));
 	ground.SetRendererData(aws::cube);
 	ground.SetColorByID(0, { 0.0f, 0.75f, 0.0f, 1.0f });
@@ -226,6 +231,8 @@ void Wnd::Update() {
 	point1.Render(projection, view);
 
 	terrainMesh.Render(projection, view);
+
+	text.Render();
 	
 	std::future<void> phys = std::async(physics);
 }

@@ -84,6 +84,34 @@ namespace aws
 		"Color = test_Color;\n"
 		"}\n";
 
+	InShader text_vs =
+		"#version 450 core\n"
+		"uniform mat4 transform;\n"
+		"layout(location = 0)in vec4 aPos;\n"
+		"layout(location = 1)in vec4 aCol;\n"
+		"layout(location = 2)in vec2 aTexCoords;\n"
+		"out vec4 Col;\n"
+		"out vec2 TexCoords;\n"
+		"void main()\n"
+		"{\n"
+		"gl_Position = transform * aPos;\n"
+		"Col = aCol;\n"
+		"TexCoords = aTexCoords;\n"
+		"}\n";
+
+	InShader text_fs =
+		"#version 450 core\n"
+		"uniform sampler2D Texture;\n"
+		"in vec4 Col;\n"
+		"in vec2 TexCoords;\n"
+		"out vec4 Color;\n"
+		"void main()\n"
+		"{\n"
+		"vec4 test_Color = texture(Texture, TexCoords) * Col;\n"
+		"if(test_Color.w < 0.1) discard;\n"
+		"Color = test_Color;\n"
+		"}\n";
+
 	/**
 	 * @brief Type of buffer(general or element)
 	 * 
@@ -1724,6 +1752,14 @@ namespace aws
 		return shader;
 	}
 
+	uint32_t LoadShaderFromMemory(InShader sh, ShadType type) {
+		uint32_t shader = glCreateShader(type);
+		glShaderSource(shader, 1, &sh, nullptr);
+		glCompileShader(shader);
+
+		return shader;
+	}
+
 	Aws_Vector to_vec(float _value) {
 		return Aws_Vector(_value, _value, _value, _value);
 	}
@@ -1747,6 +1783,48 @@ namespace aws
 		}
 
 	}*/
+
+	/**
+	 * @brief Hard coded square data
+	 *
+	 */
+	const Aws_RenderedData square = Aws_RenderedData(
+		{
+			1.0f, 1.0f, 1.0f,
+			-1.0f, 1.0f, 1.0f,
+			1.0f, -1.0f, 1.0f,
+
+			-1.0f, 1.0f, 1.0f,
+			1.0f, -1.0f, 1.0f,
+			-1.0f, -1.0f, 1.0f
+		},
+		{
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f,
+			0.86f, 0.86f, 0.86f, 1.0f
+		},
+		{
+			1.0f, 1.0f,
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+
+			0.0f, 1.0f,
+			1.0f, 0.0f,
+			0.0f, 0.0f
+		},
+		{
+			0.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f
+		}
+		);
 
 	/**
 	 * @brief Hard coded cube data

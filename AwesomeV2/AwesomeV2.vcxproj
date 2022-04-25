@@ -169,6 +169,7 @@
     <ClInclude Include="Raycast.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Text.hpp" />
     <ClInclude Include="Window.hpp" />
   </ItemGroup>
   <ItemGroup>

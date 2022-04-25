@@ -383,120 +383,121 @@ P:\VS project\AwesomeV2\AwesomeV2\Model_loader.hpp(656,76): warning C4244: 'argu
 P:\VS project\AwesomeV2\AwesomeV2\Model_loader.hpp(658,72): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
 P:\VS project\AwesomeV2\AwesomeV2\Model_loader.hpp(659,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
 P:\VS project\AwesomeV2\AwesomeV2\Model_loader.hpp(660,76): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(161,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(170,22): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(383,64): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(384,80): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(189,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(198,22): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(411,64): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(412,80): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(384,72): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(412,72): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(385,88): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(413,88): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(385,80): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(413,80): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(385,72): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(413,72): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(386,96): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(414,96): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(386,88): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(414,88): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(386,80): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(414,80): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(386,72): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(414,72): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(388,56): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(389,72): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(416,56): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(417,72): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(389,64): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(417,64): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(390,80): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(418,80): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(390,72): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(418,72): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(390,64): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(418,64): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(391,88): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(419,88): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(391,80): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(419,80): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(391,72): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(419,72): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(391,64): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(419,64): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
           with
           [
               T=double
           ]
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1512,98): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1512,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1512,24): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1641,21): warning C4018: '<': signed/unsigned mismatch
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1732,46): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1732,38): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1732,30): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1732,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1540,98): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1540,47): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1540,24): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1669,21): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1768,46): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1768,38): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1768,30): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Core.hpp(1768,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(315,22): warning C4018: '<': signed/unsigned mismatch
 P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(353,61): warning C4018: '<': signed/unsigned mismatch
 P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(513,45): warning C4018: '<': signed/unsigned mismatch
 P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(531,45): warning C4018: '<': signed/unsigned mismatch
 P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(971,22): warning C4018: '<': signed/unsigned mismatch
-P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(1030,58): warning C4244: 'return': conversion from '_Ty' to 'unsigned int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Renderer.hpp(1040,58): warning C4244: 'return': conversion from '_Ty' to 'unsigned int', possible loss of data
           with
           [
               _Ty=float
           ]
-P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(59,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(60,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(62,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(63,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\Text.hpp(476,23): warning C4018: '<': signed/unsigned mismatch
+P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(61,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(62,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(64,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+P:\VS project\AwesomeV2\AwesomeV2\test_code.cpp(65,11): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
   AwesomeV2.vcxproj -> P:\VS project\AwesomeV2\Debug\AwesomeV2.exe
