@@ -105,9 +105,10 @@ namespace aws
 		"in vec4 Col;\n"
 		"in vec2 TexCoords;\n"
 		"out vec4 Color;\n"
+		"float INEZ(float val) { if(val < 0.1)\n return 0.0;\n else\n return 1.0; }\n"
 		"void main()\n"
 		"{\n"
-		"vec4 test_Color = texture(Texture, TexCoords) * Col;\n"
+		"vec4 test_Color = vec4(INEZ(texture(Texture, TexCoords).w), INEZ(texture(Texture, TexCoords).w), INEZ(texture(Texture, TexCoords).w), texture(Texture, TexCoords).w) * Col;\n"
 		"if(test_Color.w < 0.1) discard;\n"
 		"Color = test_Color;\n"
 		"}\n";
@@ -977,6 +978,14 @@ namespace aws
 			glUseProgram(0);
 		}
 
+		void uniform(const unsigned int program, const std::string place, unsigned int number) {
+			glUseProgram(program);
+
+			glUniform1i(glGetUniformLocation(program, place.c_str()), number);
+
+			glUseProgram(0);
+		}
+
 		/**
 		 * @brief Delete texture
 		 * 
@@ -1790,13 +1799,13 @@ namespace aws
 	 */
 	const Aws_RenderedData square = Aws_RenderedData(
 		{
-			1.0f, 1.0f, 1.0f,
-			-1.0f, 1.0f, 1.0f,
-			1.0f, -1.0f, 1.0f,
+			1.0f, 1.0f, 0.0f,
+			-1.0f, 1.0f, 0.0f,
+			1.0f, -1.0f, 0.0f,
 
-			-1.0f, 1.0f, 1.0f,
-			1.0f, -1.0f, 1.0f,
-			-1.0f, -1.0f, 1.0f
+			-1.0f, 1.0f, 0.0f,
+			1.0f, -1.0f, 0.0f,
+			-1.0f, -1.0f, 0.0f
 		},
 		{
 			0.86f, 0.86f, 0.86f, 1.0f,

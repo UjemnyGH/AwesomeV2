@@ -339,16 +339,12 @@ namespace aws
 			tex_coords_buf.init();
 			atlas.init();
 
-			shader.use();
-
-			atlas.uniform(shader.ID, "Texture");
-
-			shader.unuse();
-
 			vertices_buf.bind(BuffType::general, _rendered.data.vertices, 0, 3);
 			color_buf.bind(BuffType::general, _rendered.data.color, 1, 4);
 			tex_coords_buf.bind(BuffType::general, _rendered.data.texture_coordinates, 2, 2);
 			atlas.bind(characters_atlas, GL_REPEAT);
+
+			atlas.uniform(shader.ID, "Texture", 0);
 
 			vao.unbind();
 		}
@@ -361,7 +357,7 @@ namespace aws
 
 			glUniformMatrix4fv(glGetUniformLocation(shader.ID, "transform"), 1, GL_FALSE, glm::value_ptr(projection * view * transform));
 
-			glDrawArrays(GL_TRIANGLES, 0, _rendered.count * (_rendered.sizeID / 3));
+			glDrawArrays(GL_TRIANGLES, 0, _rendered.count * 3);
 
 			vao.unbind();
 			shader.unuse();
@@ -370,6 +366,7 @@ namespace aws
 		void SetText(std::string text) {
 			if (text != _text)
 			{
+				_rendered.count = 0;
 				_rendered.data.vertices.clear();
 				_rendered.data.color.clear();
 				_rendered.data.texture_coordinates.clear();
@@ -377,36 +374,89 @@ namespace aws
 
 				const char* text_char = text.c_str();
 
-				for (; _rendered.count < sizeof(text_char) / sizeof(text_char[0]); _rendered.count++)
+				for (; _rendered.count < text.size(); _rendered.count++)
 				{
 					int text_int = (int)text_char[_rendered.count];
 
-					_rendered.data.vertices.push_back(square.vertices[0] + (float)_rendered.count);
-					_rendered.data.vertices.push_back(square.vertices[1] + (float)_rendered.count);
-					_rendered.data.vertices.push_back(square.vertices[2] + (float)_rendered.count);
+					std::cout << text_int << ' ' << (unsigned char)text_int << '\n';
 
-					_rendered.data.vertices.push_back(square.vertices[3] + (float)_rendered.count);
-					_rendered.data.vertices.push_back(square.vertices[4] + (float)_rendered.count);
-					_rendered.data.vertices.push_back(square.vertices[5] + (float)_rendered.count);
+					_rendered.data.vertices.push_back(0.05f + (0.05f * _rendered.count));
+					_rendered.data.vertices.push_back(0.05f);
+					_rendered.data.vertices.push_back(0.0f);
 
-					_rendered.data.vertices.push_back(square.vertices[6] + (float)_rendered.count);
-					_rendered.data.vertices.push_back(square.vertices[7] + (float)_rendered.count);
-					_rendered.data.vertices.push_back(square.vertices[8] + (float)_rendered.count);
+					_rendered.data.vertices.push_back(-0.05f + (0.05f * _rendered.count));
+					_rendered.data.vertices.push_back(0.05f);
+					_rendered.data.vertices.push_back(0.0f);
 
-					_rendered.data.vertices.push_back(square.vertices[9] + (float)_rendered.count);
-					_rendered.data.vertices.push_back(square.vertices[10] + (float)_rendered.count);
-					_rendered.data.vertices.push_back(square.vertices[11] + (float)_rendered.count);
+					_rendered.data.vertices.push_back(0.05f + (0.05f * _rendered.count));
+					_rendered.data.vertices.push_back(-0.05f);
+					_rendered.data.vertices.push_back(0.0f);
 
-					_rendered.data.vertices.push_back(square.vertices[12] + (float)_rendered.count);
-					_rendered.data.vertices.push_back(square.vertices[13] + (float)_rendered.count);
-					_rendered.data.vertices.push_back(square.vertices[14] + (float)_rendered.count);
+					_rendered.data.vertices.push_back(-0.05f + (0.05f * _rendered.count));
+					_rendered.data.vertices.push_back(0.05f);
+					_rendered.data.vertices.push_back(0.0f);
 
-					_rendered.data.vertices.push_back(square.vertices[15] + (float)_rendered.count);
-					_rendered.data.vertices.push_back(square.vertices[16] + (float)_rendered.count);
-					_rendered.data.vertices.push_back(square.vertices[17] + (float)_rendered.count);
+					_rendered.data.vertices.push_back(0.05f + (0.05f * _rendered.count));
+					_rendered.data.vertices.push_back(-0.05f);
+					_rendered.data.vertices.push_back(0.0f);
 
-					std::move(square.color.begin(), square.color.end(), std::back_inserter(_rendered.data.color));
-					std::move(square.normals.begin(), square.normals.end(), std::back_inserter(_rendered.data.normals));
+					_rendered.data.vertices.push_back(-0.05f + (0.05f * _rendered.count));
+					_rendered.data.vertices.push_back(-0.05f);
+					_rendered.data.vertices.push_back(0.0f);
+
+					_rendered.data.normals.push_back(0.0f);
+					_rendered.data.normals.push_back(0.0f);
+					_rendered.data.normals.push_back(1.0f);
+
+					_rendered.data.normals.push_back(0.0f);
+					_rendered.data.normals.push_back(0.0f);
+					_rendered.data.normals.push_back(1.0f);
+
+					_rendered.data.normals.push_back(0.0f);
+					_rendered.data.normals.push_back(0.0f);
+					_rendered.data.normals.push_back(1.0f);
+
+					_rendered.data.normals.push_back(0.0f);
+					_rendered.data.normals.push_back(0.0f);
+					_rendered.data.normals.push_back(1.0f);
+
+					_rendered.data.normals.push_back(0.0f);
+					_rendered.data.normals.push_back(0.0f);
+					_rendered.data.normals.push_back(1.0f);
+
+					_rendered.data.normals.push_back(0.0f);
+					_rendered.data.normals.push_back(0.0f);
+					_rendered.data.normals.push_back(1.0f);
+
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
+					_rendered.data.color.push_back(1.0f);
 
 					_rendered.data.texture_coordinates.push_back((characters_map[text_int].x + char_mul) / 512.0f);
 					_rendered.data.texture_coordinates.push_back((characters_map[text_int].y + char_mul) / 512.0f);

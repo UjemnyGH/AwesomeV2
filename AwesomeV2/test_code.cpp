@@ -48,7 +48,6 @@ aws::Camera camera;
 
 aws::Vector point;
 
-aws::Renderer ground;
 aws::Renderer ground2;
 aws::Renderer ground3;
 aws::Renderer point1;
@@ -101,20 +100,6 @@ void Wnd::input() {
 	if (GetKey(aws::Keys::SPACE) && inGround)
 	{
 		acceleration = -2.0f;
-	}
-
-	if (GetKey(aws::Keys::R) && aws::time.GetTime() > old + 2.0f)
-	{
-		ground.Terminate();
-
-		ground.Init(aws::LoadShader("water.vert", aws::ShadType::vertex), aws::LoadShader("water.frag", aws::ShadType::fragment));
-		ground.AddTexture("white.png");
-		ground.SetTextureByID(0, 1);
-		ground.SetColorByID(0, { 0.0f, 0.5f, 0.0f, 1.0f });
-
-		ground.SetScale({ 10000.0f, 0.1f, 10000.0f });
-
-		old = aws::time.GetTime();
 	}
 
 	speed = normal_speed;
@@ -175,19 +160,11 @@ void Wnd::Start() {
 	point1.SetScale({ 0.1f, 0.1f, 0.1f });
 
 	text.Init();
-	text.SetText("Hello world!");
-
-	ground.Init(aws::LoadShader("light.vert", aws::ShadType::vertex), aws::LoadShader("light.frag", aws::ShadType::fragment));
-	ground.SetRendererData(aws::cube);
-	ground.SetColorByID(0, { 0.0f, 0.75f, 0.0f, 1.0f });
-	ground.SetScale({ 1000.0f, 0.1f, 1000.0f });
-	ground.SetUVMapByID(0, 200.0f);
-	ground.AddTexture("data/textures/grass.png");
-	ground.SetTextureByID(0, 0);
+	text.SetText("QWERTYUIOPASDFGHJKLZXCVBNM");
 
 	ground2.Init(aws::LoadShader("light.vert", aws::ShadType::vertex), aws::LoadShader("light.frag", aws::ShadType::fragment));
 	ground2.SetRendererData(aws::cube);
-	ground2.AddTexture("data/textures/awesomev2.png");
+	ground2.AddTexture("data/textures/characters.png");
 
 	ground2.SetScale({ 10.0f, 10.0f, 10.0f });
 	ground2.SetPosition({ 0.0f, 20.0f, 0.0f });
@@ -210,8 +187,6 @@ void Wnd::Update() {
 	view = glm::lookAt(camera.GetCameraPosition().changeV3() + cameraFront.changeV3(), camera.GetCameraPosition().changeV3(), glm::vec3(0.0f, 1.0f, 0.0f));
 
 	glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
-	
-	ground.Render(projection, view);
 	
 	ground2.SetFloat3("cameraPos", camera.GetCameraPosition());
 	ground2.SetFloatMat4("view", 1, glm::value_ptr(view));
