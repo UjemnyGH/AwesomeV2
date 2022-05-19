@@ -440,8 +440,7 @@ namespace aws
 				objects_data.axis_helper[ID].ry = rotation.y;
 				objects_data.axis_helper[ID].rz = rotation.z;
 
-				Vector rot_cart = CartToSphere(Radians(rotation.x), Radians(rotation.y), Radians(rotation.z));
-				Vector rot = SphereToCart(rot_cart.x, rot_cart.y, rot_cart.z);
+				Vector rot = NormalizedRotationVector({objects_data.axis_helper[ID].rx, objects_data.axis_helper[ID].ry, objects_data.axis_helper[ID].rz});
 
 				for (size_t i = 0; i < objects_data.sizeID; i++)
 				{
@@ -468,13 +467,13 @@ namespace aws
 
 			if (objects_data.textureCount < 32)
 			{
-				texture[objects_data.textureCount].bind(name, GL_REPEAT);
+				texture[objects_data.textureCount].bind(pathRoot + name, GL_REPEAT);
 
 				objects_data.textureCount++;
 			}
 			else
 			{
-				texture[31].bind(name, GL_REPEAT);
+				texture[31].bind(pathRoot + name, GL_REPEAT);
 			}
 
 			vao.unbind();
@@ -491,11 +490,11 @@ namespace aws
 
 			if (textureID < 32)
 			{
-				texture[textureID].bind(name, GL_REPEAT);
+				texture[textureID].bind(pathRoot + name, GL_REPEAT);
 			}
 			else
 			{
-				texture[31].bind(name, GL_REPEAT);
+				texture[31].bind(pathRoot + name, GL_REPEAT);
 			}
 
 			vao.unbind();

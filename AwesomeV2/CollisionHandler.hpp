@@ -47,6 +47,10 @@ namespace aws
 			return false;
 			//return AABBToMesh(_aabb_pos, _aabb_scale, _mesh, _mesh_pos, _mesh_scale);
 		}
+
+		bool BoxCollision(Vector _position1, Vector _scale1, Vector _rotation1, Vector _position2, Vector _scale2, Vector _rotation2) {
+			return false;
+		}
 	};
 
 	typedef Aws_CollisionHandler CollisionHandler;

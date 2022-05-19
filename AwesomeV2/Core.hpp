@@ -20,6 +20,12 @@
 
 namespace aws 
 {
+	#if defined(__linux)
+		const std::string pathRoot = "AwesomeV2/";
+	#elif defined(_WIN32)
+		const std::string pathRoot = "";
+	#endif
+
 	/**
 	 * @brief const char*
 	 * 
@@ -1445,8 +1451,17 @@ namespace aws
 		return _val;
 	}
 
+	/**
+	 * @brief Get the Closest object
+	 * 
+	 * @tparam T 
+	 * @param val1 
+	 * @param val2 
+	 * @param target 
+	 * @return T 
+	 */
 	template<typename T>
-	int getClosest(T val1, T val2, T target)
+	T getClosest(T val1, T val2, T target)
 	{
 		if (target - val1 >= val2 - target)
 			return val2;
@@ -1454,6 +1469,14 @@ namespace aws
 			return val1;
 	}
 
+	/**
+	 * @brief Gets and returns closest match of all array
+	 * 
+	 * @tparam T 
+	 * @param arr Array of values
+	 * @param target Targeted value
+	 * @return T 
+	 */
 	template<typename T>
 	T ClosestMatch(std::vector<T> arr, T target) {
 		size_t index_beg = 0;
@@ -1505,6 +1528,15 @@ namespace aws
 		return beg_closest;
 	}
 
+	/**
+	 * @brief Returns value only between range
+	 * 
+	 * @tparam T 
+	 * @param _min Min number
+	 * @param _max Max number
+	 * @param _value 
+	 * @return T 
+	 */
 	template<typename T>
 	T clamp(T _min, T _max, T _value) {
 		if (_value > _max)
@@ -1522,21 +1554,6 @@ namespace aws
 	}
 
 	/*
-	 * @brief (OLD)Returns rotation from input
-	 * 
-	 * @param _Rotation1
-	 */
-	Aws_Vector rotation(Aws_Vector _Rotation1) {
-		Aws_Vector Rotation1 = {
-			cos(_Rotation1.y) * cos(_Rotation1.z) + sin(_Rotation1.x) * sin(_Rotation1.y) * cos(_Rotation1.z) - cos(_Rotation1.x) * sin(_Rotation1.z) + cos(_Rotation1.x) * sin(_Rotation1.y) * cos(_Rotation1.z) + sin(_Rotation1.x) * sin(_Rotation1.z),
-			cos(_Rotation1.y) * sin(_Rotation1.z) + sin(_Rotation1.x) * sin(_Rotation1.y) * sin(_Rotation1.z) - cos(_Rotation1.x) * cos(_Rotation1.z) + cos(_Rotation1.x) * sin(_Rotation1.y) * sin(_Rotation1.z) + sin(_Rotation1.x) * cos(_Rotation1.z),
-			-sin(_Rotation1.y) + sin(_Rotation1.x) * cos(_Rotation1.y) + cos(_Rotation1.x) * cos(_Rotation1.y)
-		};
-
-		return Rotation1;
-	}
-
-	/*
 	 * @brief Sphere to cartesian coordinates
 	 *
 	 * 
@@ -1549,10 +1566,12 @@ namespace aws
 		return Aws_Vector(pow(tan(_y / _x), -1), pow(tan(sqrt(pow(_x, 2) + pow(_y, 2)) / _z), -1), sqrt(pow(_x, 2) + pow(_y, 2) + pow(_z, 2)));
 	}
 
-	float Radians(float _val) {
-		return sin(_val) * cos(_val);
-	}
-
+	/**
+	 * @brief Gives average of all vectors
+	 * 
+	 * @param _vecs 
+	 * @return Aws_Vector 
+	 */
 	Aws_Vector avgVector(std::vector<Aws_Vector> _vecs) {
 		Aws_Vector _avg_vec = {0.0f, 0.0f, 0.0f, 0.0f};
 
@@ -1592,6 +1611,157 @@ namespace aws
 		return (-dot2D(_first_nor) - dot2D(_second_nor)) / dot2D(_third_nor);
 	}*/
 
+	Aws_Vector to_vec(float _value) {
+		return Aws_Vector(_value, _value, _value, _value);
+	}
+
+	Aws_DVector to_dvec(double _value) {
+		return Aws_DVector(_value, _value, _value, _value);
+	}
+
+	/**
+	 * @brief Convert degrees to radians
+	 * 
+	 * @tparam T 
+	 * @param degrees 
+	 * @return T 
+	 */
+	template<typename T>
+	T to_radians(T degrees) {
+		return degrees * static_cast<T>(0.01745329251994329576923690768489);
+	}
+
+	/**
+	 * @brief Convert radians to degrees
+	 * 
+	 * @tparam T 
+	 * @param radians 
+	 * @return T 
+	 */
+	template<typename T>
+	T to_degrees(T radians) {
+		return radians * static_cast<T>(57.295779513082320876798154814105);
+	}
+	
+	/**
+	 * @brief Gives max value of 2 parameters
+	 * 
+	 * @tparam T 
+	 * @param _v1 value 1
+	 * @param _v2 value 2
+	 * @return T 
+	 */
+	template<typename T>
+	T Max(T _v1, T _v2) {
+		if(_v1 > _v2)
+		{
+			return _v1;
+		}
+		else if(_v2 > _v1)
+		{
+			return _v2;
+		}
+		else if(_v1 == _v2)
+		{
+			return _v1;
+		}
+
+		return -1.0f;
+	}
+
+	/**
+	 * @brief Gives min value of 2 parameters
+	 * 
+	 * @tparam T 
+	 * @param _v1 value 1
+	 * @param _v2 value 2
+	 * @return T 
+	 */
+	template<typename T>
+	T Min(T _v1, T _v2) {
+		if(_v1 > _v2)
+		{
+			return _v2;
+		}
+		else if(_v2 > _v1)
+		{
+			return _v1;
+		}
+		else if(_v1 == _v2)
+		{
+			return _v1;
+		}
+
+		return -1.0f;
+	}
+
+	/**
+	 * @brief Mormalize vector parameters to 1 and smaller
+	 * 
+	 * @param vector Vector
+	 * @return Aws_Vector 
+	 */
+	Aws_Vector NormalizeVector(Aws_Vector vector) {
+		float max_value = Max(Max(vector.x, vector.y), vector.z);
+
+		Aws_Vector normalized = vector / to_vec(max_value);
+
+		return normalized;
+	}
+
+	/**
+	 * @brief Normalize vector parameters to 1 and smaller
+	 * 
+	 * @param vector Double type vector
+	 * @return Aws_DVector 
+	 */
+	Aws_DVector NormalizeDVector(Aws_DVector vector) {
+		float max_value = Max(Max(vector.x, vector.y), vector.z);
+
+		Aws_DVector normalized = vector / to_dvec(max_value);
+
+		return normalized;
+	}
+
+	/**
+	 * @brief Gives unnormalized point of rotation
+	 * 
+	 * @param radians Type input in radians or convert it into deegres
+	 * @return Aws_Vector 
+	 */
+	Aws_Vector RotationVector(Aws_Vector radians) {
+		return Aws_Vector(sin(radians.z) + sin(radians.y), sin(radians.x) + cos(radians.y), cos(radians.z) + cos(radians.x));
+	}
+
+	/**
+	 * @brief Gives unnormalized point of rotation
+	 * 
+	 * @param radians Type input in radians or convert it into deegres
+	 * @return Aws_DVector 
+	 */
+	Aws_DVector RotationDVector(Aws_DVector radians) {
+		return Aws_DVector(sin(radians.z) + sin(radians.y), sin(radians.x) + cos(radians.y), cos(radians.z) + cos(radians.x));
+	}
+
+	/**
+	 * @brief Gives normalized point of rotation (theoreticly if you multiply every element by this you should have rotation)
+	 * 
+	 * @param radians Type input in radians or convert it into deegres
+	 * @return Aws_Vector 
+	 */
+	Aws_Vector NormalizedRotationVector(Aws_Vector radians) {
+		return NormalizeVector(Aws_Vector(sin(radians.z) + sin(radians.y), sin(radians.x) + cos(radians.y), cos(radians.z) + cos(radians.x)));
+	}
+
+	/**
+	 * @brief Gives normalized point of rotation (theoreticly if you multiply every element by this you should have rotation)
+	 * 
+	 * @param radians Type input in radians or convert it into deegres
+	 * @return Aws_DVector 
+	 */
+	Aws_DVector NormalizedRotationDVector(Aws_DVector radians) {
+		return NormalizeDVector(Aws_DVector(sin(radians.z) + sin(radians.y), sin(radians.x) + cos(radians.y), cos(radians.z) + cos(radians.x)));
+	}
 
 	/**
 	 * @brief Checks 2 unrotatable box if they collide
@@ -1622,48 +1792,6 @@ namespace aws
         return collisionX && collisionY && collisionZ;
     }
 
-	/*
-	 * @brief Checks 2 box if they collide(may not work now)
-	 * 
-	 * @param _Position1
-	 * @param _Scale1
-	 * @param _Rotation1
-	 * @param _Position2
-	 * @param _Scale2
-	 * @param _Rotation2
-	 * 
-	 */
-	bool CheckOBBBoxCollision(glm::vec3 _Position1, glm::vec3 _Scale1, glm::vec3 _Rotation1, glm::vec3 _Position2, glm::vec3 _Scale2, glm::vec3 _Rotation2) {
-		glm::vec3 Position1 = _Position1 - _Scale1;
-		glm::vec3 Scale1 = _Scale1 * glm::vec3(2.0f, 2.0f, 2.0f);
-
-		glm::vec3 Position2 = _Position2 - _Scale2;
-		glm::vec3 Scale2 = _Scale2 * glm::vec3(2.0f, 2.0f, 2.0f);
-
-		glm::vec3 Rotation1 = glm::vec3(
-			cos(_Rotation1.y) * cos(_Rotation1.z) + sin(_Rotation1.x) * sin(_Rotation1.y) * cos(_Rotation1.z) - cos(_Rotation1.x) * sin(_Rotation1.z) + cos(_Rotation1.x) * sin(_Rotation1.y) * cos(_Rotation1.z) + sin(_Rotation1.x) * sin(_Rotation1.z),
-			cos(_Rotation1.y) * sin(_Rotation1.z) + sin(_Rotation1.x) * sin(_Rotation1.y) * sin(_Rotation1.z) - cos(_Rotation1.x) * cos(_Rotation1.z) + cos(_Rotation1.x) * sin(_Rotation1.y) * sin(_Rotation1.z) + sin(_Rotation1.x) * cos(_Rotation1.z),
-			-sin(_Rotation1.y) + sin(_Rotation1.x) * cos(_Rotation1.y) + cos(_Rotation1.x) * cos(_Rotation1.y)
-		);
-
-		glm::vec3 Rotation2 = glm::vec3(
-			cos(_Rotation2.y) * cos(_Rotation2.z) + sin(_Rotation2.x) * sin(_Rotation2.y) * cos(_Rotation2.z) - cos(_Rotation2.x) * sin(_Rotation2.z) + cos(_Rotation2.x) * sin(_Rotation2.y) * cos(_Rotation2.z) + sin(_Rotation2.x) * sin(_Rotation2.z),
-			cos(_Rotation2.y) * sin(_Rotation2.z) + sin(_Rotation2.x) * sin(_Rotation2.y) * sin(_Rotation2.z) - cos(_Rotation2.x) * cos(_Rotation2.z) + cos(_Rotation2.x) * sin(_Rotation2.y) * sin(_Rotation2.z) + sin(_Rotation2.x) * cos(_Rotation2.z),
-			-sin(_Rotation2.y) + sin(_Rotation2.x) * cos(_Rotation2.y) + cos(_Rotation2.x) * cos(_Rotation2.y)
-		);
-
-		bool collisionX = Position1.x + Scale1.x + Rotation1.x >= Position2.x + Rotation2.x &&
-			Position2.x + Scale2.x + Rotation2.x >= Position1.x;
-
-		bool collisionY = Position1.y + Scale1.y + Rotation1.y >= Position2.y + Rotation2.y &&
-			Position2.y + Scale2.y + Rotation2.y >= Position1.y;
-
-		bool collisionZ = Position1.z + Scale1.z + Rotation1.z >= Position2.z + Rotation2.z &&
-			Position2.z + Scale2.z + Rotation2.z >= Position1.z;
-
-		return collisionX && collisionY && collisionZ;
-	}
-
 	/**
 	 * @brief Loads .obj model to memory
 	 * 
@@ -1671,7 +1799,7 @@ namespace aws
 	 * @return Aws_RenderedData 
 	 */
 	Aws_RenderedData LoadOBJModel(const std::string& location) {
-		BufferMeshData meshData = LoadMeshBuffer(location);
+		BufferMeshData meshData = LoadMeshBuffer(pathRoot + location);
 
 		std::vector<float> __Fast_color;
 
@@ -1732,7 +1860,7 @@ namespace aws
 	uint32_t LoadShader(const std::string& path, ShadType type) {
 		std::ifstream f;
 
-		f.open(path.c_str(), std::ios_base::binary);
+		f.open(pathRoot + path, std::ios_base::binary);
 
 		if (f.bad())
 		{
@@ -1767,14 +1895,6 @@ namespace aws
 		glCompileShader(shader);
 
 		return shader;
-	}
-
-	Aws_Vector to_vec(float _value) {
-		return Aws_Vector(_value, _value, _value, _value);
-	}
-
-	Aws_DVector to_dvec(double _value) {
-		return Aws_DVector(_value, _value, _value, _value);
 	}
 
 	/*Aws_RenderedData LoadGLTFModel(const std::string location) {
