@@ -1723,44 +1723,49 @@ namespace aws
 		return normalized;
 	}
 
-	/**
-	 * @brief Gives unnormalized point of rotation
-	 * 
-	 * @param radians Type input in radians or convert it into deegres
-	 * @return Aws_Vector 
-	 */
-	Aws_Vector RotationVector(Aws_Vector radians) {
-		return Aws_Vector(sin(radians.z) + sin(radians.y), sin(radians.x) + cos(radians.y), cos(radians.z) + cos(radians.x));
+	glm::mat3 AngleToMatrix(Aws_Vector _angle) {
+		glm::mat3 r_x = glm::mat3(
+			1.0f, 0.0f, 0.0f,
+			0.0f, cos(_angle.x), -sin(_angle.x),
+			0.0f, sin(_angle.x), cos(_angle.x)
+			);
+
+		glm::mat3 r_y = glm::mat3(
+			cos(_angle.y), 0.0f, sin(_angle.y),
+			0.0f, 1.0f, 0.0f,
+			-sin(_angle.y), 0.0f, cos(_angle.y)
+			);
+
+		glm::mat3 r_z = glm::mat3(
+			cos(_angle.z), -sin(_angle.z), 0.0f,
+			sin(_angle.z), cos(_angle.z), 0.0f,
+			0.0f, 0.0f, 1.0f
+			);
+
+		return r_z * r_y * r_x;
 	}
 
-	/**
-	 * @brief Gives unnormalized point of rotation
-	 * 
-	 * @param radians Type input in radians or convert it into deegres
-	 * @return Aws_DVector 
-	 */
-	Aws_DVector RotationDVector(Aws_DVector radians) {
-		return Aws_DVector(sin(radians.z) + sin(radians.y), sin(radians.x) + cos(radians.y), cos(radians.z) + cos(radians.x));
-	}
+	Aws_Vector MatrixToAngle(glm::mat3 _rotation_matrix) {
+		float sy = sqrt(_rotation_matrix[0][0] * _rotation_matrix[0][0] + _rotation_matrix[1][0] * _rotation_matrix[1][0]);
 
-	/**
-	 * @brief Gives normalized point of rotation (theoreticly if you multiply every element by this you should have rotation)
-	 * 
-	 * @param radians Type input in radians or convert it into deegres
-	 * @return Aws_Vector 
-	 */
-	Aws_Vector NormalizedRotationVector(Aws_Vector radians) {
-		return NormalizeVector(Aws_Vector(sin(radians.z) + sin(radians.y), sin(radians.x) + cos(radians.y), cos(radians.z) + cos(radians.x)));
-	}
+		bool singular = sy < 1e-6;
 
-	/**
-	 * @brief Gives normalized point of rotation (theoreticly if you multiply every element by this you should have rotation)
-	 * 
-	 * @param radians Type input in radians or convert it into deegres
-	 * @return Aws_DVector 
-	 */
-	Aws_DVector NormalizedRotationDVector(Aws_DVector radians) {
-		return NormalizeDVector(Aws_DVector(sin(radians.z) + sin(radians.y), sin(radians.x) + cos(radians.y), cos(radians.z) + cos(radians.x)));
+		Aws_Vector angle;
+
+		if(!singular)
+		{
+			angle.x = atan2(_rotation_matrix[2][1], _rotation_matrix[2][2]);
+			angle.y = atan2(-_rotation_matrix[2][0], sy);
+			angle.z = atan2(_rotation_matrix[1][0], _rotation_matrix[0][0]);
+		}
+		else
+		{
+			angle.x = atan2(_rotation_matrix[1][2], _rotation_matrix[1][1]);
+			angle.y = atan2(-_rotation_matrix[2][0], sy);
+			angle.z = 0.0f;
+		}
+
+		return angle;
 	}
 
 	/**

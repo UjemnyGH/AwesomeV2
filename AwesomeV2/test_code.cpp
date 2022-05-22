@@ -192,9 +192,9 @@ void Wnd::Update() {
 	ground2.SetFloatMat4("view", 1, glm::value_ptr(view));
 	ground2.SetFloatMat4("projection", 1, glm::value_ptr(projection));
 
-	ground2.SetRotationByID(0, { glm::radians(w), glm::radians(w), 1.0f });
+	ground2.SetRotationByID(0, { glm::radians(w), glm::radians(w), glm::radians(w) });
 
-	w += aws::time.GetDeltaTime();
+	w += aws::time.GetDeltaTime() * 10;
 
 	if (w > 360.0f)
 	{

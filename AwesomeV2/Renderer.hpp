@@ -440,13 +440,15 @@ namespace aws
 				objects_data.axis_helper[ID].ry = rotation.y;
 				objects_data.axis_helper[ID].rz = rotation.z;
 
-				Vector rot = NormalizedRotationVector({objects_data.axis_helper[ID].rx, objects_data.axis_helper[ID].ry, objects_data.axis_helper[ID].rz});
+				glm::mat3 rot_mat = AngleToMatrix({objects_data.axis_helper[ID].rx, objects_data.axis_helper[ID].ry, objects_data.axis_helper[ID].rz});
+
+				Vector rot = MatrixToAngle(rot_mat);
 
 				for (size_t i = 0; i < objects_data.sizeID; i++)
 				{
-					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = data.vertices[i * 3 + 0] * objects_data.axis_helper[ID].sx + objects_data.axis_helper[ID].px + (rot.x * objects_data.moved_vertices[i * 3 + 0]);
-					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = data.vertices[i * 3 + 1] * objects_data.axis_helper[ID].sy + objects_data.axis_helper[ID].py + (rot.y * objects_data.moved_vertices[i * 3 + 1]);
-					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = data.vertices[i * 3 + 2] * objects_data.axis_helper[ID].sz + objects_data.axis_helper[ID].pz + (rot.z * objects_data.moved_vertices[i * 3 + 2]);
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = (cos(rot.y) - sin(rot.z) * abs(data.vertices[i * 3 + 0])) * data.vertices[i * 3 + 0] * objects_data.axis_helper[ID].sx + objects_data.axis_helper[ID].px;
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = (sin(rot.x) + cos(rot.z) * abs(data.vertices[i * 3 + 1])) * data.vertices[i * 3 + 1] * objects_data.axis_helper[ID].sy + objects_data.axis_helper[ID].py;
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = (cos(rot.x) + sin(rot.y) * abs(data.vertices[i * 3 + 2])) * data.vertices[i * 3 + 2] * objects_data.axis_helper[ID].sz + objects_data.axis_helper[ID].pz;
 				}
 
 				vao.bind();
@@ -604,8 +606,8 @@ namespace aws
 		 * @param a 
 		 */
 		void SetColorByID(unsigned int ID, Vector color) {
-			//if (objects_data.data.color[ID * objects_data.sizeID] != r && objects_data.data.color[ID * objects_data.sizeID + 1] != g && objects_data.data.color[ID * objects_data.sizeID + 2] != b && objects_data.data.color[ID * objects_data.sizeID + 3] != a)
-			//{
+			if (objects_data.data.color[ID * objects_data.sizeID] != color.x || objects_data.data.color[ID * objects_data.sizeID + 1] != color.y || objects_data.data.color[ID * objects_data.sizeID + 2] != color.z || objects_data.data.color[ID * objects_data.sizeID + 3] != color.w)
+			{
 				for (size_t i = 0; i < objects_data.sizeID; i++)
 				{
 					objects_data.data.color[ID * objects_data.sizeID + (i * 4)] = color.x;
@@ -619,7 +621,7 @@ namespace aws
 				color_buf.bind(BuffType::general, objects_data.data.color, 1, 4);
 
 				vao.unbind();
-			//}
+			}
 		}
 
 		/**
