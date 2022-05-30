@@ -149,6 +149,7 @@ void physics() {
 aws::RenderedData s = aws::LoadOBJModel("data/models/testTerrain.obj");
 
 void Wnd::Start() {
+	__debug_file = fopen("Debug.txt", "w+");
 	aws::GlobalLight = { 1.0f, 0.6f, 1.0f, 1.0f };
 	vertical_synchronization = false;
 	glfwSetFramebufferSizeCallback(GetWindow(), framebuffer_call);
@@ -166,7 +167,7 @@ void Wnd::Start() {
 	ground2.SetRendererData(aws::cube);
 	ground2.AddTexture("white.png");
 
-	ground2.SetScale({ 10.0f, 10.0f, 10.0f });
+	ground2.SetScaleByID(0, { 10.0f, 10.0f, 10.0f });
 	ground2.SetPosition({ 0.0f, 20.0f, 0.0f });
 
 	ground3.Init(aws::LoadShader("light.vert", aws::ShadType::vertex), aws::LoadShader("light.frag", aws::ShadType::fragment));
@@ -192,7 +193,7 @@ void Wnd::Update() {
 	ground2.SetFloatMat4("view", 1, glm::value_ptr(view));
 	ground2.SetFloatMat4("projection", 1, glm::value_ptr(projection));
 
-	ground2.SetRotationByID(0, { glm::radians(w), glm::radians(w), glm::radians(w) });
+	ground2.SetRotationByID(0, { aws::to_radians(w), aws::to_radians(w), 0.0f});
 
 	w += aws::time.GetDeltaTime() * 10;
 
@@ -236,6 +237,8 @@ int main()
 	Wnd window;
 
 	window.CreateWindow("Window", 800, 600, nullptr);
+
+	fclose(__debug_file);
 
 	return 0;
 }

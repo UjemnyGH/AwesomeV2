@@ -440,15 +440,17 @@ namespace aws
 				objects_data.axis_helper[ID].ry = rotation.y;
 				objects_data.axis_helper[ID].rz = rotation.z;
 
-				glm::mat3 rot_mat = AngleToMatrix({objects_data.axis_helper[ID].rx, objects_data.axis_helper[ID].ry, objects_data.axis_helper[ID].rz});
-
-				Vector rot = MatrixToAngle(rot_mat);
+				glm::mat3 rot_mat = AngleToMatrix3({objects_data.axis_helper[ID].rx, objects_data.axis_helper[ID].ry, objects_data.axis_helper[ID].rz});
 
 				for (size_t i = 0; i < objects_data.sizeID; i++)
 				{
-					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = (cos(rot.y) - sin(rot.z) * abs(data.vertices[i * 3 + 0])) * data.vertices[i * 3 + 0] * objects_data.axis_helper[ID].sx + objects_data.axis_helper[ID].px;
-					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = (sin(rot.x) + cos(rot.z) * abs(data.vertices[i * 3 + 1])) * data.vertices[i * 3 + 1] * objects_data.axis_helper[ID].sy + objects_data.axis_helper[ID].py;
-					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = (cos(rot.x) + sin(rot.y) * abs(data.vertices[i * 3 + 2])) * data.vertices[i * 3 + 2] * objects_data.axis_helper[ID].sz + objects_data.axis_helper[ID].pz;
+					Vector rot = Matrix3ToValues(rot_mat, { data.vertices[i * 3 + 0], data.vertices[i * 3 + 1], data.vertices[i * 3 + 2] });
+
+					//fprintf(__debug_file, "X: %.2f,\t Y: %.2f,\t Z: %.2f\n", rot.x, rot.y, rot.z);
+
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = data.vertices[i * 3 + 0] * objects_data.axis_helper[ID].sx + objects_data.axis_helper[ID].px + (rot.x * objects_data.axis_helper[ID].sx);
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = data.vertices[i * 3 + 1] * objects_data.axis_helper[ID].sy + objects_data.axis_helper[ID].py + (rot.y * objects_data.axis_helper[ID].sy);
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = data.vertices[i * 3 + 2] * objects_data.axis_helper[ID].sz + objects_data.axis_helper[ID].pz + (rot.z * objects_data.axis_helper[ID].sz);
 				}
 
 				vao.bind();

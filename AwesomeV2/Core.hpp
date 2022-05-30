@@ -16,6 +16,8 @@
 #include "Model_loader.hpp"
 //#include "cgltf.h"
 
+FILE* __debug_file;
+
 #define PI 3.141592653589793238462643383279502884197169399375105820974944592307816406286
 
 namespace aws 
@@ -228,7 +230,7 @@ namespace aws
 	 */
 	struct Aws_Vector
 	{
-		float x = 0.0f, y = 0.0f, z = 0.0f, w = 0.0f;
+		float x = 0.0f, y = 0.0f, z = 1.0f, w = 1.0f;
 
 		Aws_Vector() = default;
 		Aws_Vector(float _x) : x(_x) {}
@@ -407,7 +409,7 @@ namespace aws
 	 */
 	struct Aws_DVector
 	{
-		double x = 0.0, y = 0.0, z = 0.0, w = 0.0;
+		double x = 0.0, y = 0.0, z = 1.0, w = 1.0;
 
 		Aws_DVector() = default;
 		Aws_DVector(float _x) : x(_x) {}
@@ -1642,7 +1644,7 @@ namespace aws
 	T to_degrees(T radians) {
 		return radians * static_cast<T>(57.295779513082320876798154814105);
 	}
-	
+
 	/**
 	 * @brief Gives max value of 2 parameters
 	 * 
@@ -1653,20 +1655,26 @@ namespace aws
 	 */
 	template<typename T>
 	T Max(T _v1, T _v2) {
-		if(_v1 > _v2)
-		{
-			return _v1;
-		}
-		else if(_v2 > _v1)
-		{
-			return _v2;
-		}
-		else if(_v1 == _v2)
-		{
-			return _v1;
-		}
+		if (_v1 != _v2)
+			return _v1 > _v2 ? _v1 : _v2;
+		return _v1;
+	}
 
-		return -1.0f;
+	/**
+	 * @brief Gives max value of 3 parameters
+	 * 
+	 * @tparam T 
+	 * @param _v1 value 1
+	 * @param _v2 value 2
+	 * @param _v3 value 3
+	 * @return T 
+	 */
+	template<typename T>
+	T Max3(T _v1, T _v2, T _v3) {
+		T max_of_two = Max(_v1, _v2);
+		if (max_of_two != _v3)
+			return max_of_two > _v3 ? max_of_two : _v3;
+		return max_of_two;
 	}
 
 	/**
@@ -1679,20 +1687,26 @@ namespace aws
 	 */
 	template<typename T>
 	T Min(T _v1, T _v2) {
-		if(_v1 > _v2)
-		{
-			return _v2;
-		}
-		else if(_v2 > _v1)
-		{
-			return _v1;
-		}
-		else if(_v1 == _v2)
-		{
-			return _v1;
-		}
+		if (_v1 != _v2)
+			return _v1 < _v2 ? _v1 : _v2;
+		return _v1;
+	}
 
-		return -1.0f;
+	/**
+	 * @brief Gives min value of 2 parameters
+	 * 
+	 * @tparam T 
+	 * @param _v1 value 1
+	 * @param _v2 value 2
+	 * @param _v3 value 3
+	 * @return T 
+	 */
+	template<typename T>
+	T Min3(T _v1, T _v2, T _v3) {
+		T min_of_two = Min(_v1, _v2);
+		if (min_of_two != _v3)
+			return min_of_two < _v3 ? min_of_two : _v3;
+		return min_of_two;
 	}
 
 	/**
@@ -1702,9 +1716,7 @@ namespace aws
 	 * @return Aws_Vector 
 	 */
 	Aws_Vector NormalizeVector(Aws_Vector vector) {
-		float max_value = Max(Max(vector.x, vector.y), vector.z);
-
-		Aws_Vector normalized = vector / to_vec(max_value);
+		Aws_Vector normalized = vector / to_vec(Max3(vector.x, vector.y, vector.z));
 
 		return normalized;
 	}
@@ -1716,14 +1728,12 @@ namespace aws
 	 * @return Aws_DVector 
 	 */
 	Aws_DVector NormalizeDVector(Aws_DVector vector) {
-		float max_value = Max(Max(vector.x, vector.y), vector.z);
-
-		Aws_DVector normalized = vector / to_dvec(max_value);
+		Aws_DVector normalized = vector / to_dvec(Max3(vector.x, vector.y, vector.z));
 
 		return normalized;
 	}
 
-	glm::mat3 AngleToMatrix(Aws_Vector _angle) {
+	glm::mat3 AngleToMatrix3(Aws_Vector _angle) {
 		glm::mat3 r_x = glm::mat3(
 			1.0f, 0.0f, 0.0f,
 			0.0f, cos(_angle.x), -sin(_angle.x),
@@ -1745,7 +1755,7 @@ namespace aws
 		return r_z * r_y * r_x;
 	}
 
-	Aws_Vector MatrixToAngle(glm::mat3 _rotation_matrix) {
+	Aws_Vector Matrix3ToAngle(glm::mat3 _rotation_matrix) {
 		float sy = sqrt(_rotation_matrix[0][0] * _rotation_matrix[0][0] + _rotation_matrix[1][0] * _rotation_matrix[1][0]);
 
 		bool singular = sy < 1e-6;
@@ -1766,6 +1776,21 @@ namespace aws
 		}
 
 		return angle;
+	}
+
+	/**
+	 * @brief Somehow calculates good rotation, i just tried it and it worked
+	 * 
+	 * @param _rotation_matrix Matrix of calculated rotations (consider to use AngleToMatrix function)
+	 * @param _rotation Vector with rotations(points of mesh that matrix data would be multiplied)
+	 * @return Aws_Vector 
+	 */
+	Aws_Vector Matrix3ToValues(glm::mat3 _rotation_matrix, Aws_Vector _rotation = {1.0f, 1.0f, 1.0f}) {
+		return {
+			_rotation_matrix[0][0] * _rotation.x + _rotation_matrix[0][1] * _rotation.y + _rotation_matrix[0][2] * _rotation.z, 
+			_rotation_matrix[1][0] * _rotation.x + _rotation_matrix[1][1] * _rotation.y + _rotation_matrix[1][2] * _rotation.z, 
+			_rotation_matrix[2][0] * _rotation.x + _rotation_matrix[2][1] * _rotation.y + _rotation_matrix[2][2] * _rotation.z, 
+			};
 	}
 
 	/**

@@ -13,8 +13,12 @@ This is basicly comtinuation Awesome engine, but instead rewriting old engine I 
 - CGLTF (I hope I use it)
 
 ### Changes
+	> - 30.05.2022
+	> So now we have half working rotations becouse bug in NormalizeVector function
+	> Also you can now use global "FILE* __debug_file" to write debug from where you want
+	> And also I added couple new functions to convert matrix3x3 to angle and vice versa to make rotation easier(i don`t know if it really tha easier but you know, it should be)
 	> - 12.04.2022
-	> I added custom dynamic vector type
+	> I added custom dynamic vector type (unused)
 	> I made better (in engine case) user input
 	> I added another sorting algorithm
 	> I added some functions for rotation to try things out
@@ -36,4 +40,4 @@ This is basicly comtinuation Awesome engine, but instead rewriting old engine I 
 ### To fix:
 	> AABB Collisions inside Renderer class doesn`t work properly
 	> Adding new objects in batch adds weird things
-	> Rotation of batched object
+	> Normalization of rotation of batched object
