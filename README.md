@@ -12,7 +12,17 @@ This is basicly comtinuation Awesome engine, but instead rewriting old engine I 
 - STB Image
 - CGLTF (I hope I use it)
 
+### Note
+	Do not use SetRotationByID on models becouse it rotate objects but it was so broken.
+
 ### Changes
+	> - 1.06.2022
+	> I added invert square root and quake invsqrt
+	> I added some new functions that later may be used in rotations
+	> I moved some math stuff to e_Math.hpp to make code cleaner and easier to search through
+	> Rotations works in unintended way
+	> I currently adding Matrix struct
+	> ------------------------------
 	> - 30.05.2022
 	> So now we have half working rotations becouse bug in NormalizeVector function
 	> Also you can now use global "FILE* __debug_file" to write debug from where you want

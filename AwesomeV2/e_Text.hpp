@@ -1,5 +1,5 @@
 #pragma once
-#include "Core.hpp"
+#include "e_Core.hpp"
 
 namespace aws
 {
@@ -13,7 +13,7 @@ namespace aws
 	const float char_column[16] = {0.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f};
 	const int offset[16] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
 
-	std::map<int, Vector> characters_map = {
+	std::map<int, math::Vector> characters_map = {
 		{0	*	offset[0], {0.0f	* char_mul,		char_column[0] * char_mul}},
 		{1	*	offset[0], {1.0f	* char_mul,		char_column[0] * char_mul}},
 		{2	*	offset[0], {2.0f	* char_mul,		char_column[0] * char_mul}},
@@ -314,7 +314,7 @@ namespace aws
 		Texture atlas;
 
 		Rendered _rendered;
-		Vector _psr[3] = {
+		math::Vector _psr[3] = {
 			{0.0f, 0.0f, 0.0f},
 			{1.0f, 1.0f, 1.0f},
 			{0.0f, 0.0f, 0.0f}
@@ -490,7 +490,7 @@ namespace aws
 
 		}
 
-		void SetPosition(Vector _values) {
+		void SetPosition(math::Vector _values) {
 			_psr[0] = _values;
 
 			transform = glm::translate(glm::mat4(1.0), _psr[0].changeV3());
@@ -500,7 +500,7 @@ namespace aws
 			transform = glm::scale(transform, _psr[1].changeV3());
 		}
 
-		void SetScale(Vector _values) {
+		void SetScale(math::Vector _values) {
 			_psr[1] = _values;
 
 			transform = glm::translate(glm::mat4(1.0), _psr[0].changeV3());
@@ -510,7 +510,7 @@ namespace aws
 			transform = glm::scale(transform, _psr[1].changeV3());
 		}
 
-		void SetRotation(Vector _values) {
+		void SetRotation(math::Vector _values) {
 			_psr[2] = _values;
 
 			transform = glm::translate(glm::mat4(1.0), _psr[0].changeV3());
@@ -520,7 +520,7 @@ namespace aws
 			transform = glm::scale(transform, _psr[1].changeV3());
 		}
 
-		void SetColor(Vector _values) {
+		void SetColor(math::Vector _values) {
 			if (_rendered.data.color[0] != _values.x && _rendered.data.color[1] != _values.y && _rendered.data.color[2] != _values.z && _rendered.data.color[3] != _values.w)
 			{
 				for (int i = 0; i < _rendered.count * 6; i++)

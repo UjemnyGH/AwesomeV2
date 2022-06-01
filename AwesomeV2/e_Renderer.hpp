@@ -1,9 +1,11 @@
 #pragma once
-#include "Core.hpp"
+#include "e_Core.hpp"
+#include "e_Math.hpp"
+#include "e_CollisionHandler.hpp"
 
 namespace aws
 {
-	static Vector GlobalLight;
+	static math::Vector GlobalLight;
 
 	class Aws_Renderer
 	{
@@ -373,7 +375,7 @@ namespace aws
 		 * @param y 
 		 * @param z 
 		 */
-		void SetPositionByID(unsigned int ID, Vector position) {
+		void SetPositionByID(unsigned int ID, math::Vector position) {
 			if (objects_data.axis_helper[ID].px != position.x || objects_data.axis_helper[ID].py != position.y || objects_data.axis_helper[ID].pz != position.z)
 			{
 				objects_data.axis_helper[ID].px = position.x;
@@ -403,7 +405,7 @@ namespace aws
 		 * @param y 
 		 * @param z 
 		 */
-		void SetScaleByID(unsigned int ID, Vector scale) {
+		void SetScaleByID(unsigned int ID, math::Vector scale) {
 			if (objects_data.axis_helper[ID].sx != scale.x || objects_data.axis_helper[ID].sy != scale.y || objects_data.axis_helper[ID].sz != scale.z)
 			{
 				objects_data.axis_helper[ID].sx = scale.x;
@@ -433,18 +435,20 @@ namespace aws
 		 * @param y 
 		 * @param z 
 		 */
-		void SetRotationByID(unsigned int ID, Vector rotation) {
+		void SetRotationByID(unsigned int ID, math::Vector rotation) {
 			if (objects_data.axis_helper[ID].rx != rotation.x || objects_data.axis_helper[ID].ry != rotation.y || objects_data.axis_helper[ID].rz != rotation.z)
 			{
 				objects_data.axis_helper[ID].rx = rotation.x;
 				objects_data.axis_helper[ID].ry = rotation.y;
 				objects_data.axis_helper[ID].rz = rotation.z;
 
-				glm::mat3 rot_mat = AngleToMatrix3({objects_data.axis_helper[ID].rx, objects_data.axis_helper[ID].ry, objects_data.axis_helper[ID].rz});
+				glm::mat3 rot_mat = math::AngleToMatrix3({objects_data.axis_helper[ID].rx, objects_data.axis_helper[ID].ry, objects_data.axis_helper[ID].rz});
 
 				for (size_t i = 0; i < objects_data.sizeID; i++)
 				{
-					Vector rot = Matrix3ToValues(rot_mat, { data.vertices[i * 3 + 0], data.vertices[i * 3 + 1], data.vertices[i * 3 + 2] });
+					//math::Vector rot = math::NormalizedMatrix3ToValues(rot_mat, { data.vertices[i * 3 + 0], data.vertices[i * 3 + 1], data.vertices[i * 3 + 2] });
+					//math::Vector rot = math::RodriguesRotation(rotation.x, rot_mat, {1.0f, 0.0f, 0.0f}, { data.vertices[i * 3 + 0], data.vertices[i * 3 + 1], data.vertices[i * 3 + 2] });
+					math::Vector rot = math::Matrix4ToVector(rot_mat, { data.vertices[i * 3 + 0], data.vertices[i * 3 + 1], data.vertices[i * 3 + 2] });
 
 					//fprintf(__debug_file, "X: %.2f,\t Y: %.2f,\t Z: %.2f\n", rot.x, rot.y, rot.z);
 
@@ -548,7 +552,7 @@ namespace aws
 		 * @param y 
 		 * @param z 
 		 */
-		void SetPosition(Vector position) {
+		void SetPosition(math::Vector position) {
 			psr[0][0] = position.x;
 			psr[0][1] = position.y;
 			psr[0][2] = position.z;
@@ -567,7 +571,7 @@ namespace aws
 		 * @param y 
 		 * @param z 
 		 */
-		void SetScale(Vector scale) {
+		void SetScale(math::Vector scale) {
 			psr[1][0] = scale.x;
 			psr[1][1] = scale.y;
 			psr[1][2] = scale.z;
@@ -586,7 +590,7 @@ namespace aws
 		 * @param y 
 		 * @param z 
 		 */
-		void SetRotation(Vector rotation) {
+		void SetRotation(math::Vector rotation) {
 			psr[2][0] = rotation.x;
 			psr[2][1] = rotation.y;
 			psr[2][2] = rotation.z;
@@ -607,7 +611,7 @@ namespace aws
 		 * @param b 
 		 * @param a 
 		 */
-		void SetColorByID(unsigned int ID, Vector color) {
+		void SetColorByID(unsigned int ID, math::Vector color) {
 			if (objects_data.data.color[ID * objects_data.sizeID] != color.x || objects_data.data.color[ID * objects_data.sizeID + 1] != color.y || objects_data.data.color[ID * objects_data.sizeID + 2] != color.z || objects_data.data.color[ID * objects_data.sizeID + 3] != color.w)
 			{
 				for (size_t i = 0; i < objects_data.sizeID; i++)
@@ -769,7 +773,7 @@ namespace aws
 		 * @param _value1 
 		 * @param _value2 
 		 */
-		void SetFloat2(const std::string _name, Vector _value) {
+		void SetFloat2(const std::string _name, math::Vector _value) {
 			shader.use();
 
 			glUniform2f(glGetUniformLocation(shader.ID, _name.c_str()), _value.x, _value.z);
@@ -785,7 +789,7 @@ namespace aws
 		 * @param _value2 
 		 * @param _value3 
 		 */
-		void SetFloat3(const std::string _name, Vector _value) {
+		void SetFloat3(const std::string _name, math::Vector _value) {
 			shader.use();
 
 			glUniform3f(glGetUniformLocation(shader.ID, _name.c_str()), _value.x, _value.y, _value.z);
@@ -802,7 +806,7 @@ namespace aws
 		 * @param _value3 
 		 * @param _value4 
 		 */
-		void SetFloat4(const std::string _name, Vector _value) {
+		void SetFloat4(const std::string _name, math::Vector _value) {
 			shader.use();
 
 			glUniform4f(glGetUniformLocation(shader.ID, _name.c_str()), _value.x, _value.y, _value.z, _value.w);
@@ -1030,7 +1034,7 @@ namespace aws
 		 * @return false 
 		 */
 		bool GetAABBTriggerByID(unsigned int ID, glm::vec3 _position, glm::vec3 _scale) {
-			return CheckAABBCollision(_position, _scale, glm::vec3(psr[0][0] + objects_data.axis_helper[ID].px, psr[0][1] + objects_data.axis_helper[ID].py, psr[0][2] + objects_data.axis_helper[ID].pz), glm::vec3(psr[1][0] * objects_data.axis_helper[ID].sx, psr[1][1] * objects_data.axis_helper[ID].sy, psr[1][2] * objects_data.axis_helper[ID].sz));
+			return physics::CheckAABBCollision(_position, _scale, glm::vec3(psr[0][0] + objects_data.axis_helper[ID].px, psr[0][1] + objects_data.axis_helper[ID].py, psr[0][2] + objects_data.axis_helper[ID].pz), glm::vec3(psr[1][0] * objects_data.axis_helper[ID].sx, psr[1][1] * objects_data.axis_helper[ID].sy, psr[1][2] * objects_data.axis_helper[ID].sz));
 		}
 
 		/**

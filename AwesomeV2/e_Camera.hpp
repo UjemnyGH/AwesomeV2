@@ -3,7 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <cmath>
 #include <algorithm>
-#include "Core.hpp"
+#include "e_Core.hpp"
 
 namespace aws
 {
@@ -23,7 +23,7 @@ namespace aws
 		 * @param _y 
 		 * @param _z 
 		 */
-		void SetCameraPosition(Vector pos) {
+		void SetCameraPosition(math::Vector pos) {
 			x = pos.x;
 			y = pos.y;
 			z = pos.z;
@@ -66,7 +66,7 @@ namespace aws
 		 * 
 		 * @return Vector
 		 */
-		Vector GetCameraPosition() { return { x, y, z }; }
+		math::Vector GetCameraPosition() { return { x, y, z }; }
 
 		/**
 		 * @brief Get the Camera Position object
@@ -81,13 +81,13 @@ namespace aws
 		 * @param camera_get_mode mode of returned values
 		 * @return glm::vec3 
 		 */
-		Vector GetCameraRotation(const CameraGetMode& camera_get_mode = CameraGetMode::Rotation) { 
+		math::Vector GetCameraRotation(const CameraGetMode& camera_get_mode = CameraGetMode::Rotation) { 
 			if (camera_get_mode == CameraGetMode::Rotation)
 				return { rx, ry, rz };
 			else if (camera_get_mode == CameraGetMode::Normalized)
-				return Vector(glm::normalize(glm::vec3(rx, ry, rz)).x, glm::normalize(glm::vec3(rx, ry, rz)).y, glm::normalize(glm::vec3(rx, ry, rz)).z);
+				return math::Vector(glm::normalize(glm::vec3(rx, ry, rz)).x, glm::normalize(glm::vec3(rx, ry, rz)).y, glm::normalize(glm::vec3(rx, ry, rz)).z);
 			else if (camera_get_mode == CameraGetMode::Crossed)
-				return Vector(glm::normalize(glm::cross(glm::normalize(glm::vec3(rx, ry, rz)), glm::vec3(0.0f, 1.0f, 0.0f))).x, glm::normalize(glm::cross(glm::normalize(glm::vec3(rx, ry, rz)), glm::vec3(0.0f, 1.0f, 0.0f))).y, glm::normalize(glm::cross(glm::normalize(glm::vec3(rx, ry, rz)), glm::vec3(0.0f, 1.0f, 0.0f))).z);
+				return math::Vector(glm::normalize(glm::cross(glm::normalize(glm::vec3(rx, ry, rz)), glm::vec3(0.0f, 1.0f, 0.0f))).x, glm::normalize(glm::cross(glm::normalize(glm::vec3(rx, ry, rz)), glm::vec3(0.0f, 1.0f, 0.0f))).y, glm::normalize(glm::cross(glm::normalize(glm::vec3(rx, ry, rz)), glm::vec3(0.0f, 1.0f, 0.0f))).z);
 			else
 				return { rx, ry, rz };
 		}

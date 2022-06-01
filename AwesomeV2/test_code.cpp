@@ -4,13 +4,14 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
-#include "Core.hpp"
-#include "Renderer.hpp"
-#include "Camera.hpp"
-#include "Window.hpp"
-#include "CollisionHandler.hpp"
-#include "Raycast.hpp"
-#include "Text.hpp"
+#include "e_Core.hpp"
+#include "e_Renderer.hpp"
+#include "e_Camera.hpp"
+#include "e_Window.hpp"
+#include "e_CollisionHandler.hpp"
+#include "e_Raycast.hpp"
+#include "e_Text.hpp"
+#include "e_Math.hpp"
 
 aws::CollisionHandler ch;
 aws::Raycast rc;
@@ -35,9 +36,9 @@ float old = 0.0f;
 
 glm::mat4 view = glm::mat4(1.0);
 glm::mat4 projection = glm::mat4(1.0);
-aws::Vector cameraFront = { 0.0f, 0.0f, -1.0f };
-aws::Vector cameraRight;
-aws::Vector playerPos = aws::Vector(0.0f, 0.0f, 0.0f);
+aws::math::Vector cameraFront = { 0.0f, 0.0f, -1.0f };
+aws::math::Vector cameraRight;
+aws::math::Vector playerPos = aws::math::Vector(0.0f, 0.0f, 0.0f);
 
 float yaw, pitch;
 int lastX, lastY;
@@ -46,7 +47,7 @@ bool inGround = false;
 
 aws::Camera camera;
 
-aws::Vector point;
+aws::math::Vector point;
 
 aws::Renderer ground2;
 aws::Renderer ground3;
@@ -70,7 +71,7 @@ void mouse(GLFWwindow* window, double xpos, double ypos) {
 		yaw += xoffset;
 		pitch -= yoffset;
 
-		pitch = aws::clamp(-89.99f, 89.99f, pitch);
+		pitch = aws::math::clamp(-89.99f, 89.99f, pitch);
 
 		camera.SetCameraRotation(glm::radians(yaw), glm::radians(pitch), aws::Axis::xy);
 
@@ -86,16 +87,16 @@ void mouse(GLFWwindow* window, double xpos, double ypos) {
 
 void Wnd::input() {
 	if (GetKey(aws::Keys::W))
-		playerPos -= aws::Vector(cameraFront.x, 0.0f, cameraFront.z) * aws::to_vec(speed * aws::time.GetDeltaTime());
+		playerPos -= aws::math::Vector(cameraFront.x, 0.0f, cameraFront.z) * aws::math::to_vec(speed * aws::time.GetDeltaTime());
 
 	if (GetKey(aws::Keys::S))
-		playerPos += aws::Vector(cameraFront.x, 0.0f, cameraFront.z) * aws::to_vec(speed * aws::time.GetDeltaTime());
+		playerPos += aws::math::Vector(cameraFront.x, 0.0f, cameraFront.z) * aws::math::to_vec(speed * aws::time.GetDeltaTime());
 
 	if (GetKey(aws::Keys::A))
-		playerPos += cameraRight * aws::to_vec(speed * aws::time.GetDeltaTime());
+		playerPos += cameraRight * aws::math::to_vec(speed * aws::time.GetDeltaTime());
 
 	if (GetKey(aws::Keys::D))
-		playerPos -= cameraRight * aws::to_vec(speed * aws::time.GetDeltaTime());
+		playerPos -= cameraRight * aws::math::to_vec(speed * aws::time.GetDeltaTime());
 
 	if (GetKey(aws::Keys::SPACE) && inGround)
 	{
@@ -125,8 +126,8 @@ void framebuffer_call(GLFWwindow* window, int w, int h) {
 void physics() {
 	playerPos.y -= aws::time.GetDeltaTime() * 20.0f * acceleration;
 
-	inGround = aws::CheckAABBCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(10000.0f, 0.1f, 10000.0f))
-		|| aws::CheckAABBCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(10.0f, 10.0f, 10.0f))
+	inGround = aws::physics::CheckAABBCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(10000.0f, 0.1f, 10000.0f))
+		|| aws::physics::CheckAABBCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(10.0f, 10.0f, 10.0f))
 		|| ground2.GetAABBTriggerByID(0, camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f));
 		//|| aws::CheckOBBBoxCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(10.0f, 10.0f, 10.0f), glm::vec3(glm::radians(45.0f), 0.0f, 0.0f));
 		//|| ch.AABBToMesh(camera.GetCameraPosition(), { 1.0f, 10.0f, 1.0f, 1.0f }, terrainMesh.GetMesh().vertices, { 0.0f, 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f });
@@ -151,7 +152,7 @@ aws::RenderedData s = aws::LoadOBJModel("data/models/testTerrain.obj");
 void Wnd::Start() {
 	__debug_file = fopen("Debug.txt", "w+");
 	aws::GlobalLight = { 1.0f, 0.6f, 1.0f, 1.0f };
-	vertical_synchronization = false;
+	vertical_synchronization = true;
 	glfwSetFramebufferSizeCallback(GetWindow(), framebuffer_call);
 	glfwSetCursorPosCallback(GetWindow(), mouse);
 	framebuffer_call(GetWindow(), 800, 600);
@@ -160,14 +161,11 @@ void Wnd::Start() {
 	point1.SetRendererData(aws::cube);
 	point1.SetScale({ 0.1f, 0.1f, 0.1f });
 
-	text.Init();
-	text.SetText("QWERTYUIOPASDFGHJKLZXCVBNM");
-
 	ground2.Init(aws::LoadShader("light.vert", aws::ShadType::vertex), aws::LoadShader("light.frag", aws::ShadType::fragment));
-	ground2.SetRendererData(aws::cube);
+	ground2.SetRendererData(aws::LoadOBJModel("data/models/awesome.obj"));
 	ground2.AddTexture("white.png");
 
-	ground2.SetScaleByID(0, { 10.0f, 10.0f, 10.0f });
+	ground2.SetScaleByID(0, { 3.0f, 3.0f, 3.0f });
 	ground2.SetPosition({ 0.0f, 20.0f, 0.0f });
 
 	ground3.Init(aws::LoadShader("light.vert", aws::ShadType::vertex), aws::LoadShader("light.frag", aws::ShadType::fragment));
@@ -193,9 +191,9 @@ void Wnd::Update() {
 	ground2.SetFloatMat4("view", 1, glm::value_ptr(view));
 	ground2.SetFloatMat4("projection", 1, glm::value_ptr(projection));
 
-	ground2.SetRotationByID(0, { aws::to_radians(w), aws::to_radians(w), 0.0f});
+	ground2.SetRotationByID(0, { aws::math::to_radians(w), aws::math::to_radians(0.0f), 0.0f});
 
-	w += aws::time.GetDeltaTime() * 10;
+	w += aws::time.GetDeltaTime() * 100;
 
 	if (w > 360.0f)
 	{
@@ -208,20 +206,20 @@ void Wnd::Update() {
 
 	terrainMesh.Render(projection, view);
 
-	text.Render();
+	printf("FPS: %1.f\n", 1.0f / aws::time.GetDeltaTime());
 	
 	std::future<void> phys = std::async(physics);
 }
 
 void tests()
 {
-	float x = aws::ClosestMatch(s.vertices, playerPos.x);
-	float y = aws::ClosestMatch(s.vertices, playerPos.y);
-	float z = aws::ClosestMatch(s.vertices, playerPos.z);
+	float x = aws::math::ClosestMatch(s.vertices, playerPos.x);
+	float y = aws::math::ClosestMatch(s.vertices, playerPos.y);
+	float z = aws::math::ClosestMatch(s.vertices, playerPos.z);
 
-	size_t xi = aws::basicSearch(0, s.vertices.size() - 1, s.vertices, x);
-	size_t yi = aws::basicSearch(0, s.vertices.size() - 1, s.vertices, y);
-	size_t zi = aws::basicSearch(0, s.vertices.size() - 1, s.vertices, z);
+	size_t xi = aws::math::basicSearch(0, s.vertices.size() - 1, s.vertices, x);
+	size_t yi = aws::math::basicSearch(0, s.vertices.size() - 1, s.vertices, y);
+	size_t zi = aws::math::basicSearch(0, s.vertices.size() - 1, s.vertices, z);
 
 	std::cout << "DELTA: " << 1.0f / aws::time.GetDeltaTime() << " X: " << x << ' ' << xi << " Y: " << y << ' ' << yi << " Z: " << z << ' ' << zi << " PX: " << playerPos.x << " PY: " << playerPos.y << " PZ: " << playerPos.z << '\n';
 }
