@@ -442,19 +442,37 @@ namespace aws
 				objects_data.axis_helper[ID].ry = rotation.y;
 				objects_data.axis_helper[ID].rz = rotation.z;
 
-				glm::mat3 rot_mat = math::AngleToMatrix3({objects_data.axis_helper[ID].rx, objects_data.axis_helper[ID].ry, objects_data.axis_helper[ID].rz});
+				//glm::mat3 rot_mat = math::AngleToMatrix3({objects_data.axis_helper[ID].rx, objects_data.axis_helper[ID].ry, objects_data.axis_helper[ID].rz});
 
 				for (size_t i = 0; i < objects_data.sizeID; i++)
 				{
 					//math::Vector rot = math::NormalizedMatrix3ToValues(rot_mat, { data.vertices[i * 3 + 0], data.vertices[i * 3 + 1], data.vertices[i * 3 + 2] });
 					//math::Vector rot = math::RodriguesRotation(rotation.x, rot_mat, {1.0f, 0.0f, 0.0f}, { data.vertices[i * 3 + 0], data.vertices[i * 3 + 1], data.vertices[i * 3 + 2] });
-					math::Vector rot = math::Matrix4ToVector(rot_mat, { data.vertices[i * 3 + 0], data.vertices[i * 3 + 1], data.vertices[i * 3 + 2] });
+					//math::Vector rot = math::Matrix4ToVector(rot_mat, { data.vertices[i * 3 + 0], data.vertices[i * 3 + 1], data.vertices[i * 3 + 2] });
 
 					//fprintf(__debug_file, "X: %.2f,\t Y: %.2f,\t Z: %.2f\n", rot.x, rot.y, rot.z);
 
-					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = data.vertices[i * 3 + 0] * objects_data.axis_helper[ID].sx + objects_data.axis_helper[ID].px + (rot.x * objects_data.axis_helper[ID].sx);
-					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = data.vertices[i * 3 + 1] * objects_data.axis_helper[ID].sy + objects_data.axis_helper[ID].py + (rot.y * objects_data.axis_helper[ID].sy);
-					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = data.vertices[i * 3 + 2] * objects_data.axis_helper[ID].sz + objects_data.axis_helper[ID].pz + (rot.z * objects_data.axis_helper[ID].sz);
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = data.vertices[i * 3 + 0] * objects_data.axis_helper[ID].sx + objects_data.axis_helper[ID].px;
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = data.vertices[i * 3 + 1] * objects_data.axis_helper[ID].sy + objects_data.axis_helper[ID].py;
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = data.vertices[i * 3 + 2] * objects_data.axis_helper[ID].sz + objects_data.axis_helper[ID].pz;
+
+					float _y1 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)];
+					float _z1 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)];
+
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = (cos(objects_data.axis_helper[ID].rx) * _y1 - sin(objects_data.axis_helper[ID].rx) * _z1);
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = (cos(objects_data.axis_helper[ID].rx) * _z1 + sin(objects_data.axis_helper[ID].rx) * _y1);
+
+					float _x1 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)];
+					float _z2 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)];
+
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = (cos(objects_data.axis_helper[ID].ry) * _x1 + sin(objects_data.axis_helper[ID].ry) * _z2);
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = (cos(objects_data.axis_helper[ID].ry) * _z2 - sin(objects_data.axis_helper[ID].ry) * _x1);
+
+					float _x2 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)];
+					float _y2 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)];
+
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = (cos(objects_data.axis_helper[ID].rz) * _x2 - sin(objects_data.axis_helper[ID].rz) * _y2);
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = (cos(objects_data.axis_helper[ID].rz) * _y2 + sin(objects_data.axis_helper[ID].rz) * _x2);
 				}
 
 				vao.bind();

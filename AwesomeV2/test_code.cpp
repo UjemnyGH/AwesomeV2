@@ -116,8 +116,6 @@ void Wnd::input() {
 }
 
 void framebuffer_call(GLFWwindow* window, int w, int h) {
-	//Wnd::width = w;
-	//Wnd::height = h;
 	glViewport(0, 0, w, h);
 
 	projection = glm::perspectiveFov(70.0f, (float)w, (float)h, 0.001f, 100000.0f);
@@ -191,7 +189,7 @@ void Wnd::Update() {
 	ground2.SetFloatMat4("view", 1, glm::value_ptr(view));
 	ground2.SetFloatMat4("projection", 1, glm::value_ptr(projection));
 
-	ground2.SetRotationByID(0, { aws::math::to_radians(w), aws::math::to_radians(0.0f), 0.0f});
+	ground2.SetRotationByID(0, { aws::math::to_radians(w), aws::math::to_radians(w), aws::math::to_radians(w) });
 
 	w += aws::time.GetDeltaTime() * 100;
 

@@ -3,19 +3,23 @@ Awesome engine v2
 
 ![Awesome image logo](AwesomeV2/data/textures/awesomev2.png)
 
-This is basicly comtinuation Awesome engine, but instead rewriting old engine I am writing new one.
+This is basicly continuation of Awesome engine, but instead rewriting old engine I am writing new one.
 
 # Libs I used:
 - GLFW
 - GLEW
 - GLM
 - STB Image
+- ImGui
 - CGLTF (I hope I use it)
 
 ### Note
 	Do not use SetRotationByID on models becouse it rotate objects but it was so broken.
 
 ### Changes
+	> - 11.06.2022
+	> Rotations now fully working, yea thats it
+	> ------------------------------
 	> - 1.06.2022
 	> I added invert square root and quake invsqrt
 	> I added some new functions that later may be used in rotations
