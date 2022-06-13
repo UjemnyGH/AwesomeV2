@@ -14,7 +14,7 @@ This is basicly continuation of Awesome engine, but instead rewriting old engine
 - CGLTF (I hope I use it)
 
 ### Note
-	Do not use SetRotationByID on models becouse it rotate objects but it was so broken.
+	Set...ByID can couse FPS drops on larger models
 
 ### Changes
 	> - 11.06.2022
@@ -54,4 +54,3 @@ This is basicly continuation of Awesome engine, but instead rewriting old engine
 ### To fix:
 	> AABB Collisions inside Renderer class doesn`t work properly
 	> Adding new objects in batch adds weird things
-	> Normalization of rotation of batched object

@@ -1,5 +1,6 @@
 #pragma once
 #include "e_Core.hpp"
+#include "e_Math.hpp"
 
 namespace aws
 {
@@ -83,6 +84,10 @@ namespace aws
 
             return collisionX && collisionY && collisionZ;
         }
+
+		bool CheckAABBTriangleCollision(const glm::vec3 _Position1, const glm::vec3 _Scale1, const glm::vec3 _Position2, const glm::vec3 _Scale2, const RenderedData mesh) {
+			
+		}
 	};
 	
 

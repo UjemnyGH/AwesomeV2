@@ -25,8 +25,8 @@ public:
 	void input();
 };
 
-const float normal_speed = 40.0f;
-const float speed_mul = 2.0f;
+const float normal_speed = 80.0f;
+const float speed_mul = 4.0f;
 
 float speed = normal_speed;
 
@@ -39,10 +39,12 @@ glm::mat4 projection = glm::mat4(1.0);
 aws::math::Vector cameraFront = { 0.0f, 0.0f, -1.0f };
 aws::math::Vector cameraRight;
 aws::math::Vector playerPos = aws::math::Vector(0.0f, 0.0f, 0.0f);
+aws::math::Vector playerVelocity = {0.0f, 0.0f, 0.0f};
 
 float yaw, pitch;
 int lastX, lastY;
 float acceleration = 1.0f;
+bool onGround = false;
 bool inGround = false;
 
 aws::Camera camera;
@@ -86,29 +88,39 @@ void mouse(GLFWwindow* window, double xpos, double ypos) {
 }
 
 void Wnd::input() {
-	if (GetKey(aws::Keys::W))
-		playerPos -= aws::math::Vector(cameraFront.x, 0.0f, cameraFront.z) * aws::math::to_vec(speed * aws::time.GetDeltaTime());
+	if (GetKey(aws::Keys::W) && onGround) {
+		playerVelocity.x -= cameraFront.x * speed * aws::time.GetDeltaTime();
+		playerVelocity.z -= cameraFront.z * speed * aws::time.GetDeltaTime();
+	}
 
-	if (GetKey(aws::Keys::S))
-		playerPos += aws::math::Vector(cameraFront.x, 0.0f, cameraFront.z) * aws::math::to_vec(speed * aws::time.GetDeltaTime());
+	if (GetKey(aws::Keys::S) && onGround) {
+		playerVelocity.x += cameraFront.x * speed * aws::time.GetDeltaTime();
+		playerVelocity.z += cameraFront.z * speed * aws::time.GetDeltaTime();
+	}
 
-	if (GetKey(aws::Keys::A))
-		playerPos += cameraRight * aws::math::to_vec(speed * aws::time.GetDeltaTime());
+	if (GetKey(aws::Keys::A) && onGround) {
+		playerVelocity.x += cameraRight.x * speed * aws::time.GetDeltaTime();
+		playerVelocity.z += cameraRight.z * speed * aws::time.GetDeltaTime();
+	}
 
-	if (GetKey(aws::Keys::D))
-		playerPos -= cameraRight * aws::math::to_vec(speed * aws::time.GetDeltaTime());
+	if (GetKey(aws::Keys::D) && onGround) {
+		playerVelocity.x -= cameraRight.x * speed * aws::time.GetDeltaTime();
+		playerVelocity.z -= cameraRight.z * speed * aws::time.GetDeltaTime();
+	}
 
-	if (GetKey(aws::Keys::SPACE) && inGround)
+	if (GetKey(aws::Keys::SPACE) && onGround && !inGround)
 	{
 		acceleration = -2.0f;
 	}
 
 	speed = normal_speed;
 
-	if (GetKey(aws::Keys::L_SHIFT))
+	if (GetKey(aws::Keys::L_SHIFT) && !inGround)
 	{
 		speed = normal_speed * speed_mul;
 	}
+
+	playerPos += playerVelocity;
 
 	cameraRight = camera.GetCameraRotation(aws::CameraGetMode::Crossed);
 
@@ -118,21 +130,39 @@ void Wnd::input() {
 void framebuffer_call(GLFWwindow* window, int w, int h) {
 	glViewport(0, 0, w, h);
 
-	projection = glm::perspectiveFov(70.0f, (float)w, (float)h, 0.001f, 100000.0f);
+	projection = glm::perspectiveFov(70.0f, (float)w, (float)h, 0.001f, 50000.0f);
 }
 
 void physics() {
+	playerVelocity.x = aws::math::clamp(-50.0f, 50.0f, playerVelocity.x);
+	playerVelocity.y = aws::math::clamp(-50.0f, 50.0f, playerVelocity.y);
+	playerVelocity.z = aws::math::clamp(-50.0f, 50.0f, playerVelocity.z);
+
 	playerPos.y -= aws::time.GetDeltaTime() * 20.0f * acceleration;
 
-	inGround = aws::physics::CheckAABBCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(10000.0f, 0.1f, 10000.0f))
-		|| aws::physics::CheckAABBCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(10.0f, 10.0f, 10.0f))
-		|| ground2.GetAABBTriggerByID(0, camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f));
+	onGround = false;
+
+	onGround = aws::physics::CheckAABBCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(10000.0f, 0.1f, 10000.0f)) ||
+		ground3.GetAABBTriggerByID(0, camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f));
+		//|| ground2.GetAABBTriggerByID(0, camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f));
 		//|| aws::CheckOBBBoxCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(10.0f, 10.0f, 10.0f), glm::vec3(glm::radians(45.0f), 0.0f, 0.0f));
 		//|| ch.AABBToMesh(camera.GetCameraPosition(), { 1.0f, 10.0f, 1.0f, 1.0f }, terrainMesh.GetMesh().vertices, { 0.0f, 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f });
 
-	if (inGround)
+	inGround = aws::physics::CheckAABBCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f) * glm::vec3(1.0f, 0.9f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(10000.0f, 0.1f, 10000.0f)) ||
+		ground3.GetAABBTriggerByID(0, camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f) * glm::vec3(1.0f, 0.9f, 1.0f));
+		//|| ground2.GetAABBTriggerByID(0, camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f) * glm::vec3(1.0f, 0.9f, 1.0f));
+		//|| aws::CheckOBBBoxCollision(camera.GetCameraPositionV3(), glm::vec3(1.0f, 10.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(10.0f, 10.0f, 10.0f), glm::vec3(glm::radians(45.0f), 0.0f, 0.0f));
+		//|| ch.AABBToMesh(camera.GetCameraPosition(), { 1.0f, 10.0f, 1.0f, 1.0f }, terrainMesh.GetMesh().vertices, { 0.0f, 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f });
+
+	if (onGround)
 	{
 		playerPos.y += aws::time.GetDeltaTime() * 20.0f * fabs(acceleration);
+		playerVelocity -= playerVelocity * (aws::math::to_vec(aws::time.GetDeltaTime()) * 0.01f);
+	}
+
+	if (inGround)
+	{
+		playerVelocity = aws::math::Vector(cameraFront.x * speed * aws::time.GetDeltaTime(), 0.0f, cameraFront.z * speed * aws::time.GetDeltaTime());
 	}
 
 	if (acceleration < 2.5f)
@@ -144,8 +174,6 @@ void physics() {
 
 	w += 0.001f;
 }
-
-aws::RenderedData s = aws::LoadOBJModel("data/models/testTerrain.obj");
 
 void Wnd::Start() {
 	__debug_file = fopen("Debug.txt", "w+");
@@ -159,11 +187,11 @@ void Wnd::Start() {
 	point1.SetRendererData(aws::cube);
 	point1.SetScale({ 0.1f, 0.1f, 0.1f });
 
-	ground2.Init(aws::LoadShader("light.vert", aws::ShadType::vertex), aws::LoadShader("light.frag", aws::ShadType::fragment));
-	ground2.SetRendererData(aws::LoadOBJModel("data/models/awesome.obj"));
-	ground2.AddTexture("white.png");
+	ground2.Init(aws::vs, aws::fs);
+	ground2.SetRendererData(aws::LoadOBJModel("data/models/skybox_cube.obj"));
+	ground2.AddTexture("data/textures/skybox_texture2.png");
 
-	ground2.SetScaleByID(0, { 3.0f, 3.0f, 3.0f });
+	ground2.SetScaleByID(0, { 10000.0f, 10000.0f, 10000.0f });
 	ground2.SetPosition({ 0.0f, 20.0f, 0.0f });
 
 	ground3.Init(aws::LoadShader("light.vert", aws::ShadType::vertex), aws::LoadShader("light.frag", aws::ShadType::fragment));
@@ -189,8 +217,8 @@ void Wnd::Update() {
 	ground2.SetFloatMat4("view", 1, glm::value_ptr(view));
 	ground2.SetFloatMat4("projection", 1, glm::value_ptr(projection));
 
-	ground2.SetRotationByID(0, { aws::math::to_radians(w), aws::math::to_radians(w), aws::math::to_radians(w) });
-
+	ground2.SetPosition(playerPos);
+	
 	w += aws::time.GetDeltaTime() * 100;
 
 	if (w > 360.0f)
@@ -207,19 +235,6 @@ void Wnd::Update() {
 	printf("FPS: %1.f\n", 1.0f / aws::time.GetDeltaTime());
 	
 	std::future<void> phys = std::async(physics);
-}
-
-void tests()
-{
-	float x = aws::math::ClosestMatch(s.vertices, playerPos.x);
-	float y = aws::math::ClosestMatch(s.vertices, playerPos.y);
-	float z = aws::math::ClosestMatch(s.vertices, playerPos.z);
-
-	size_t xi = aws::math::basicSearch(0, s.vertices.size() - 1, s.vertices, x);
-	size_t yi = aws::math::basicSearch(0, s.vertices.size() - 1, s.vertices, y);
-	size_t zi = aws::math::basicSearch(0, s.vertices.size() - 1, s.vertices, z);
-
-	std::cout << "DELTA: " << 1.0f / aws::time.GetDeltaTime() << " X: " << x << ' ' << xi << " Y: " << y << ' ' << yi << " Z: " << z << ' ' << zi << " PX: " << playerPos.x << " PY: " << playerPos.y << " PZ: " << playerPos.z << '\n';
 }
 
 void Wnd::LateUpdate() {

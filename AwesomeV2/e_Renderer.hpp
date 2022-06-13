@@ -370,6 +370,8 @@ namespace aws
 		/**
 		 * @brief Set the Position By ID of object
 		 * 
+		 * Should be only used to set position of static object
+		 * 
 		 * @param ID object ID in batch
 		 * @param x 
 		 * @param y 
@@ -384,9 +386,27 @@ namespace aws
 
 				for (size_t i = 0; i < objects_data.sizeID; i++)
 				{
-					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3)] = data.vertices[i * 3] * objects_data.axis_helper[ID].sx + objects_data.axis_helper[ID].px;
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = data.vertices[i * 3 + 0] * objects_data.axis_helper[ID].sx + objects_data.axis_helper[ID].px;
 					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = data.vertices[i * 3 + 1] * objects_data.axis_helper[ID].sy + objects_data.axis_helper[ID].py;
 					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = data.vertices[i * 3 + 2] * objects_data.axis_helper[ID].sz + objects_data.axis_helper[ID].pz;
+
+					float _y1 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)];
+					float _z1 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)];
+
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = (cos(objects_data.axis_helper[ID].rx) * _y1 - sin(objects_data.axis_helper[ID].rx) * _z1);
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = (cos(objects_data.axis_helper[ID].rx) * _z1 + sin(objects_data.axis_helper[ID].rx) * _y1);
+
+					float _x1 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)];
+					float _z2 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)];
+
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = (cos(objects_data.axis_helper[ID].ry) * _x1 + sin(objects_data.axis_helper[ID].ry) * _z2);
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = (cos(objects_data.axis_helper[ID].ry) * _z2 - sin(objects_data.axis_helper[ID].ry) * _x1);
+
+					float _x2 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)];
+					float _y2 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)];
+
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = (cos(objects_data.axis_helper[ID].rz) * _x2 - sin(objects_data.axis_helper[ID].rz) * _y2);
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = (cos(objects_data.axis_helper[ID].rz) * _y2 + sin(objects_data.axis_helper[ID].rz) * _x2);
 				};
 
 				vao.bind();
@@ -399,6 +419,8 @@ namespace aws
 
 		/**
 		 * @brief Set the Scale By ID object
+		 * 
+		 * Should be only used to set scale of static object
 		 * 
 		 * @param ID object ID in batch
 		 * @param x 
@@ -414,9 +436,27 @@ namespace aws
 
 				for (size_t i = 0; i < objects_data.sizeID; i++)
 				{
-					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3)] = data.vertices[i * 3] * objects_data.axis_helper[ID].sx + objects_data.axis_helper[ID].px;
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = data.vertices[i * 3 + 0] * objects_data.axis_helper[ID].sx + objects_data.axis_helper[ID].px;
 					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = data.vertices[i * 3 + 1] * objects_data.axis_helper[ID].sy + objects_data.axis_helper[ID].py;
 					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = data.vertices[i * 3 + 2] * objects_data.axis_helper[ID].sz + objects_data.axis_helper[ID].pz;
+
+					float _y1 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)];
+					float _z1 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)];
+
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = (cos(objects_data.axis_helper[ID].rx) * _y1 - sin(objects_data.axis_helper[ID].rx) * _z1);
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = (cos(objects_data.axis_helper[ID].rx) * _z1 + sin(objects_data.axis_helper[ID].rx) * _y1);
+
+					float _x1 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)];
+					float _z2 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)];
+
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = (cos(objects_data.axis_helper[ID].ry) * _x1 + sin(objects_data.axis_helper[ID].ry) * _z2);
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = (cos(objects_data.axis_helper[ID].ry) * _z2 - sin(objects_data.axis_helper[ID].ry) * _x1);
+
+					float _x2 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)];
+					float _y2 = objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)];
+
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = (cos(objects_data.axis_helper[ID].rz) * _x2 - sin(objects_data.axis_helper[ID].rz) * _y2);
+					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = (cos(objects_data.axis_helper[ID].rz) * _y2 + sin(objects_data.axis_helper[ID].rz) * _x2);
 				}
 
 				vao.bind();
@@ -430,6 +470,8 @@ namespace aws
 		/**
 		 * @brief Set the Rotation By ID object
 		 * 
+		 * Should be only used to set rotation of static object
+		 * 
 		 * @param ID object ID in batch
 		 * @param x 
 		 * @param y 
@@ -442,16 +484,8 @@ namespace aws
 				objects_data.axis_helper[ID].ry = rotation.y;
 				objects_data.axis_helper[ID].rz = rotation.z;
 
-				//glm::mat3 rot_mat = math::AngleToMatrix3({objects_data.axis_helper[ID].rx, objects_data.axis_helper[ID].ry, objects_data.axis_helper[ID].rz});
-
 				for (size_t i = 0; i < objects_data.sizeID; i++)
 				{
-					//math::Vector rot = math::NormalizedMatrix3ToValues(rot_mat, { data.vertices[i * 3 + 0], data.vertices[i * 3 + 1], data.vertices[i * 3 + 2] });
-					//math::Vector rot = math::RodriguesRotation(rotation.x, rot_mat, {1.0f, 0.0f, 0.0f}, { data.vertices[i * 3 + 0], data.vertices[i * 3 + 1], data.vertices[i * 3 + 2] });
-					//math::Vector rot = math::Matrix4ToVector(rot_mat, { data.vertices[i * 3 + 0], data.vertices[i * 3 + 1], data.vertices[i * 3 + 2] });
-
-					//fprintf(__debug_file, "X: %.2f,\t Y: %.2f,\t Z: %.2f\n", rot.x, rot.y, rot.z);
-
 					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 0)] = data.vertices[i * 3 + 0] * objects_data.axis_helper[ID].sx + objects_data.axis_helper[ID].px;
 					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 1)] = data.vertices[i * 3 + 1] * objects_data.axis_helper[ID].sy + objects_data.axis_helper[ID].py;
 					objects_data.data.vertices[ID * objects_data.sizeID + (i * 3 + 2)] = data.vertices[i * 3 + 2] * objects_data.axis_helper[ID].sz + objects_data.axis_helper[ID].pz;
@@ -576,9 +610,9 @@ namespace aws
 			psr[0][2] = position.z;
 
 			transform = glm::translate(glm::mat4(1.0), glm::vec3(psr[0][0], psr[0][1], psr[0][2]));
-			transform = glm::rotate(transform, glm::radians(psr[2][0]), glm::vec3(1.0f, 0.0f, 0.0f));
-			transform = glm::rotate(transform, glm::radians(psr[2][1]), glm::vec3(0.0f, 1.0f, 0.0f));
-			transform = glm::rotate(transform, glm::radians(psr[2][2]), glm::vec3(0.0f, 0.0f, 1.0f));
+			transform = glm::rotate(transform, psr[2][0], glm::vec3(1.0f, 0.0f, 0.0f));
+			transform = glm::rotate(transform, psr[2][1], glm::vec3(0.0f, 1.0f, 0.0f));
+			transform = glm::rotate(transform, psr[2][2], glm::vec3(0.0f, 0.0f, 1.0f));
 			transform = glm::scale(transform, glm::vec3(psr[1][0], psr[1][1], psr[1][2]));
 		}
 
@@ -595,9 +629,9 @@ namespace aws
 			psr[1][2] = scale.z;
 
 			transform = glm::translate(glm::mat4(1.0), glm::vec3(psr[0][0], psr[0][1], psr[0][2]));
-			transform = glm::rotate(transform, glm::radians(psr[2][0]), glm::vec3(1.0f, 0.0f, 0.0f));
-			transform = glm::rotate(transform, glm::radians(psr[2][1]), glm::vec3(0.0f, 1.0f, 0.0f));
-			transform = glm::rotate(transform, glm::radians(psr[2][2]), glm::vec3(0.0f, 0.0f, 1.0f));
+			transform = glm::rotate(transform, psr[2][0], glm::vec3(1.0f, 0.0f, 0.0f));
+			transform = glm::rotate(transform, psr[2][1], glm::vec3(0.0f, 1.0f, 0.0f));
+			transform = glm::rotate(transform, psr[2][2], glm::vec3(0.0f, 0.0f, 1.0f));
 			transform = glm::scale(transform, glm::vec3(psr[1][0], psr[1][1], psr[1][2]));
 		}
 
@@ -614,9 +648,9 @@ namespace aws
 			psr[2][2] = rotation.z;
 
 			transform = glm::translate(glm::mat4(1.0), glm::vec3(psr[0][0], psr[0][1], psr[0][2]));
-			transform = glm::rotate(transform, glm::radians(psr[2][0]), glm::vec3(1.0f, 0.0f, 0.0f));
-			transform = glm::rotate(transform, glm::radians(psr[2][1]), glm::vec3(0.0f, 1.0f, 0.0f));
-			transform = glm::rotate(transform, glm::radians(psr[2][2]), glm::vec3(0.0f, 0.0f, 1.0f));
+			transform = glm::rotate(transform, psr[2][0], glm::vec3(1.0f, 0.0f, 0.0f));
+			transform = glm::rotate(transform, psr[2][1], glm::vec3(0.0f, 1.0f, 0.0f));
+			transform = glm::rotate(transform, psr[2][2], glm::vec3(0.0f, 0.0f, 1.0f));
 			transform = glm::scale(transform, glm::vec3(psr[1][0], psr[1][1], psr[1][2]));
 		}
 
